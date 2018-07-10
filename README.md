@@ -1,5 +1,4 @@
-# DCMS_2
-Distributed Systems - DCMS Assignment II
+Distributed Systems - Project
 
 •	Open the src/Server/DcmsServer.java file, run it.
 
