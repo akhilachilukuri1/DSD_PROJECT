@@ -7,6 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * 
+ * LogManager performs logging to each of the server operations (MTL,DDO and LVL).
+ *
+ */
+
 public class LogManager {
 	public Handler fileHandler = null;
 	public Logger logger;

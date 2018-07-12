@@ -6,6 +6,12 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 
+ * LogClient performs the logging for the client Manager operations
+ *
+ */
+
 public class LogClient {
 	public Handler consoleHandler = null;
 	public Handler fileHandler = null;

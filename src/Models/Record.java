@@ -2,10 +2,9 @@ package Models;
 
 import java.io.Serializable;
 /**
- *
  *Model Class that holds the base record attributes
- *contains record ID,first name,last name
- *has the getters and setters for the attributes
+ *contains record ID,first name,last name has the getters 
+ *and setters for the attributes
  */
 public abstract class Record implements Serializable {
 	private String firstName;

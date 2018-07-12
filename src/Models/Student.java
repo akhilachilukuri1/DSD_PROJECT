@@ -3,7 +3,7 @@ package Models;
 import java.io.Serializable;
 import java.util.List;
 
-/*
+/**
  * Student Model Class that holds the student's attributes
  * extends the base record class, to enable
  * easy marshalling and unmarshalling between client and server
