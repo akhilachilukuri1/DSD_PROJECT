@@ -13,6 +13,8 @@ import Server.UDPRequestServer;
 /**
  * 
  * ServerUDP is the class that serves other servers' requests
+ * in form of UDP communication
+ * with RECPAKT functionality
  *
  */
 
@@ -30,6 +32,7 @@ public class ServerUDP extends Thread {
 	/**
 	 * 
 	 * ServerUDP constructor initializes the UDP socket port number of each location
+	 * based on the received location input
 	 * 
 	 * @param loc
 	 *            location of UDP server
@@ -46,6 +49,11 @@ public class ServerUDP extends Thread {
 		this.server = serverImp;
 		c = 0;
 		try {
+			
+			/*Switch case to create the datagram packet based on the location port number
+			 * and a logger to log the current event
+			 * */
+			
 			switch (loc) {
 			case MTL:
 				serverSocket = new DatagramSocket(Constants.UDP_PORT_NUM_MTL);
@@ -70,8 +78,9 @@ public class ServerUDP extends Thread {
 	}
 
 	/**
-	 * UDP server thread that keeps listening continuously for any new request and
-	 * receives the request
+	 * A UDP server thread is issued that continuously/periodically keeps listening
+	 * for any request or incoming data packet.
+	 * Calls UDPRequestServer based on the received data.
 	 */
 
 	@Override

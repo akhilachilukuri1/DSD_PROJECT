@@ -41,8 +41,9 @@ public class UDPRequestServer extends Thread {
 	}
 
 	/**
-	 * Serves the actual UDP request Either Gets the record count or Transfers the
-	 * Record
+	 * Serves the actual UDP request by performing the required functionality
+	 * be it Get Record or Transfer Record
+	 * 
 	 */
 
 	@Override
@@ -81,8 +82,10 @@ public class UDPRequestServer extends Thread {
 		}
 	}
 
-	/*
-	 * This method adds the record to the given server location's hashmap
+	/**
+	 * This method the functionality of adding
+	 * the data to the respective server's hashmap
+	 * (Transfer Functionality)
 	 */
 	private String transferRecord(String recordToBeAdded) {
 		String temp[] = recordToBeAdded.split(",");
@@ -116,7 +119,9 @@ public class UDPRequestServer extends Thread {
 	}
 
 	/**
-	 * Returns the number of entries made in the hashmap
+	 * getRecCount is the function that 
+	 * returns the number of entries made in
+	 * the respective hashmap
 	 *
 	 */
 

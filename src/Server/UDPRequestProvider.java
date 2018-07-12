@@ -20,8 +20,10 @@ public class UDPRequestProvider extends Thread {
 	private Record recordForTransfer;
 
 	/**
-	 * UDPRequestProvider handles the UDP message call and transfers the necessary
-	 * record
+	 * UDPRequestProvider handles the incoming messages call (Get Rec ,
+	 * Trans Rec) and based on the incoming call 
+	 * Routes the packet to the necessary location 
+	 * to retreive the data
 	 * 
 	 * @param server
 	 *            serverimpl class instance
@@ -47,8 +49,10 @@ public class UDPRequestProvider extends Thread {
 	}
 
 	/**
-	 * UDP Server thread that handles the incoming packets Routes the packet to the
-	 * respective server address
+	 * UDP Server thread that handles the incoming packets 
+	 * Routes the packet to the
+	 * respective server address based on the
+	 * required functionality
 	 */
 
 	@Override
@@ -59,6 +63,9 @@ public class UDPRequestProvider extends Thread {
 			case "GET_RECORD_COUNT":
 				socket = new DatagramSocket();
 				byte[] data = "GET_RECORD_COUNT".getBytes();
+				
+				/*Create a datagram packet for the respective server address.*/
+				
 				DatagramPacket packet = new DatagramPacket(data, data.length,
 						InetAddress.getByName(server.IPaddress),
 						server.serverUDP.udpPortNum);
@@ -71,6 +78,9 @@ public class UDPRequestProvider extends Thread {
 				socket = new DatagramSocket();
 				byte[] data1 = ("TRANSFER_RECORD" + "#"
 						+ recordForTransfer.toString()).getBytes();
+				
+				/*Create a datagram packet for the respective server address.*/
+				
 				DatagramPacket packet1 = new DatagramPacket(data1, data1.length,
 						InetAddress.getByName(server.IPaddress),
 						server.serverUDP.udpPortNum);
