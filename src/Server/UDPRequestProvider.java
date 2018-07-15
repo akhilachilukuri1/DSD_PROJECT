@@ -63,11 +63,10 @@ public class UDPRequestProvider extends Thread {
 			case "GET_RECORD_COUNT":
 				socket = new DatagramSocket();
 				byte[] data = "GET_RECORD_COUNT".getBytes();
-				
+				System.out.println(InetAddress.getByName(socket.getLocalAddress().getHostAddress()));
 				/*Create a datagram packet for the respective server address.*/
-				
 				DatagramPacket packet = new DatagramPacket(data, data.length,
-						InetAddress.getByName(server.IPaddress),
+						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
 						server.serverUDP.udpPortNum);
 				socket.send(packet);
 				data = new byte[100];
@@ -82,7 +81,7 @@ public class UDPRequestProvider extends Thread {
 				/*Create a datagram packet for the respective server address.*/
 				
 				DatagramPacket packet1 = new DatagramPacket(data1, data1.length,
-						InetAddress.getByName(server.IPaddress),
+						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
 						server.serverUDP.udpPortNum);
 				socket.send(packet1);
 				data1 = new byte[100];

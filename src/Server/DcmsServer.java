@@ -43,13 +43,13 @@ public class DcmsServer {
 	 */
 	private static void init() {
 
-		boolean isMtlDir = new File(
+		new File(
 				Constants.LOG_DIR + ServerCenterLocation.MTL.toString()).mkdir();
-		boolean isLvlDir = new File(
+		new File(
 				Constants.LOG_DIR + ServerCenterLocation.LVL.toString()).mkdir();
-		boolean isDdoDir = new File(
+		new File(
 				Constants.LOG_DIR + ServerCenterLocation.DDO.toString()).mkdir();
-		boolean globalDir = new File(Constants.LOG_DIR + "ServerGlobal").mkdir();
+		new File(Constants.LOG_DIR + "ServerGlobal").mkdir();
 	}
 
 	/**
