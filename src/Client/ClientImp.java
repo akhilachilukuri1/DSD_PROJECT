@@ -65,12 +65,9 @@ public class ClientImp {
 			 * Resolve the name and get the object reference to invoke servant
 			 * methods
 			 */
-			if (location == ServerCenterLocation.MTL) {
-				serverLoc = DcmsHelper.narrow(ncRef.resolve_str("MTL"));
-			} else if (location == ServerCenterLocation.LVL) {
-				serverLoc = DcmsHelper.narrow(ncRef.resolve_str("LVL"));
-			} else if (location == ServerCenterLocation.DDO) {
-				serverLoc = DcmsHelper.narrow(ncRef.resolve_str("DDO"));
+			if ((location == ServerCenterLocation.MTL)|| (location == ServerCenterLocation.LVL) 
+					|| (location == ServerCenterLocation.DDO)){
+				serverLoc = DcmsHelper.narrow(ncRef.resolve_str("FE"));
 			}
 			boolean mgrID = new File(Constants.LOG_DIR + ManagerID).mkdir();
 			logManager = new LogManager(ManagerID);

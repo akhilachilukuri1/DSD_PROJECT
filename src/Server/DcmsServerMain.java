@@ -2,15 +2,11 @@ package Server;
 
 import DcmsApp.*;
 import org.omg.CosNaming.*;
-
 import java.util.HashMap;
-
 import java.io.File;
 import java.io.IOException;
-
 import Conf.Constants;
 import org.omg.CORBA.*;
-import Conf.ServerCenterLocation.*;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
 
@@ -21,9 +17,9 @@ import Conf.ServerCenterLocation;
  * and establishes the initial set of communication between the client module
  * and the server module for performing various operations
  */
-public class DcmsServer {
-	static HashMap<String, DcmsServerImpl> serverRepo;
-	static Dcms mtlhref, lvlhref, ddohref;
+public class DcmsServerMain {
+	static HashMap<String, DcmsServerImpl> locationMap;
+	static Dcms fehref;
 
 	static {
 		try {
@@ -79,14 +75,7 @@ public class DcmsServer {
 			/*As per the process implementations, create the Java object instances
 			*For the client, create servants to do the work*/
 			
-			DcmsServerImpl mtlServer = new DcmsServerImpl(ServerCenterLocation.MTL);
-			DcmsServerImpl lvlServer = new DcmsServerImpl(ServerCenterLocation.LVL);
-			DcmsServerImpl ddoServer = new DcmsServerImpl(ServerCenterLocation.DDO);
-
-			serverRepo = new HashMap<>();
-			serverRepo.put("MTL", mtlServer);
-			serverRepo.put("LVL", lvlServer);
-			serverRepo.put("DDO", ddoServer);
+			DcmsServerFE serverFE = new DcmsServerFE();
 
 			/*
 			 * A CORBA object reference is a handler for a particular 
@@ -103,9 +92,7 @@ public class DcmsServer {
 			* @return - mtlRef - object reference associated with the servant.
 			**/
 			
-			org.omg.CORBA.Object mtlRef = rootpoa.servant_to_reference(mtlServer);
-			org.omg.CORBA.Object lvlRef = rootpoa.servant_to_reference(lvlServer);
-			org.omg.CORBA.Object ddoRef = rootpoa.servant_to_reference(ddoServer);
+			org.omg.CORBA.Object feRef = rootpoa.servant_to_reference(serverFE);
 			
 			/*narrow - helper method of idl, which casts the corba object reference to local 
 			programming language object.*/
@@ -114,9 +101,7 @@ public class DcmsServer {
 			*mtlhref,lvlhref and ddohref are of type Dcms signature file
 			*created by the idl compiler*/
 			
-			mtlhref = DcmsHelper.narrow(mtlRef);
-			lvlhref = DcmsHelper.narrow(lvlRef);
-			ddohref = DcmsHelper.narrow(ddoRef);
+			fehref = DcmsHelper.narrow(feRef);
 
 			/*CORBA NAMING SERVICE*/
 			
@@ -126,17 +111,13 @@ public class DcmsServer {
 
 			/*Create Naming directory entries, which the client would use to resolve*/
 			
-			NameComponent mtlPath[] = ncRef.to_name("MTL");
-			NameComponent lvlPath[] = ncRef.to_name("LVL");
-			NameComponent ddoPath[] = ncRef.to_name("DDO");
+			NameComponent fePath[] = ncRef.to_name("FE");
 
 			/*Rebind will bind the object reference to the given path*/
 			
-			ncRef.rebind(mtlPath, mtlhref);
-			ncRef.rebind(lvlPath, lvlhref);
-			ncRef.rebind(ddoPath, ddohref);
-
+			ncRef.rebind(fePath, fehref);
 			System.out.println("DCMS Servers ready and waiting ...");
+			orb.run();
 		}
 
 		catch (Exception e) {

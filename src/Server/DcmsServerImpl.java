@@ -1,19 +1,10 @@
 package Server;
 
 import DcmsApp.*;
-import org.omg.CosNaming.*;
-import org.omg.CosNaming.NamingContextPackage.*;
-import org.omg.CORBA.*;
-import org.omg.PortableServer.*;
-import org.omg.PortableServer.POA;
-import org.omg.stub.java.rmi._Remote_Stub;
-
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Level;
-import Conf.Constants;
 import Conf.LogManager;
 import Conf.ServerCenterLocation;
 import Models.Record;
@@ -29,7 +20,6 @@ import Models.Teacher;
  */
 
 class DcmsServerImpl extends DcmsPOA {
-	private ORB orb;
 	LogManager logManager;
 	ServerUDP serverUDP;
 	String IPaddress;
@@ -211,7 +201,7 @@ class DcmsServerImpl extends DcmsPOA {
 			} else {
 				try {
 					req[counter] = new UDPRequestProvider(
-							DcmsServer.serverRepo.get(loc), "GET_RECORD_COUNT",
+							DcmsServerMain.locationMap.get(loc), "GET_RECORD_COUNT",
 							null);
 				} catch (IOException e) {
 					logManager.logger.log(Level.SEVERE, e.getMessage());
@@ -287,7 +277,7 @@ class DcmsServerImpl extends DcmsPOA {
 						+ location;
 			}
 			req = new UDPRequestProvider(
-					DcmsServer.serverRepo.get(remoteCenterServerName),
+					DcmsServerMain.locationMap.get(remoteCenterServerName),
 					"TRANSFER_RECORD", record);
 		} catch (IOException e) {
 			logManager.logger.log(Level.SEVERE, e.getMessage());
