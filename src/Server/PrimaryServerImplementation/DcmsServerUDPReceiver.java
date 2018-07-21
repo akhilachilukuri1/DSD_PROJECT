@@ -1,4 +1,4 @@
-package Server;
+package Server.PrimaryServerImplementation;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -7,17 +7,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Conf.Constants;
 import Conf.ServerCenterLocation;
-import Server.UDPRequestServer;
 
 /**
  * 
- * ServerUDP is the class that serves other servers' requests
+ * DcmsServerUDPReceiver is the class that serves other servers' requests
  * in form of UDP communication
  * with RECPAKT functionality
  *
  */
 
-public class ServerUDP extends Thread {
+public class DcmsServerUDPReceiver extends Thread {
 	DatagramSocket serverSocket;
 	DatagramPacket receivePacket;
 	DatagramPacket sendPacket;
@@ -30,7 +29,7 @@ public class ServerUDP extends Thread {
 
 	/**
 	 * 
-	 * ServerUDP constructor initializes the UDP socket port number of each location
+	 * DcmsServerUDPReceiver constructor initializes the UDP socket port number of each location
 	 * based on the received location input
 	 * 
 	 * @param loc
@@ -41,7 +40,7 @@ public class ServerUDP extends Thread {
 	 *            object that holds the corba server instance for communication
 	 */
 
-	public ServerUDP(ServerCenterLocation loc, Logger logger,
+	public DcmsServerUDPReceiver(ServerCenterLocation loc, Logger logger,
 			DcmsServerImpl serverImp) {
 		location = loc;
 		loggerInstance = logger;
@@ -79,7 +78,7 @@ public class ServerUDP extends Thread {
 	/**
 	 * A UDP server thread is issued that continuously/periodically keeps listening
 	 * for any request or incoming data packet.
-	 * Calls UDPRequestServer based on the received data.
+	 * Calls DcmsServerUDPRequestServer based on the received data.
 	 */
 
 	@Override
@@ -93,7 +92,7 @@ public class ServerUDP extends Thread {
 				System.out.println(
 						"Received pkt :: " + new String(receivePacket.getData()));
 				String inputPkt = new String(receivePacket.getData()).trim();
-				new UDPRequestServer(receivePacket, server).start();
+				new DcmsServerUDPRequestServer(receivePacket, server).start();
 				loggerInstance.log(Level.INFO,
 						"Received " + inputPkt + " from " + location);
 			} catch (Exception e) {

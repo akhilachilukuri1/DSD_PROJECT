@@ -1,9 +1,14 @@
-package Server;
+package Server.ServerFrontEnd;
 
 import DcmsApp.*;
 import java.util.*;
 import java.util.logging.Level;
+
+import Conf.Constants;
 import Conf.LogManager;
+import Conf.ServerOperations;
+
+import java.net.*;
 import Models.Record;
 
 /**
@@ -14,15 +19,15 @@ import Models.Record;
  *
  */
 
-class DcmsServerFE extends DcmsPOA {
+public class DcmsServerFE extends DcmsPOA {
 	LogManager logManager;
-	ServerUDP serverUDP;
 	String IPaddress;
 	public HashMap<String, List<Record>> recordsMap;
 	int studentCount = 0;
 	int teacherCount = 0;
 	String recordsCount;
 	String location;
+	
 
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
@@ -33,6 +38,8 @@ class DcmsServerFE extends DcmsPOA {
 	 */
 	public DcmsServerFE() {
 		recordsMap = new HashMap<>();
+		UDPReceiverFromFE udpReceiverFromFE = new UDPReceiverFromFE();
+		udpReceiverFromFE.start();
 	}
 
 	/**
@@ -49,8 +56,16 @@ class DcmsServerFE extends DcmsPOA {
 
 	@Override
 	public String createTRecord(String managerID, String teacher) {
-		return "CT";
+		teacher = ServerOperations.CREATE_T_RECORD + Constants.RECEIVED_DATA_SEPERATOR
+				+ getServerLoc(managerID)+Constants.RECEIVED_DATA_SEPERATOR+managerID+
+				Constants.RECEIVED_DATA_SEPERATOR+teacher;
+		sendRequestToServer(teacher);
+		return "...processing";
 
+	}
+	
+	private String getServerLoc(String managerID) {
+	       return managerID.substring(0,3);
 	}
 
 	/**
@@ -106,7 +121,7 @@ class DcmsServerFE extends DcmsPOA {
 
 	/**
 	 * Performs the transfer record to the remoteCenterServer by sending the
-	 * appropriate packet to the UDPRequestProvider thread Creates UDPRequest
+	 * appropriate packet to the DcmsServerUDPRequestProvider thread Creates UDPRequest
 	 * Provider objects for each request and creates separate thread for each
 	 * request. And makes sure each thread is complete and returns the result
 	 * 
@@ -120,5 +135,17 @@ class DcmsServerFE extends DcmsPOA {
 	public String transferRecord(String ManagerID, String recordID,
 			String remoteCenterServerName) {
 		return "Transfer record operation unsuccessful!";
+	}
+	
+	public void sendRequestToServer(String data) {
+		 try {
+			DatagramSocket ds = new DatagramSocket();
+			byte[] dataBytes = data.getBytes();
+			DatagramPacket dp = new DatagramPacket(dataBytes, dataBytes.length, InetAddress.getByName(Constants.CURRENT_SERVER_IP),
+			         Constants.CURRENT_SERVER_UDP_PORT);
+			ds.send(dp);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

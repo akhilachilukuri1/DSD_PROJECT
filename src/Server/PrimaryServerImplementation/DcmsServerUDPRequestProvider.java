@@ -1,4 +1,4 @@
-package Server;
+package Server.PrimaryServerImplementation;
 
 import java.io.IOException;
 import java.net.*;
@@ -9,7 +9,7 @@ import Conf.ServerCenterLocation;
 import Conf.Constants;
 import Models.Record;
 
-public class UDPRequestProvider extends Thread {
+public class DcmsServerUDPRequestProvider extends Thread {
 	private static final String MTL = null;
 	private static final String LVL = null;
 	private static final String DDO = null;
@@ -20,7 +20,7 @@ public class UDPRequestProvider extends Thread {
 	private Record recordForTransfer;
 
 	/**
-	 * UDPRequestProvider handles the incoming messages call (Get Rec ,
+	 * DcmsServerUDPRequestProvider handles the incoming messages call (Get Rec ,
 	 * Trans Rec) and based on the incoming call 
 	 * Routes the packet to the necessary location 
 	 * to retreive the data
@@ -33,7 +33,7 @@ public class UDPRequestProvider extends Thread {
 	 *            The record to be transferred
 	 * 
 	 */
-	public UDPRequestProvider(DcmsServerImpl server, String requestType,
+	public DcmsServerUDPRequestProvider(DcmsServerImpl server, String requestType,
 			Record recordForTransfer) throws IOException {
 		this.server = server;
 		this.requestType = requestType;
@@ -67,7 +67,7 @@ public class UDPRequestProvider extends Thread {
 				/*Create a datagram packet for the respective server address.*/
 				DatagramPacket packet = new DatagramPacket(data, data.length,
 						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
-						server.serverUDP.udpPortNum);
+						server.dcmsServerUDPReceiver.udpPortNum);
 				socket.send(packet);
 				data = new byte[100];
 				socket.receive(new DatagramPacket(data, data.length));
@@ -82,7 +82,7 @@ public class UDPRequestProvider extends Thread {
 				
 				DatagramPacket packet1 = new DatagramPacket(data1, data1.length,
 						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
-						server.serverUDP.udpPortNum);
+						server.dcmsServerUDPReceiver.udpPortNum);
 				socket.send(packet1);
 				data1 = new byte[100];
 				socket.receive(new DatagramPacket(data1, data1.length));

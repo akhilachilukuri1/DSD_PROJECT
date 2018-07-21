@@ -1,4 +1,4 @@
-package Server;
+package Server.PrimaryServerImplementation;
 
 import DcmsApp.*;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import Conf.ServerCenterLocation;
 import Models.Record;
 import Models.Student;
 import Models.Teacher;
+import Server.ServerMain.DcmsServerMain;
 
 /**
  * 
@@ -19,9 +20,9 @@ import Models.Teacher;
  *
  */
 
-class DcmsServerImpl extends DcmsPOA {
+public class DcmsServerImpl extends DcmsPOA {
 	LogManager logManager;
-	ServerUDP serverUDP;
+	DcmsServerUDPReceiver dcmsServerUDPReceiver;
 	String IPaddress;
 	public HashMap<String, List<Record>> recordsMap;
 	int studentCount = 0;
@@ -39,8 +40,8 @@ class DcmsServerImpl extends DcmsPOA {
 	public DcmsServerImpl(ServerCenterLocation loc) {
 		logManager = new LogManager(loc.toString());
 		recordsMap = new HashMap<>();
-		serverUDP = new ServerUDP(loc, logManager.logger, this);
-		serverUDP.start();
+		dcmsServerUDPReceiver = new DcmsServerUDPReceiver(loc, logManager.logger, this);
+		dcmsServerUDPReceiver.start();
 		location = loc.toString();
 	}
 
@@ -189,53 +190,53 @@ class DcmsServerImpl extends DcmsPOA {
 	@Override
 	public String getRecordCount() {
 		String recordCount = null;
-		UDPRequestProvider[] req = new UDPRequestProvider[2];
-		int counter = 0;
-		ArrayList<String> locList = new ArrayList<>();
-		locList.add("MTL");
-		locList.add("LVL");
-		locList.add("DDO");
-		for (String loc : locList) {
-			if (loc == this.location) {
-				recordCount = loc + " " + getCurrServerCnt();
-			} else {
-				try {
-					req[counter] = new UDPRequestProvider(
-							DcmsServerMain.locationMap.get(loc), "GET_RECORD_COUNT",
-							null);
-				} catch (IOException e) {
-					logManager.logger.log(Level.SEVERE, e.getMessage());
-				}
-				req[counter].start();
-				counter++;
-			}
-		}
-		for (UDPRequestProvider request : req) {
-			try {
-				request.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			recordCount += " , " + request.getRemoteRecordCount().trim();
-		}
+//		DcmsServerUDPRequestProvider[] req = new DcmsServerUDPRequestProvider[2];
+//		int counter = 0;
+//		ArrayList<String> locList = new ArrayList<>();
+//		locList.add("MTL");
+//		locList.add("LVL");
+//		locList.add("DDO");
+//		for (String loc : locList) {
+//			if (loc == this.location) {
+//				recordCount = loc + " " + getCurrServerCnt();
+//			} else {
+//				try {
+//					req[counter] = new DcmsServerUDPRequestProvider(
+//							locationMap.get(loc), "GET_RECORD_COUNT",
+//							null);
+//				} catch (IOException e) {
+//					logManager.logger.log(Level.SEVERE, e.getMessage());
+//				}
+//				req[counter].start();
+//				counter++;
+//			}
+//		}
+//		for (DcmsServerUDPRequestProvider request : req) {
+//			try {
+//				request.join();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			recordCount += " , " + request.getRemoteRecordCount().trim();
+//		}
 		return recordCount;
 	}
-
-	/**
-	 * The edit record function performs the edit operation on the server and
-	 * returns the appropriate message
-	 * 
-	 * @param managerID
-	 *            gets the managerID
-	 * @param recordID
-	 *            gets the recordID to be edited
-	 * @param fieldname
-	 *            gets the fieldname to be edited for the given recordID
-	 * @param newvalue
-	 *            gets the newvalue to be replaced to the given fieldname from the
-	 *            client
-	 */
-
+//
+//	/**
+//	 * The edit record function performs the edit operation on the server and
+//	 * returns the appropriate message
+//	 * 
+//	 * @param managerID
+//	 *            gets the managerID
+//	 * @param recordID
+//	 *            gets the recordID to be edited
+//	 * @param fieldname
+//	 *            gets the fieldname to be edited for the given recordID
+//	 * @param newvalue
+//	 *            gets the newvalue to be replaced to the given fieldname from the
+//	 *            client
+//	 */
+//
 	@Override
 	public String editRecord(String managerID, String recordID, String fieldname,
 			String newvalue) {
@@ -248,53 +249,53 @@ class DcmsServerImpl extends DcmsPOA {
 		logManager.logger.log(Level.INFO, "Record edit successful");
 		return "Operation not performed!";
 	}
-
-	/**
-	 * Performs the transfer record to the remoteCenterServer by sending the
-	 * appropriate packet to the UDPRequestProvider thread Creates UDPRequest
-	 * Provider objects for each request and creates separate thread for each
-	 * request. And makes sure each thread is complete and returns the result
-	 * 
-	 * @param managerID
-	 *            gets the managerID
-	 * @param recordID
-	 *            gets the recordID to be edited
-	 * @param remoteCenterServerName
-	 *            gets the location to transfer the recordID from the client
-	 */
+//
+//	/**
+//	 * Performs the transfer record to the remoteCenterServer by sending the
+//	 * appropriate packet to the DcmsServerUDPRequestProvider thread Creates UDPRequest
+//	 * Provider objects for each request and creates separate thread for each
+//	 * request. And makes sure each thread is complete and returns the result
+//	 * 
+//	 * @param managerID
+//	 *            gets the managerID
+//	 * @param recordID
+//	 *            gets the recordID to be edited
+//	 * @param remoteCenterServerName
+//	 *            gets the location to transfer the recordID from the client
+//	 */
 	public String transferRecord(String ManagerID, String recordID,
 			String remoteCenterServerName) {
-		String type = recordID.substring(0, 2);
-		UDPRequestProvider req = null;
-		try {
-			System.out
-					.println("Transferring record to :: " + remoteCenterServerName);
-			Record record = getRecordForTransfer(recordID);
-			if (record == null) {
-				return "RecordID unavailable!";
-			} else if (remoteCenterServerName.equals(this.location)) {
-				return "Please enter a valid location to transfer. The record is already present in "
-						+ location;
-			}
-			req = new UDPRequestProvider(
-					DcmsServerMain.locationMap.get(remoteCenterServerName),
-					"TRANSFER_RECORD", record);
-		} catch (IOException e) {
-			logManager.logger.log(Level.SEVERE, e.getMessage());
-		}
-		req.start();
-		try {
-			req.join();
-			if (removeRecordAfterTransfer(recordID) == "success") {
-				System.out.println(recordsMap);
-				logManager.logger.log(Level.INFO, "Record created in  "
-						+ remoteCenterServerName + "  and removed from " + location);
-				return "Record created in " + remoteCenterServerName
-						+ "and removed from " + location;
-			}
-		} catch (Exception e) {
-
-		}
+//		String type = recordID.substring(0, 2);
+//		DcmsServerUDPRequestProvider req = null;
+//		try {
+//			System.out
+//					.println("Transferring record to :: " + remoteCenterServerName);
+//			Record record = getRecordForTransfer(recordID);
+//			if (record == null) {
+//				return "RecordID unavailable!";
+//			} else if (remoteCenterServerName.equals(this.location)) {
+//				return "Please enter a valid location to transfer. The record is already present in "
+//						+ location;
+//			}
+//			req = new DcmsServerUDPRequestProvider(
+//					DcmsServerMain.locationMap.get(remoteCenterServerName),
+//					"TRANSFER_RECORD", record);
+//		} catch (IOException e) {
+//			logManager.logger.log(Level.SEVERE, e.getMessage());
+//		}
+//		req.start();
+//		try {
+//			req.join();
+//			if (removeRecordAfterTransfer(recordID) == "success") {
+//				System.out.println(recordsMap);
+//				logManager.logger.log(Level.INFO, "Record created in  "
+//						+ remoteCenterServerName + "  and removed from " + location);
+//				return "Record created in " + remoteCenterServerName
+//						+ "and removed from " + location;
+//			}
+//		} catch (Exception e) {
+//
+//		}
 
 		return "Transfer record operation unsuccessful!";
 	}

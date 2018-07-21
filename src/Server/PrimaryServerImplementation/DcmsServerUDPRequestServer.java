@@ -1,4 +1,4 @@
-package Server;
+package Server.PrimaryServerImplementation;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -12,7 +12,7 @@ import Models.Record;
 import Models.Student;
 import Models.Teacher;
 
-public class UDPRequestServer extends Thread {
+public class DcmsServerUDPRequestServer extends Thread {
 	DatagramSocket serverSocket;
 	ServerCenterLocation location;
 	private DatagramPacket receivePacket;
@@ -20,7 +20,7 @@ public class UDPRequestServer extends Thread {
 	private Logger loggerInstance;
 
 	/**
-	 * UDPRequestServer forwards the request received to the respective server port
+	 * DcmsServerUDPRequestServer forwards the request received to the respective server port
 	 * 
 	 * @param pkt
 	 *            datagram packet that holds the packet information
@@ -29,7 +29,7 @@ public class UDPRequestServer extends Thread {
 	 * 
 	 */
 
-	public UDPRequestServer(DatagramPacket pkt, DcmsServerImpl serverImp) {
+	public DcmsServerUDPRequestServer(DatagramPacket pkt, DcmsServerImpl serverImp) {
 		receivePacket = pkt;
 		server = serverImp;
 		try {

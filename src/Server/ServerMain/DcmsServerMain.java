@@ -1,15 +1,14 @@
-package Server;
+package Server.ServerMain;
 
 import DcmsApp.*;
 import org.omg.CosNaming.*;
-import java.util.HashMap;
 import java.io.File;
 import java.io.IOException;
 import Conf.Constants;
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
-
+import Server.ServerFrontEnd.DcmsServerFE;
 import Conf.ServerCenterLocation;
 
 /**
@@ -18,7 +17,6 @@ import Conf.ServerCenterLocation;
  * and the server module for performing various operations
  */
 public class DcmsServerMain {
-	static HashMap<String, DcmsServerImpl> locationMap;
 	static Dcms fehref;
 
 	static {
