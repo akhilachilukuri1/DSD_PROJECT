@@ -63,7 +63,6 @@ public class DcmsServerUDPRequestProvider extends Thread {
 			case "GET_RECORD_COUNT":
 				socket = new DatagramSocket();
 				byte[] data = "GET_RECORD_COUNT".getBytes();
-				System.out.println(InetAddress.getByName(socket.getLocalAddress().getHostAddress()));
 				/*Create a datagram packet for the respective server address.*/
 				DatagramPacket packet = new DatagramPacket(data, data.length,
 						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
@@ -87,10 +86,11 @@ public class DcmsServerUDPRequestProvider extends Thread {
 				data1 = new byte[100];
 				socket.receive(new DatagramPacket(data1, data1.length));
 				transferResult = new String(data1);
+				System.out.println("============="+transferResult);
 				break;
 			}
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.getMessage());
+			//System.out.println(e.getMessage());
 		} finally {
 			if (socket != null) {
 				socket.close();

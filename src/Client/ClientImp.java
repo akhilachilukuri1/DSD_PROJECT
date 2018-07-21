@@ -137,10 +137,10 @@ public class ClientImp {
 	 * Displays the record counts of all the servers as result
 	 * 
 	 */
-	public String getRecordCounts() {
+	public String getRecordCounts(String managerID) {
 		String count = "";
 		logManager.logger.log(Level.INFO, "Initiating record count request");
-		count = serverLoc.getRecordCount();
+		count = serverLoc.getRecordCount(managerID);
 		logManager.logger.log(Level.INFO, "received....count as follows");
 		logManager.logger.log(Level.INFO, count);
 		return count;

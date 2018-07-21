@@ -219,7 +219,7 @@ public class DcmsClient {
 							 *  Get the record count of all the server operation
 							 */
 							System.out.println("Total Record Count from all " + Constants.TOTAL_SERVERS_COUNT
-									+ " servers is :: " + serverloc.getRecordCounts());
+									+ " servers is :: " + serverloc.getRecordCounts(managerID));
 							break;
 						case 4:
 							/*

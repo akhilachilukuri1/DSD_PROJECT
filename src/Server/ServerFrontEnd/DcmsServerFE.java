@@ -6,10 +6,12 @@ import java.util.logging.Level;
 
 import Conf.Constants;
 import Conf.LogManager;
+import Conf.ServerCenterLocation;
 import Conf.ServerOperations;
 
 import java.net.*;
 import Models.Record;
+import Server.PrimaryServerImplementation.DcmsServerImpl;
 
 /**
  * 
@@ -27,7 +29,7 @@ public class DcmsServerFE extends DcmsPOA {
 	int teacherCount = 0;
 	String recordsCount;
 	String location;
-	
+	public static HashMap<String, DcmsServerImpl> serverMap;
 
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
@@ -40,6 +42,17 @@ public class DcmsServerFE extends DcmsPOA {
 		recordsMap = new HashMap<>();
 		UDPReceiverFromFE udpReceiverFromFE = new UDPReceiverFromFE();
 		udpReceiverFromFE.start();
+		serverMap = new HashMap<>();
+		init();
+	}
+	
+	public void init() {
+		DcmsServerImpl mtlServer = new DcmsServerImpl(ServerCenterLocation.MTL);
+		DcmsServerImpl lvlServer = new DcmsServerImpl(ServerCenterLocation.LVL);
+		DcmsServerImpl ddoServer = new DcmsServerImpl(ServerCenterLocation.DDO);
+		serverMap.put("MTL", mtlServer);
+		serverMap.put("LVL", lvlServer);
+		serverMap.put("DDO", ddoServer);
 	}
 
 	/**
@@ -82,7 +95,11 @@ public class DcmsServerFE extends DcmsPOA {
 
 	@Override
 	public String createSRecord(String managerID, String student) {
-		return "CS";
+		student = ServerOperations.CREATE_S_RECORD + Constants.RECEIVED_DATA_SEPERATOR
+				+ getServerLoc(managerID)+Constants.RECEIVED_DATA_SEPERATOR+managerID+
+				Constants.RECEIVED_DATA_SEPERATOR+student;
+		sendRequestToServer(student);
+		return "...processing";
 	}
 
 	/**
@@ -93,8 +110,12 @@ public class DcmsServerFE extends DcmsPOA {
 	 */
 
 	@Override
-	public String getRecordCount() {
-		return "0";
+	public String getRecordCount(String managerID) {
+		String req = ServerOperations.GET_REC_COUNT + 
+				Constants.RECEIVED_DATA_SEPERATOR+getServerLoc(managerID)+
+				Constants.RECEIVED_DATA_SEPERATOR+managerID;
+		sendRequestToServer(req);
+		return "...processing";
 	}
 
 	/**
@@ -115,8 +136,14 @@ public class DcmsServerFE extends DcmsPOA {
 	@Override
 	public String editRecord(String managerID, String recordID, String fieldname,
 			String newvalue) {
-		logManager.logger.log(Level.INFO, "Record edit successful");
-		return "Operation not performed!";
+		String editData = ServerOperations.EDIT_RECORD + 
+				Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)+
+				Constants.RECEIVED_DATA_SEPERATOR+managerID+
+				Constants.RECEIVED_DATA_SEPERATOR+recordID+
+				Constants.RECEIVED_DATA_SEPERATOR+fieldname+
+				Constants.RECEIVED_DATA_SEPERATOR+newvalue;
+		sendRequestToServer(editData);
+		return "...processing";
 	}
 
 	/**
@@ -132,10 +159,15 @@ public class DcmsServerFE extends DcmsPOA {
 	 * @param remoteCenterServerName
 	 *            gets the location to transfer the recordID from the client
 	 */
-	public String transferRecord(String ManagerID, String recordID,
+	public String transferRecord(String managerID, String recordID,
 			String remoteCenterServerName) {
-		return "Transfer record operation unsuccessful!";
-	}
+		String req = ServerOperations.TRANSFER_RECORD + 
+				Constants.RECEIVED_DATA_SEPERATOR+getServerLoc(managerID)+
+				Constants.RECEIVED_DATA_SEPERATOR+managerID+
+				Constants.RECEIVED_DATA_SEPERATOR+recordID+
+				Constants.RECEIVED_DATA_SEPERATOR+remoteCenterServerName;
+		sendRequestToServer(req);
+		return "...processing";	}
 	
 	public void sendRequestToServer(String data) {
 		 try {

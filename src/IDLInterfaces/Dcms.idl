@@ -6,7 +6,7 @@ module DcmsApp
 	
 		string createSRecord(in string managerID,in string student);
 	
-		string getRecordCount();
+		string getRecordCount(in string managerID);
 	
 		string editRecord(in string managerID,in string recordID, in string fieldname, in string newvalue);
 		
