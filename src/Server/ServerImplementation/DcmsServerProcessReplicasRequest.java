@@ -1,4 +1,4 @@
-package Server.ServerFrontEnd;
+package Server.ServerImplementation;
 
 import DcmsApp.*;
 import java.util.*;
@@ -21,7 +21,7 @@ import Server.ServerImplementation.*;
  *
  */
 
-public class DcmsServerFE extends DcmsPOA {
+public class DcmsServerProcessReplicasRequest extends DcmsPOA {
 	LogManager logManager;
 	String IPaddress;
 	public HashMap<String, List<Record>> recordsMap;
@@ -31,14 +31,6 @@ public class DcmsServerFE extends DcmsPOA {
 	String location;
 	Integer requestId;
 	HashMap<Integer, String> requestBuffer;
-	ArrayList<TransferReqToCurrentServer> requests;
-	public static HashMap<Integer,TransferResponseToFE> responses;
-	public static ArrayList<String> receivedResponses;
-	public static HashMap<String, DcmsServerImpl> primarServerMap,replica1ServerMap;
-	DcmsServerMultiCastReceiver primaryReceiver, replica1Receiver;
-	
-	public static HashMap<Integer, HashMap<String, DcmsServerImpl>> centralRepository;
-
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
@@ -46,47 +38,10 @@ public class DcmsServerFE extends DcmsPOA {
 	 * @param loc The server location for which the server implementation should be
 	 * initialized
 	 */
-	public DcmsServerFE() {
+	public DcmsServerProcessReplicasRequest() {
 		recordsMap = new HashMap<>();
-		requests = new ArrayList<>();
-		responses = new HashMap<>();
 		requestBuffer = new HashMap<>();
-		receivedResponses = new ArrayList<>();
-		UDPReceiverFromFE udpReceiverFromFE = new UDPReceiverFromFE(requests);
-		udpReceiverFromFE.start();
-		UDPResponseReceiver udpResponse = new UDPResponseReceiver(responses);
-		udpResponse.start();
-		primarServerMap = new HashMap<>();
-		replica1ServerMap = new HashMap<>();
-		centralRepository = new HashMap<>();
 		requestId = 0;
-		init();
-	}
-
-	public void init() {
-		
-		primaryReceiver = new DcmsServerMultiCastReceiver();
-		primaryReceiver.start();
-		
-		DcmsServerImpl primaryMtlServer = new DcmsServerImpl(true, ServerCenterLocation.MTL,9999);
-		DcmsServerImpl primaryLvlServer = new DcmsServerImpl(true, ServerCenterLocation.LVL,7777);
-		DcmsServerImpl primaryDdoServer = new DcmsServerImpl(true, ServerCenterLocation.DDO,6666);
-		primarServerMap.put("MTL", primaryMtlServer);
-		primarServerMap.put("LVL", primaryLvlServer);
-		primarServerMap.put("DDO", primaryDdoServer);
-
-		replica1Receiver = new DcmsServerMultiCastReceiver();
-		replica1Receiver.start();
-		
-		DcmsServerImpl replica1MtlServer = new DcmsServerImpl(false, ServerCenterLocation.MTL,5555);
-		DcmsServerImpl replica1LvlServer = new DcmsServerImpl(false, ServerCenterLocation.LVL,4444);
-		DcmsServerImpl replica1DdoServer = new DcmsServerImpl(false, ServerCenterLocation.DDO,2222);
-		replica1ServerMap.put("MTL", replica1MtlServer);
-		replica1ServerMap.put("LVL", replica1LvlServer);
-		replica1ServerMap.put("DDO", replica1DdoServer);
-		
-		centralRepository.put(1, primarServerMap);
-		centralRepository.put(2, replica1ServerMap);
 	}
 
 	/**
@@ -101,13 +56,18 @@ public class DcmsServerFE extends DcmsPOA {
 	 * 
 	 */
 
+	private void sendMulticastRequest(String req) {
+		DcmsServerMultiCastSender sender = new DcmsServerMultiCastSender(req);
+		sender.start();
+	}
 	@Override
 	public String createTRecord(String managerID, String teacher) {
 		teacher = ServerOperations.CREATE_T_RECORD + 
 				Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + 
 				Constants.RECEIVED_DATA_SEPERATOR + teacher;
-		return sendRequestToServer(teacher);
+		sendMulticastRequest(teacher);
+		return "";
 	}
 
 	private String getServerLoc(String managerID) {
@@ -130,7 +90,7 @@ public class DcmsServerFE extends DcmsPOA {
 	public String createSRecord(String managerID, String student) {
 		student = ServerOperations.CREATE_S_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + student;
-		return sendRequestToServer(student);
+		return "";
 	}
 
 	/**
@@ -144,7 +104,7 @@ public class DcmsServerFE extends DcmsPOA {
 	public String getRecordCount(String managerID) {
 		String req = ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID;
-		return sendRequestToServer(req);
+		return "";
 	}
 
 	/**
@@ -167,7 +127,7 @@ public class DcmsServerFE extends DcmsPOA {
 		String editData = ServerOperations.EDIT_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + fieldname + Constants.RECEIVED_DATA_SEPERATOR + newvalue;
-		return sendRequestToServer(editData);
+		return "";
 	}
 
 	/**
@@ -187,56 +147,6 @@ public class DcmsServerFE extends DcmsPOA {
 		String req = ServerOperations.TRANSFER_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + remoteCenterServerName;
-		return sendRequestToServer(req);
-	}
-
-	public String sendRequestToServer(String data) {
-		try {
-			requestId += 1;
-			DatagramSocket ds = new DatagramSocket();
-			data = data + Constants.RECEIVED_DATA_SEPERATOR+ Integer.toString(requestId);
-			byte[] dataBytes = data.getBytes();
-			DatagramPacket dp = new DatagramPacket(dataBytes, dataBytes.length,
-					InetAddress.getByName(Constants.CURRENT_SERVER_IP)
-					, Constants.CURRENT_SERVER_UDP_PORT);
-			ds.send(dp);
-			System.out.println("Adding request to request buffer with req id..."+requestId);
-			requestBuffer.put(requestId, data);
-			//waitForAck();
-			System.out.println("Waiting for acknowledgement from current server...");
-			Thread.sleep(Constants.RETRY_TIME);
-			return getResponse(requestId);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return e.getMessage();
-		}
-	}
-
-	public String getResponse(Integer requestId) {
-		try {
-			responses.get(requestId).join();
-		} catch (InterruptedException e) {
-			System.out.println(e.getMessage());		
-		}
-		requestBuffer.remove(requestId);
-		return responses.get(requestId).getResponse();
-	}
-
-	private void waitForAck() {
-		int counter = 0;
-		while (true) {
-			if (counter >= Constants.MAX_RETRY_ATTEMPT) {
-				break;
-			} else {
-				try {
-					System.out.println("Waiting");
-					Thread.sleep(Constants.RETRY_TIME);
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-				//sendRequestToServer(requestBuffer.get(requestId));
-				counter++;
-			}
-		}
+		return "";
 	}
 }

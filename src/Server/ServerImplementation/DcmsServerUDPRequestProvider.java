@@ -1,4 +1,4 @@
-package Server.PrimaryServerImplementation;
+package Server.ServerImplementation;
 
 import java.io.IOException;
 import java.net.*;

@@ -1,4 +1,4 @@
-package Server.PrimaryServerImplementation;
+package Server.ServerImplementation;
 
 import DcmsApp.*;
 import java.io.IOException;
@@ -30,7 +30,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	int teacherCount = 0;
 	String recordsCount;
 	String location;
-
+	int locUDPPort = 0;
+	boolean isPrimary;
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
@@ -38,12 +39,14 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * @param loc The server location for which the server implementation should be
 	 * initialized
 	 */
-	public DcmsServerImpl(ServerCenterLocation loc) {
+	public DcmsServerImpl(boolean isPrimary, ServerCenterLocation loc, int locUDPPort) {
 		logManager = new LogManager(loc.toString());
 		recordsMap = new HashMap<>();
-		dcmsServerUDPReceiver = new DcmsServerUDPReceiver(loc, logManager.logger, this);
+		this.locUDPPort = locUDPPort;
+		dcmsServerUDPReceiver = new DcmsServerUDPReceiver(locUDPPort, loc, logManager.logger, this);
 		dcmsServerUDPReceiver.start();
 		location = loc.toString();
+		this.isPrimary = isPrimary;
 	}
 
 	/**
@@ -57,10 +60,12 @@ public class DcmsServerImpl extends DcmsPOA {
 	 *            are received from the client
 	 * 
 	 */
-
 	@Override
 	public String createTRecord(String managerID, String teacher) {
-
+		if(isPrimary) {
+			DcmsServerProcessReplicasRequest req = new DcmsServerProcessReplicasRequest();
+			req.createTRecord(managerID, teacher);
+		}
 		String temp[] = teacher.split(",");
 		// String managerID = temp[0];
 		String teacherID = "TR" + (++teacherCount);
@@ -203,7 +208,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			} else {
 				try {
 					req[counter] = new DcmsServerUDPRequestProvider(
-							DcmsServerFE.serverMap.get(loc), "GET_RECORD_COUNT",
+							DcmsServerFE.primarServerMap.get(loc), "GET_RECORD_COUNT",
 							null);
 				} catch (IOException e) {
 					logManager.logger.log(Level.SEVERE, e.getMessage());
@@ -282,7 +287,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			//System.out.println("Transferring to :: "+remoteCenterServerName.trim());
 			//System.out.println(DcmsServerFE.serverMap.get(remoteCenterServerName.trim()));
 			req = new DcmsServerUDPRequestProvider(
-					DcmsServerFE.serverMap.get(remoteCenterServerName.trim()),
+					DcmsServerFE.primarServerMap.get(remoteCenterServerName.trim()),
 					"TRANSFER_RECORD", record);
 		} catch (IOException e) {
 			logManager.logger.log(Level.SEVERE, e.getMessage());

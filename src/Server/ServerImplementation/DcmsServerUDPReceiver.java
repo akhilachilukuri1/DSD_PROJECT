@@ -1,4 +1,4 @@
-package Server.PrimaryServerImplementation;
+package Server.ServerImplementation;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -40,7 +40,7 @@ public class DcmsServerUDPReceiver extends Thread {
 	 *            object that holds the corba server instance for communication
 	 */
 
-	public DcmsServerUDPReceiver(ServerCenterLocation loc, Logger logger,
+	public DcmsServerUDPReceiver(int udpPort, ServerCenterLocation loc, Logger logger,
 			DcmsServerImpl serverImp) {
 		location = loc;
 		loggerInstance = logger;
@@ -52,23 +52,23 @@ public class DcmsServerUDPReceiver extends Thread {
 			 * and a logger to log the current event
 			 * */
 			
-			switch (loc) {
-			case MTL:
-				serverSocket = new DatagramSocket(Constants.UDP_PORT_NUM_MTL);
-				udpPortNum = Constants.UDP_PORT_NUM_MTL;
-				logger.log(Level.INFO, "MTL UDP Server Started");
-				break;
-			case LVL:
-				serverSocket = new DatagramSocket(Constants.UDP_PORT_NUM_LVL);
-				udpPortNum = Constants.UDP_PORT_NUM_LVL;
-				logger.log(Level.INFO, "LVL UDP Server Started");
-				break;
-			case DDO:
-				serverSocket = new DatagramSocket(Constants.UDP_PORT_NUM_DDO);
-				udpPortNum = Constants.UDP_PORT_NUM_DDO;
-				logger.log(Level.INFO, "DDO UDP Server Started");
-				break;
-			}
+//			switch (loc) {
+//			case MTL:
+				serverSocket = new DatagramSocket(udpPort);
+				udpPortNum = udpPort;
+				logger.log(Level.INFO, loc.toString()+ " UDP Server Started");
+//				break;
+//			case LVL:
+//				serverSocket = new DatagramSocket(Constants.PRIMARY_UDP_PORT_NUM_LVL);
+//				udpPortNum = Constants.PRIMARY_UDP_PORT_NUM_LVL;
+//				logger.log(Level.INFO, "LVL UDP Server Started");
+//				break;
+//			case DDO:
+//				serverSocket = new DatagramSocket(Constants.PRIMARY_UDP_PORT_NUM_DDO);
+//				udpPortNum = Constants.PRIMARY_UDP_PORT_NUM_DDO;
+//				logger.log(Level.INFO, "DDO UDP Server Started");
+//				break;
+//			}
 
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, e.getMessage());

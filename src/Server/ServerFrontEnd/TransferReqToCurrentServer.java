@@ -8,8 +8,8 @@ import java.util.Arrays;
 import Conf.Constants;
 import Conf.ServerOperations;
 import Conf.ServerCenterLocation;
-import Server.PrimaryServerImplementation.DcmsServerImpl;
 import Server.ServerFrontEnd.DcmsServerFE;
+import Server.ServerImplementation.DcmsServerImpl;
 public class TransferReqToCurrentServer extends Thread {
 	String currentOperationData;
 	DcmsServerImpl server;
@@ -61,7 +61,7 @@ public class TransferReqToCurrentServer extends Thread {
 		return response;
 	}
 	private synchronized DcmsServerImpl chooseServer(String loc) {
-		return DcmsServerFE.serverMap.get(loc);
+		return DcmsServerFE.primarServerMap.get(loc);
 	}
 	
 	private void sendReply(String requestId, String response) {

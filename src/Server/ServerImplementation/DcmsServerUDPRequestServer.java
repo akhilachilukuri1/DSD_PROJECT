@@ -1,4 +1,4 @@
-package Server.PrimaryServerImplementation;
+package Server.ServerImplementation;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

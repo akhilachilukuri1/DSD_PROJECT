@@ -4,9 +4,6 @@ package Conf;
 
 public class Constants {
 	
-	public static int UDP_PORT_NUM_MTL = 9999;
-	public static int UDP_PORT_NUM_LVL = 1111;
-	public static int UDP_PORT_NUM_DDO = 7777;
 	public static int TOTAL_SERVERS_COUNT = 3;
 	
 	public static String CURRENT_SERVER_IP = "localhost";
@@ -14,9 +11,11 @@ public class Constants {
 	
 	public static String FRONT_END_IP =  "localhost";
 	public static int FRONT_END_UDP_PORT = 4444;
-	
+
+	public static int MULTICAST_PORT_NUMBER = 6789;
+	public static String MULTICAST_IP_ADDRESS = "224.0.0.1";
 	public static int MAX_RETRY_ATTEMPT = 10;
-	public static int RETRY_TIME = 10;
+	public static int RETRY_TIME = 100;
 	
 	public static String RECEIVED_DATA_SEPERATOR = ",";
 	public static String RESPONSE_DATA_SEPERATOR = "_";
