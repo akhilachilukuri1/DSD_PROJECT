@@ -4,13 +4,14 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Conf.Constants;
 import Conf.ServerCenterLocation;
 
-public class UDPReceiverFromFE extends Thread {
+public class UDPResponseReceiver extends Thread {
 	
 	DatagramSocket serverSocket;
 	DatagramPacket receivePacket;
@@ -19,12 +20,12 @@ public class UDPReceiverFromFE extends Thread {
 	ServerCenterLocation location;
 	Logger loggerInstance;
 	String recordCount;
-	ArrayList<TransferReqToCurrentServer> requests;
+	HashMap<Integer, TransferResponseToFE> responses;
 	int c;
-	public UDPReceiverFromFE(ArrayList<TransferReqToCurrentServer> requests) {
+	public UDPResponseReceiver(HashMap<Integer,TransferResponseToFE> responses) {
 		try {
-			this.requests = requests;
-			serverSocket = new DatagramSocket(Constants.CURRENT_SERVER_UDP_PORT);
+			this.responses = responses;
+			serverSocket = new DatagramSocket(Constants.FRONT_END_UDP_PORT);
 		} catch (SocketException e) {
 			System.out.println(e.getMessage());
 		}
@@ -39,11 +40,13 @@ public class UDPReceiverFromFE extends Thread {
 				serverSocket.receive(receivePacket);
 				byte[] receivedData = receivePacket.getData();
 				System.out.println(
-						"Received pkt :: " + new String(receivedData));
-				TransferReqToCurrentServer transferReq = new TransferReqToCurrentServer(receivedData);
-				transferReq.start();
-				requests.add(transferReq);
-				String inputPkt = new String(receivePacket.getData()).trim();
+						"Received response packet :: " + new String(receivedData));
+				String inputPkt = new String(receivedData).trim();
+				System.out.println("Returned response...."+inputPkt);
+				String[] data = inputPkt.split(Constants.RESPONSE_DATA_SEPERATOR);
+				TransferResponseToFE transferResponse = new TransferResponseToFE(data[0]);
+				transferResponse.start();
+				responses.put(Integer.parseInt(data[1]), transferResponse);				
 				loggerInstance.log(Level.INFO,
 						"Received " + inputPkt + " from " + location);
 			} catch (Exception e) {
