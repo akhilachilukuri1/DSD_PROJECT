@@ -12,41 +12,39 @@ import java.util.Map;
 
 import static java.lang.Thread.sleep;
 
-/**
- * Created by kamal on 7/28/2017.
- */
+
 
 public class HeartBeat implements Runnable {
-    private Conf.Constants.REPLICAS replicaManagerID;
+    private Conf.Constants.REPLICAS RM_ID; /* Replica Manager ID */
     private int heartbeatPort;
-    private Map<Conf.Constants.REPLICAS, Boolean> replicaManagerStatus;
-    private final Object replicaManagerStatusLock = new Object();
-    private Map<Conf.Constants.REPLICAS, Long> mostRecentAliveTime;
-    private final Object mostRecentAliveTimeLock = new Object();
+    private Map<Conf.Constants.REPLICAS, Boolean> RM_Status;
+    private final Object RM_StatusLock = new Object();
+    private Map<Conf.Constants.REPLICAS, Long> LastAliveTime;
+    private final Object LastAlive = new Object();
     private Election election;
     private boolean[] replicasStatus;
     private Conf.Constants.REPLICAS leaderID;
 
     // A HeartBeat object is created when a RM starts
-    public HeartBeat(Conf.Constants.REPLICAS replicaManagerID, int heartbeatPort) throws SocketException {
-        this.replicaManagerID = replicaManagerID;
+    public HeartBeat(Conf.Constants.REPLICAS RM_ID, int heartbeatPort) throws SocketException {
+        this.RM_ID = RM_ID;
         this.heartbeatPort = heartbeatPort;
         // Start listening to election messages
-        this.election = new Election(this.replicaManagerID);
+        this.election = new Election(this.RM_ID);
 
         replicasStatus = new boolean[Conf.Constants.REPLICAS.values().length];
         for (Conf.Constants.REPLICAS replicaID : Conf.Constants.REPLICAS.values())
             replicasStatus[replicaID.getCoefficient() - 1] = true;
 
         // Assume all RMs are alive when HeartBeat object is initiated
-        this.replicaManagerStatus = Collections.synchronizedMap(new HashMap<Conf.Constants.REPLICAS, Boolean>());
-        this.replicaManagerStatus.put(Conf.Constants.REPLICAS.KEN_RO, true);
-        this.replicaManagerStatus.put(Conf.Constants.REPLICAS.KAMAL, true);
-        this.replicaManagerStatus.put(Conf.Constants.REPLICAS.MINH, true);
-        this.mostRecentAliveTime = Collections.synchronizedMap(new HashMap<Conf.Constants.REPLICAS, Long>());
-        this.mostRecentAliveTime.put(Conf.Constants.REPLICAS.KEN_RO, System.nanoTime() / 1000000);
-        this.mostRecentAliveTime.put(Conf.Constants.REPLICAS.KAMAL, System.nanoTime() / 1000000);
-        this.mostRecentAliveTime.put(Conf.Constants.REPLICAS.MINH, System.nanoTime() / 1000000);
+        this.RM_Status = Collections.synchronizedMap(new HashMap<Conf.Constants.REPLICAS, Boolean>());
+        this.RM_Status.put(Conf.Constants.REPLICAS.Replica2, true);
+        this.RM_Status.put(Conf.Constants.REPLICAS.Replica1, true);
+        this.RM_Status.put(Conf.Constants.REPLICAS.Replica3, true);
+        this.LastAliveTime = Collections.synchronizedMap(new HashMap<Conf.Constants.REPLICAS, Long>());
+        this.LastAliveTime.put(Conf.Constants.REPLICAS.Replica2, System.nanoTime() / 1000000);
+        this.LastAliveTime.put(Conf.Constants.REPLICAS.Replica1, System.nanoTime() / 1000000);
+        this.LastAliveTime.put(Conf.Constants.REPLICAS.Replica3, System.nanoTime() / 1000000);
     }
 
     @Override
@@ -66,7 +64,7 @@ public class HeartBeat implements Runnable {
 
             try {
                 sleep(Constants.ELECTION_DELAY);
-//                System.out.println(replicaManagerID.name() + " starts new election");
+//                System.out.println(RM_ID.name() + " starts new election");
                 election.startElection(replicasStatus);
                 election.announceNewLeader();
             } catch (InterruptedException e) {
@@ -93,12 +91,12 @@ public class HeartBeat implements Runnable {
                     long currentTime = System.nanoTime() / 1000000;
                     String dataReceived = new String(datagramPacket.getData()).trim();
                     Conf.Constants.REPLICAS replicaID = Conf.Constants.REPLICAS.valueOf(dataReceived);
-//                    System.out.println(replicaManagerID + ": knows " + replicaID + " is alive at " + currentTime);
-                    synchronized (replicaManagerStatusLock) {
-                        replicaManagerStatus.put(replicaID, true);
+//                    System.out.println(RM_ID + ": knows " + replicaID + " is alive at " + currentTime);
+                    synchronized (RM_StatusLock) {
+                        RM_Status.put(replicaID, true);
                     }
-                    synchronized (mostRecentAliveTimeLock) {
-                        mostRecentAliveTime.put(replicaID, currentTime);
+                    synchronized (LastAlive) {
+                        LastAliveTime.put(replicaID, currentTime);
                     }
                 }).start();
             }
@@ -114,15 +112,15 @@ public class HeartBeat implements Runnable {
         DatagramSocket socket = null;
         try {
             socket = new DatagramSocket();
-            byte[] buffer = replicaManagerID.name().getBytes();
+            byte[] buffer = RM_ID.name().getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
             datagramPacket.setAddress(InetAddress.getLocalHost());
             while (true) {
                 for (Conf.Constants.REPLICAS replicaID : Conf.Constants.REPLICAS.values()) {
-                    if (replicaID != replicaManagerID) {
+                    if (replicaID != RM_ID) {
                         datagramPacket.setPort(replicaID.getCoefficient() * Constants.PORT_HEART_BEAT);
                         socket.send(datagramPacket);
-//                        System.out.println("Send " + replicaManagerID.name() + " is alive to " + replicaID.name());
+//                        System.out.println("Send " + RM_ID.name() + " is alive to " + replicaID.name());
                     }
                 }
                 sleep(Constants.HEART_BEAT_DELAY);
@@ -139,19 +137,19 @@ public class HeartBeat implements Runnable {
         try {
             while (true) {
                 for (Conf.Constants.REPLICAS replicaID : Conf.Constants.REPLICAS.values()) {
-                    if (isReplicaAlive(replicaID) && replicaID != replicaManagerID) {
+                    if (isReplicaAlive(replicaID) && replicaID != RM_ID) {
                         long mostRecentTime;
-                        synchronized (mostRecentAliveTimeLock) {
-                            mostRecentTime = mostRecentAliveTime.get(replicaID);
+                        synchronized (LastAlive) {
+                            mostRecentTime = LastAliveTime.get(replicaID);
                         }
                         long currentTime = System.nanoTime() / 1000000;
 //                            System.out.println("currentTime - mostRecentTime = " + currentTime + " - " + mostRecentTime + " = " + (currentTime - mostRecentTime));
 
                         // The replica is failed
                         if (currentTime - mostRecentTime > Constants.HEART_BEAT_TIMEOUT) {
-                            System.out.println(replicaManagerID.name() + ": knows " + replicaID.name() + " is CRASH, current leader is " + leaderID);
-                            synchronized (replicaManagerStatusLock) {
-                                replicaManagerStatus.put(replicaID, false);
+                            System.out.println(RM_ID.name() + ": knows " + replicaID.name() + " is CRASH, current leader is " + leaderID);
+                            synchronized (RM_StatusLock) {
+                                RM_Status.put(replicaID, false);
                             }
 
                             // Restart the crashed replica
@@ -163,7 +161,7 @@ public class HeartBeat implements Runnable {
                             // Start new election if leader is failed
                             if (replicaID.equals(leaderID)) {
                                 new Thread(() -> {
-                                    System.out.println(replicaManagerID + ": starts new election");
+                                    System.out.println(RM_ID + ": starts new election");
                                     election.startElection(replicasStatus);
                                     election.announceNewLeader();
                                 }).start();
@@ -179,8 +177,8 @@ public class HeartBeat implements Runnable {
     }
 
     private boolean isReplicaAlive(Conf.Constants.REPLICAS replicaID) {
-        synchronized (replicaManagerStatusLock) {
-            return replicaManagerStatus.get(replicaID);
+        synchronized (RM_StatusLock) {
+            return RM_Status.get(replicaID);
         }
     }
 }

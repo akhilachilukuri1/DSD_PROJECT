@@ -20,11 +20,11 @@ public class Constants {
 	public static String PROJECT_DIR = System.getProperty("user.dir");
 	public static String LOG_DIR = PROJECT_DIR + "\\Logs\\";
 
-	/*
-	 * public static final int PORT_FRONT_END_TO_LEADER = 1231; public static final
-	 * int PORT_LEADER_TO_BACKUPS = 1232; public static final int
-	 * PORT_BACKUPS_TO_LEADER = 1233;
-	 */
+	
+	public static final int PORT_FRONT_END_TO_LEADER = 1231; public static final
+	int PORT_LEADER_TO_BACKUPS = 1232; 
+	public static final int PORT_BACKUPS_TO_LEADER = 1233;
+	 
 	public static final int PORT_HEART_BEAT = 1234;
 	public static final int PORT_ELECTION = 1235;
 	public static final int PORT_NEW_LEADER = 1236;
@@ -42,7 +42,7 @@ public class Constants {
 	public static final int HEART_BEAT_TIMEOUT = 6000;
 
 	public enum REPLICAS {
-		KAMAL(1), KEN_RO(2), MINH(3);
+		Replica1(1), Replica2(2), Replica3(3);
 
 		private final int coefficient;
 
@@ -60,11 +60,11 @@ public class Constants {
 		MTL, LVL, DDO
 	}
 
-	public enum KAMAL_SERVER_ID {
+	public enum Replica1_SERVER_ID {
 		KM_MTL, KM_LVL, KM_DDO
 	}
 
-	public enum KENRO_SERVER_ID {
+	public enum Replica2_SERVER_ID {
 		KR_MTL, KR_LVL, KR_DDO
 	}
 
