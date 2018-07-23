@@ -21,7 +21,7 @@ public class DcmsServerMultiCastReceiver extends Thread {
 
 	}
 
-	public void run() {
+	public synchronized void run() {
 		try {
 			while (true) {
 				byte[] mydata = new byte[100];
@@ -29,6 +29,9 @@ public class DcmsServerMultiCastReceiver extends Thread {
 				multicastsocket.receive(packet);
 				if(!isPrimary) {
 					System.out.println("Received data in multicast receiver " + new String(packet.getData()));
+					System.out.println("Sent the acknowledgement for the data recevied in replica to primary server " + new String(packet.getData()));
+					DcmsServerReplicaAcknowledgementSender ack=new DcmsServerReplicaAcknowledgementSender(new String(packet.getData()));
+					ack.start();
 					DcmsServerReplicaRequestProcessor req = new DcmsServerReplicaRequestProcessor(new String(packet.getData()));
 					req.start();
 				}

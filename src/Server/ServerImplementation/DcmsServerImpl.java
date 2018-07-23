@@ -62,7 +62,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * 
 	 */
 	@Override
-	public String createTRecord(String managerID, String teacher) {
+	public synchronized String createTRecord(String managerID, String teacher) {
 		if(isPrimary) {
 			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
 			req.createTRecord(managerID, teacher);
@@ -101,7 +101,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 */
 
 	@Override
-	public String createSRecord(String managerID, String student) {
+	public synchronized String createSRecord(String managerID, String student) {
 		if(isPrimary) {
 			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
 			req.createSRecord(managerID, student);
@@ -253,7 +253,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 */
 
 	@Override
-	public String editRecord(String managerID, String recordID, String fieldname,
+	public synchronized String editRecord(String managerID, String recordID, String fieldname,
 			String newvalue) {
 		if(isPrimary) {
 			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
@@ -282,7 +282,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * @param remoteCenterServerName
 	 *            gets the location to transfer the recordID from the client
 	 */
-	public String transferRecord(String managerID, String recordID,
+	public synchronized String transferRecord(String managerID, String recordID,
 			String remoteCenterServerName) {
 		
 		if(isPrimary) {

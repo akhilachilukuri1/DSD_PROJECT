@@ -31,7 +31,7 @@ public class DcmsServerReplicaResponseReceiver extends Thread{
 			}
 	}
 	@Override
-	public void run() {
+	public synchronized void run() {
 		byte[] receiveData;
 		while (true) {
 			try {
@@ -40,10 +40,18 @@ public class DcmsServerReplicaResponseReceiver extends Thread{
 				serverSocket.receive(receivePacket);
 				byte[] receivedData = receivePacket.getData();
 				String inputPkt = new String(receivedData).trim();
+				if(inputPkt.contains("ACKNOWLEDGEMENT"))
+				{
+					System.out.println(new String(receivedData));		
+					loggerInstance.log(Level.INFO, inputPkt + " from " + location);
+				}
+				else
+				{
 				System.out.println(
 						"Received response packet in PRIMARY:: " + new String(receivedData));		
 				loggerInstance.log(Level.INFO,
 						"Received " + inputPkt + " from " + location);
+				}
 			} catch (Exception e) {
 		 
 			}

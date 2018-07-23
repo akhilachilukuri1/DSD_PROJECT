@@ -16,7 +16,7 @@ public class DcmsServerProcessReplicaRequest extends Thread {
 			this.server = null;
 			response = null;
 		}
-		public void run() {
+		public synchronized void run() {
 			String[] dataArr; 
 			String[] dataToBeSent = this.currentOperationData.trim().split(Constants.RECEIVED_DATA_SEPERATOR);
 			ServerOperations oprn = ServerOperations.valueOf(dataToBeSent[0]);

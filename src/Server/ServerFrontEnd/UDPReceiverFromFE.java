@@ -4,6 +4,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,7 @@ public class UDPReceiverFromFE extends Thread {
 	String recordCount;
 	ArrayList<TransferReqToCurrentServer> requests;
 	int c;
+	Queue<String> FIFORequest = new LinkedList<String>();
 	public UDPReceiverFromFE(ArrayList<TransferReqToCurrentServer> requests) {
 		try {
 			this.requests = requests;
@@ -40,7 +43,8 @@ public class UDPReceiverFromFE extends Thread {
 				byte[] receivedData = receivePacket.getData();
 				System.out.println(
 						"Received pkt :: " + new String(receivedData));
-				TransferReqToCurrentServer transferReq = new TransferReqToCurrentServer(receivedData);
+				FIFORequest.add(new String(receivedData));
+				TransferReqToCurrentServer transferReq = new TransferReqToCurrentServer(FIFORequest.poll().getBytes());
 				transferReq.start();
 				requests.add(transferReq);
 				String inputPkt = new String(receivePacket.getData()).trim();
