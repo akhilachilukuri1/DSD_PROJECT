@@ -27,31 +27,31 @@ public class TransferReqToCurrentServer extends Thread {
 		System.out.println("Currently serving request with id :: "+ requestId);
 		switch (oprn) {
 		case CREATE_T_RECORD:
-			this.server = chooseServer(dataToBeSent[1].toUpperCase());
+			this.server = chooseServer(dataToBeSent[1]);
 			dataArr = Arrays.copyOfRange(dataToBeSent, 3, dataToBeSent.length-1);
 			String teacherData = String.join(Constants.RECEIVED_DATA_SEPERATOR,dataArr);
 			response = this.server.createTRecord(dataToBeSent[2], teacherData);
 			sendReply(requestId, response);
 			break;
 		case CREATE_S_RECORD:
-			this.server = chooseServer(dataToBeSent[1].toUpperCase());
+			this.server = chooseServer(dataToBeSent[1]);
 			dataArr = Arrays.copyOfRange(dataToBeSent, 3, dataToBeSent.length-1);
 			String studentData = String.join(Constants.RECEIVED_DATA_SEPERATOR,dataArr);
 			response = this.server.createSRecord(dataToBeSent[2], studentData);
 			sendReply(requestId, response);
 			break;
 		case GET_REC_COUNT:
-			this.server = chooseServer(dataToBeSent[1].toUpperCase());
+			this.server = chooseServer(dataToBeSent[1]);
 			response = this.server.getRecordCount(dataToBeSent[2]);
 			sendReply(requestId, response);
 			break;
 		case EDIT_RECORD:
-			this.server = chooseServer(dataToBeSent[1].toUpperCase());
+			this.server = chooseServer(dataToBeSent[1]);
 			response = this.server.editRecord(dataToBeSent[2], dataToBeSent[3], dataToBeSent[4],  dataToBeSent[5]);
 			sendReply(requestId, response);
 			break;
 		case TRANSFER_RECORD:
-			this.server = chooseServer(dataToBeSent[1].toUpperCase());
+			this.server = chooseServer(dataToBeSent[1]);
 			response = this.server.transferRecord(dataToBeSent[2], dataToBeSent[3], dataToBeSent[4]);
 			sendReply(requestId, response);
 			break;
@@ -61,7 +61,7 @@ public class TransferReqToCurrentServer extends Thread {
 		return response;
 	}
 	private synchronized DcmsServerImpl chooseServer(String loc) {
-		return DcmsServerFE.primarServerMap.get(loc);
+		return DcmsServerFE.centralRepository.get(Constants.PRIMARY_SERVER_ID).get(loc);
 	}
 	
 	private void sendReply(String requestId, String response) {

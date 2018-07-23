@@ -2,8 +2,6 @@ package Server.ServerFrontEnd;
 
 import DcmsApp.*;
 import java.util.*;
-import java.util.logging.Level;
-
 import Conf.Constants;
 import Conf.LogManager;
 import Conf.ServerCenterLocation;
@@ -34,9 +32,9 @@ public class DcmsServerFE extends DcmsPOA {
 	ArrayList<TransferReqToCurrentServer> requests;
 	public static HashMap<Integer,TransferResponseToFE> responses;
 	public static ArrayList<String> receivedResponses;
-	public static HashMap<String, DcmsServerImpl> primarServerMap,replica1ServerMap;
+	public static HashMap<String, DcmsServerImpl> primaryServerMap,replica1ServerMap;
 	DcmsServerMultiCastReceiver primaryReceiver, replica1Receiver;
-	
+	DcmsServerReplicaResponseReceiver replicaResponseReceiver;
 	public static HashMap<Integer, HashMap<String, DcmsServerImpl>> centralRepository;
 
 	/*
@@ -56,37 +54,41 @@ public class DcmsServerFE extends DcmsPOA {
 		udpReceiverFromFE.start();
 		UDPResponseReceiver udpResponse = new UDPResponseReceiver(responses);
 		udpResponse.start();
-		primarServerMap = new HashMap<>();
-		replica1ServerMap = new HashMap<>();
 		centralRepository = new HashMap<>();
+		primaryServerMap = new HashMap<>();
+		replica1ServerMap = new HashMap<>();
 		requestId = 0;
 		init();
 	}
 
 	public void init() {
 		
-		primaryReceiver = new DcmsServerMultiCastReceiver();
+		boolean isPrimary = true;
+		primaryReceiver = new DcmsServerMultiCastReceiver(isPrimary);
 		primaryReceiver.start();
 		
-		DcmsServerImpl primaryMtlServer = new DcmsServerImpl(true, ServerCenterLocation.MTL,9999);
-		DcmsServerImpl primaryLvlServer = new DcmsServerImpl(true, ServerCenterLocation.LVL,7777);
-		DcmsServerImpl primaryDdoServer = new DcmsServerImpl(true, ServerCenterLocation.DDO,6666);
-		primarServerMap.put("MTL", primaryMtlServer);
-		primarServerMap.put("LVL", primaryLvlServer);
-		primarServerMap.put("DDO", primaryDdoServer);
+		replicaResponseReceiver = new DcmsServerReplicaResponseReceiver();
+		replicaResponseReceiver.start();
 
-		replica1Receiver = new DcmsServerMultiCastReceiver();
+		DcmsServerImpl primaryMtlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.MTL,9999);
+		DcmsServerImpl primaryLvlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.LVL,7777);
+		DcmsServerImpl primaryDdoServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.DDO,6666);
+		primaryServerMap.put("MTL", primaryMtlServer);
+		primaryServerMap.put("LVL", primaryLvlServer);
+		primaryServerMap.put("DDO", primaryDdoServer);
+
+		replica1Receiver = new DcmsServerMultiCastReceiver(false);
 		replica1Receiver.start();
 		
-		DcmsServerImpl replica1MtlServer = new DcmsServerImpl(false, ServerCenterLocation.MTL,5555);
-		DcmsServerImpl replica1LvlServer = new DcmsServerImpl(false, ServerCenterLocation.LVL,4444);
-		DcmsServerImpl replica1DdoServer = new DcmsServerImpl(false, ServerCenterLocation.DDO,2222);
+		DcmsServerImpl replica1MtlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.MTL,5555);
+		DcmsServerImpl replica1LvlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.LVL,4444);
+		DcmsServerImpl replica1DdoServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.DDO,2222);
 		replica1ServerMap.put("MTL", replica1MtlServer);
 		replica1ServerMap.put("LVL", replica1LvlServer);
 		replica1ServerMap.put("DDO", replica1DdoServer);
 		
-		centralRepository.put(1, primarServerMap);
-		centralRepository.put(2, replica1ServerMap);
+		centralRepository.put(Constants.PRIMARY_SERVER_ID, primaryServerMap);
+		centralRepository.put(Constants.REPLICA1_SERVER_ID, replica1ServerMap);
 	}
 
 	/**

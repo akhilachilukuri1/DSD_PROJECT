@@ -21,7 +21,7 @@ import Server.ServerImplementation.*;
  *
  */
 
-public class DcmsServerProcessReplicasRequest extends DcmsPOA {
+public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	LogManager logManager;
 	String IPaddress;
 	public HashMap<String, List<Record>> recordsMap;
@@ -38,7 +38,7 @@ public class DcmsServerProcessReplicasRequest extends DcmsPOA {
 	 * @param loc The server location for which the server implementation should be
 	 * initialized
 	 */
-	public DcmsServerProcessReplicasRequest() {
+	public DcmsServerPrepareReplicasRequest() {
 		recordsMap = new HashMap<>();
 		requestBuffer = new HashMap<>();
 		requestId = 0;
@@ -90,6 +90,7 @@ public class DcmsServerProcessReplicasRequest extends DcmsPOA {
 	public String createSRecord(String managerID, String student) {
 		student = ServerOperations.CREATE_S_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + student;
+		sendMulticastRequest(student);
 		return "";
 	}
 
@@ -104,6 +105,7 @@ public class DcmsServerProcessReplicasRequest extends DcmsPOA {
 	public String getRecordCount(String managerID) {
 		String req = ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID;
+		sendMulticastRequest(req);
 		return "";
 	}
 
@@ -127,6 +129,7 @@ public class DcmsServerProcessReplicasRequest extends DcmsPOA {
 		String editData = ServerOperations.EDIT_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + fieldname + Constants.RECEIVED_DATA_SEPERATOR + newvalue;
+		sendMulticastRequest(editData);
 		return "";
 	}
 
@@ -147,6 +150,7 @@ public class DcmsServerProcessReplicasRequest extends DcmsPOA {
 		String req = ServerOperations.TRANSFER_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + remoteCenterServerName;
+		sendMulticastRequest(req);
 		return "";
 	}
 }

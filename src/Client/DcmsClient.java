@@ -44,7 +44,6 @@ public class DcmsClient {
 				String manager_number = managerID.substring(3, 6);
 				Matcher matchID = validate.matcher(manager_number);
 				if (managerID.length() != 7) {
-
 					System.out.println("Too many characters in the manager ID. "
 							+ "please enter in (LOCXXXX) format, where LOC={MTL,DDO,LVL}");
 					continue;
