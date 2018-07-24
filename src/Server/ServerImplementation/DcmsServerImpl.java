@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Level;
+
+import Conf.Constants;
 import Conf.LogManager;
 import Conf.ServerCenterLocation;
 import Models.Record;
@@ -76,14 +78,15 @@ public class DcmsServerImpl extends DcmsPOA {
 		String phone = temp[3];
 		String specialization = temp[4];
 		String location = temp[5];
+		String requestID = temp[6];
 		Teacher teacherObj = new Teacher(managerID, teacherID, firstName, lastname,
 				address, phone, specialization, location);
 		String key = lastname.substring(0, 1);
 		String message = addRecordToHashMap(key, teacherObj, null);
 		System.out.println("teacher is added " + teacherObj + " with this key " + key
-				+ " by Manager " + managerID);
+				+ " by Manager " + managerID+" for the request ID: "+requestID);
 		logManager.logger.log(Level.INFO, "Teacher record created " + teacherID
-				+ " by Manager : " + managerID);
+				+ " by Manager : " + managerID+" for the request ID: "+requestID);
 		return teacherID;
 
 	}
@@ -114,6 +117,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		List<String> courseList = putCoursesinList(CoursesRegistered);
 		String status = temp[3];
 		String statusDate = temp[4];
+		String requestID = temp[5];
 		String studentID = "SR" + (++studentCount);
 		Student studentObj = new Student(managerID, studentID, firstName, lastName,
 				courseList, status, statusDate);
@@ -121,9 +125,9 @@ public class DcmsServerImpl extends DcmsPOA {
 		String message = addRecordToHashMap(key, null, studentObj);
 		if (message.equals("success")) {
 			System.out.println(" Student is added " + studentObj + " with this key "
-					+ key + " by Manager " + managerID);
+					+ key + " by Manager " + managerID +" for the requestID "+requestID);
 			logManager.logger.log(Level.INFO, "Student record created " + studentID
-					+ " by manager : " + managerID);
+					+ " by manager : " + managerID +" for the requestID "+requestID);
 		}
 		return studentID;
 	}
@@ -198,11 +202,14 @@ public class DcmsServerImpl extends DcmsPOA {
 	 */
 
 	@Override
-	public String getRecordCount(String managerID) {
+	public String getRecordCount(String manager) {
 		if(isPrimary) {
 			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
-			req.getRecordCount(managerID);
+			req.getRecordCount(manager);
 		}
+		String data[]=manager.split(Constants.RECEIVED_DATA_SEPERATOR);
+		String managerID=data[0];
+		String requestID=data[1];
 		String recordCount = null;
 		DcmsServerUDPRequestProvider[] req = new DcmsServerUDPRequestProvider[2];
 		int counter = 0;
@@ -233,7 +240,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			}
 			recordCount += " , " + request.getRemoteRecordCount().trim();
 		}
-		System.out.println(recordCount);
+		System.out.println(recordCount+" for the request ID "+requestID+" as requested by the managerID "+ managerID);
 		return recordCount;
 	}
 
@@ -259,13 +266,15 @@ public class DcmsServerImpl extends DcmsPOA {
 			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
 			req.editRecord(managerID, recordID, fieldname, newvalue);
 		}
+		String data[]=newvalue.split(Constants.RECEIVED_DATA_SEPERATOR);
+		String requestID=data[1];
 		String type = recordID.substring(0, 2);
 		if (type.equals("TR")) {
 			return editTRRecord(managerID, recordID, fieldname, newvalue);
 		} else if (type.equals("SR")) {
 			return editSRRecord(managerID, recordID, fieldname, newvalue);
 		}
-		logManager.logger.log(Level.INFO, "Record edit successful");
+		logManager.logger.log(Level.INFO, "Record edit successful for the request ID "+requestID);
 		return "Operation not performed!";
 	}
 
@@ -283,12 +292,15 @@ public class DcmsServerImpl extends DcmsPOA {
 	 *            gets the location to transfer the recordID from the client
 	 */
 	public synchronized String transferRecord(String managerID, String recordID,
-			String remoteCenterServerName) {
+			String data) {
 		
 		if(isPrimary) {
 			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
-			req.transferRecord(managerID, recordID, remoteCenterServerName);
+			req.transferRecord(managerID, recordID, data);
 		}
+		String parsedata[]=data.split(Constants.RECEIVED_DATA_SEPERATOR);
+		String remoteCenterServerName=parsedata[0];
+		String requestID=parsedata[1];
 		String type = recordID.substring(0, 2);
 		DcmsServerUDPRequestProvider req = null;
 		try {
@@ -314,8 +326,8 @@ public class DcmsServerImpl extends DcmsPOA {
 			req.join();
 			if (removeRecordAfterTransfer(recordID) == "success") {
 				logManager.logger.log(Level.INFO, "Record created in  "
-						+ remoteCenterServerName + "  and removed from " + location);
-				System.out.println("Record created in " + remoteCenterServerName + "and removed from " + location);
+						+ remoteCenterServerName + "  and removed from " + location+" with requestID "+ requestID);
+				System.out.println("Record created in " + remoteCenterServerName + "and removed from " + location+" with requestID "+ requestID);
 				return "Record created in " + remoteCenterServerName
 						+ "and removed from " + location;
 			}
@@ -398,7 +410,10 @@ public class DcmsServerImpl extends DcmsPOA {
 	 */
 
 	private synchronized String editSRRecord(String maangerID, String recordID,
-			String fieldname, String newvalue) {
+			String fieldname, String data) {
+		String newdata[]=data.split(Constants.RECEIVED_DATA_SEPERATOR);
+		String newvalue=newdata[0];
+		String requestID=newdata[1];
 		for (Entry<String, List<Record>> value : recordsMap.entrySet()) {
 			List<Record> mylist = value.getValue();
 			Optional<Record> record = mylist.stream()
@@ -407,20 +422,22 @@ public class DcmsServerImpl extends DcmsPOA {
 				if (record.isPresent() && fieldname.equals("Status")) {
 					((Student) record.get()).setStatus(newvalue);
 					logManager.logger.log(Level.INFO,
-							maangerID + "Updated the records\t" + location);
-					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue);
+							maangerID+" performed the operation with the requestID "+ requestID + " and Updated the records\t" + location);
+					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue+" with requestID "+requestID);
 					return "Updated record with status :: " + newvalue;
 				} else if (record.isPresent() && fieldname.equals("StatusDate")) {
 					((Student) record.get()).setStatusDate(newvalue);
 					logManager.logger.log(Level.INFO,
-							maangerID + "Updated the records\t" + location);
-					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue);
+							maangerID+" performed the operation with the requestID "+ requestID + "Updated the records\t" + location);
+					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue+" with requestID "+requestID);
 					return "Updated record with status date :: " + newvalue;
 				} else if (record.isPresent()
 						&& fieldname.equals("CoursesRegistered")) {
 					List<String> courseList = putCoursesinList(newvalue);
 					((Student) record.get()).setCoursesRegistered(courseList);
-					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue);
+					logManager.logger.log(Level.INFO,
+							maangerID+" performed the operation with the requestID "+ requestID + "Updated the courses registered\t" + location);
+					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue+" with requestID "+requestID);
 					return "Updated record with courses :: " + courseList;
 				} else {
 					System.out.println("Record with " + recordID + " not found");
@@ -449,7 +466,10 @@ public class DcmsServerImpl extends DcmsPOA {
 	 */
 
 	private synchronized String editTRRecord(String managerID, String recordID,
-			String fieldname, String newvalue) {
+			String fieldname, String data) {
+		String newdata[]=data.split(Constants.RECEIVED_DATA_SEPERATOR);
+		String newvalue=newdata[0];
+		String requestID=newdata[1];
 		for (Entry<String, List<Record>> val : recordsMap.entrySet()) {
 
 			List<Record> mylist = val.getValue();
@@ -460,24 +480,24 @@ public class DcmsServerImpl extends DcmsPOA {
 				if (record.isPresent() && fieldname.equals("Phone")) {
 					((Teacher) record.get()).setPhone(newvalue);
 					logManager.logger.log(Level.INFO,
-							managerID + "Updated the records\t" + location);
-					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue);
+							managerID+" performed the operation with the requestID "+ requestID + "Updated the records\t" + location);
+					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue+" with requestID "+requestID);
 					return "Updated record with Phone :: " + newvalue;
 				}
 
 				else if (record.isPresent() && fieldname.equals("Address")) {
 					((Teacher) record.get()).setAddress(newvalue);
 					logManager.logger.log(Level.INFO,
-							managerID + "Updated the records\t" + location);
-					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue);
+							managerID+" performed the operation with the requestID "+ requestID + "Updated the records\t" + location);
+					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue+" with requestID "+requestID);
 					return "Updated record with address :: " + newvalue;
 				}
 
 				else if (record.isPresent() && fieldname.equals("Location")) {
 					((Teacher) record.get()).setLocation(newvalue);
 					logManager.logger.log(Level.INFO,
-							managerID + "Updated the records\t" + location);
-					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue);
+							managerID+" performed the operation with the requestID "+ requestID + "Updated the records\t" + location);
+					System.out.println("Record with recordID "+recordID+"update with new "+fieldname+" as "+newvalue+" with requestID "+requestID);
 					return "Updated record with location :: " + newvalue;
 				} else {
 					System.out.println("Record with " + recordID + " not found");

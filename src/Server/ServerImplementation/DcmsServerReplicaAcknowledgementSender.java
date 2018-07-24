@@ -13,7 +13,7 @@ public class DcmsServerReplicaAcknowledgementSender extends Thread {
 	String request;
 	DatagramSocket ds;
 	public DcmsServerReplicaAcknowledgementSender(String request) {
-		request="RECEIVED ACKNOWLEDGEMENT FOR :: "+request;
+		request="RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: "+request;
 		this.request=request;
 	}
 	public synchronized void run() {

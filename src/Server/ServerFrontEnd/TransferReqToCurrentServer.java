@@ -28,31 +28,33 @@ public class TransferReqToCurrentServer extends Thread {
 		switch (oprn) {
 		case CREATE_T_RECORD:
 			this.server = chooseServer(dataToBeSent[1]);
-			dataArr = Arrays.copyOfRange(dataToBeSent, 3, dataToBeSent.length-1);
+			dataArr = Arrays.copyOfRange(dataToBeSent, 3, dataToBeSent.length);
 			String teacherData = String.join(Constants.RECEIVED_DATA_SEPERATOR,dataArr);
 			response = this.server.createTRecord(dataToBeSent[2], teacherData);
 			sendReply(requestId, response);
 			break;
 		case CREATE_S_RECORD:
 			this.server = chooseServer(dataToBeSent[1]);
-			dataArr = Arrays.copyOfRange(dataToBeSent, 3, dataToBeSent.length-1);
+			dataArr = Arrays.copyOfRange(dataToBeSent, 3, dataToBeSent.length);
 			String studentData = String.join(Constants.RECEIVED_DATA_SEPERATOR,dataArr);
 			response = this.server.createSRecord(dataToBeSent[2], studentData);
 			sendReply(requestId, response);
 			break;
 		case GET_REC_COUNT:
 			this.server = chooseServer(dataToBeSent[1]);
-			response = this.server.getRecordCount(dataToBeSent[2]);
+			response = this.server.getRecordCount(dataToBeSent[2]+Constants.RECEIVED_DATA_SEPERATOR+dataToBeSent[3]);
 			sendReply(requestId, response);
 			break;
 		case EDIT_RECORD:
 			this.server = chooseServer(dataToBeSent[1]);
-			response = this.server.editRecord(dataToBeSent[2], dataToBeSent[3], dataToBeSent[4],  dataToBeSent[5]);
+			String newdata=dataToBeSent[5]+Constants.RECEIVED_DATA_SEPERATOR+dataToBeSent[6];
+			response = this.server.editRecord(dataToBeSent[2], dataToBeSent[3], dataToBeSent[4],  newdata);
 			sendReply(requestId, response);
 			break;
 		case TRANSFER_RECORD:
 			this.server = chooseServer(dataToBeSent[1]);
-			response = this.server.transferRecord(dataToBeSent[2], dataToBeSent[3], dataToBeSent[4]);
+			String newdata1=dataToBeSent[4]+Constants.RECEIVED_DATA_SEPERATOR+dataToBeSent[5];
+			response = this.server.transferRecord(dataToBeSent[2], dataToBeSent[3], newdata1);
 			sendReply(requestId, response);
 			break;
 		}

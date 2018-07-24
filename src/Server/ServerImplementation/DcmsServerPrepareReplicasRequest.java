@@ -102,9 +102,10 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	 */
 
 	@Override
-	public String getRecordCount(String managerID) {
-		String req = ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
-				+ Constants.RECEIVED_DATA_SEPERATOR + managerID;
+	public String getRecordCount(String manager) {
+		String data[]=manager.split(Constants.RECEIVED_DATA_SEPERATOR);
+		String req = ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(data[0])
+				+ Constants.RECEIVED_DATA_SEPERATOR + manager;
 		sendMulticastRequest(req);
 		return "";
 	}
