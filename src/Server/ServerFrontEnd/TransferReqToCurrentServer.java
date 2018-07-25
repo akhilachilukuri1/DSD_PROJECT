@@ -27,6 +27,7 @@ public class TransferReqToCurrentServer extends Thread {
 		System.out.println("Currently serving request with id :: "+ requestId);
 		switch (oprn) {
 		case CREATE_T_RECORD:
+			System.out.println(dataToBeSent[1]);
 			this.server = chooseServer(dataToBeSent[1]);
 			dataArr = Arrays.copyOfRange(dataToBeSent, 3, dataToBeSent.length);
 			String teacherData = String.join(Constants.RECEIVED_DATA_SEPERATOR,dataArr);

@@ -546,4 +546,20 @@ public class DcmsServerImpl extends DcmsPOA {
 		sender.start();
 
 	}
+
+	public boolean isPrimary() {
+		return isPrimary;
+	}
+
+	public void setPrimary(boolean isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
+	public ArrayList<Integer> getReplicas() {
+		return replicas;
+	}
+
+	public void setReplicas(ArrayList<Integer> replicas) {
+		this.replicas = replicas;
+	}
 }

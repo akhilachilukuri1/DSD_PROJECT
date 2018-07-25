@@ -6,6 +6,7 @@ public class Constants {
 	
 	public static int PRIMARY_SERVER_ID = 1;
 	public static int REPLICA1_SERVER_ID = 2;
+	public static int REPLICA2_SERVER_ID = 3;
 	public static String CURRENT_SERVER_IP = "localhost";
 	public static int CURRENT_SERVER_UDP_PORT = 3333;
 	
@@ -18,7 +19,7 @@ public class Constants {
 	public static int CURRENT_PRIMARY_PORT_FOR_REPLICAS = 2323;
 	
 	public static int MAX_RETRY_ATTEMPT = 10;
-	public static int RETRY_TIME = 1000;
+	public static int RETRY_TIME = 10000;
 
 	public static String RECEIVED_DATA_SEPERATOR = ",";
 	public static String RESPONSE_DATA_SEPERATOR = "_";
