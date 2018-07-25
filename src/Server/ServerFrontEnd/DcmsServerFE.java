@@ -129,7 +129,8 @@ public class DcmsServerFE extends DcmsPOA {
 
 	public void init() {
 		try {
-			
+		ArrayList<Integer> replicas =new ArrayList<>();
+		replicas.add(Constants.REPLICA1_SERVER_ID);
 		boolean isPrimary = true;
 		primaryReceiver = new DcmsServerMultiCastReceiver(isPrimary);
 		primaryReceiver.start();
@@ -137,9 +138,9 @@ public class DcmsServerFE extends DcmsPOA {
 		replicaResponseReceiver = new DcmsServerReplicaResponseReceiver();
 		replicaResponseReceiver.start();
 		DatagramSocket socket1 = new DatagramSocket();
-		DcmsServerImpl primaryMtlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.MTL,9999,socket1, s1_MTL_sender_isAlive, MTLserverName1, s1_MTL_receive_port, s2_MTL_receive_port,0);
-		DcmsServerImpl primaryLvlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.LVL,7777,socket1, s1_LVL_sender_isAlive, LVLserverName1, s1_LVL_receive_port, s2_LVL_receive_port,0);
-		DcmsServerImpl primaryDdoServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.DDO,6666,socket1, s1_DDO_sender_isAlive, DDOserverName1, s1_DDO_receive_port, s2_DDO_receive_port,0);
+		DcmsServerImpl primaryMtlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.MTL,9999,socket1, s1_MTL_sender_isAlive, MTLserverName1, s1_MTL_receive_port, s2_MTL_receive_port,0,replicas);
+		DcmsServerImpl primaryLvlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.LVL,7777,socket1, s1_LVL_sender_isAlive, LVLserverName1, s1_LVL_receive_port, s2_LVL_receive_port,0,replicas);
+		DcmsServerImpl primaryDdoServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.DDO,6666,socket1, s1_DDO_sender_isAlive, DDOserverName1, s1_DDO_receive_port, s2_DDO_receive_port,0,replicas);
 		primaryServerMap.put("MTL", primaryMtlServer);
 		primaryServerMap.put("LVL", primaryLvlServer);
 		primaryServerMap.put("DDO", primaryDdoServer);
@@ -147,9 +148,9 @@ public class DcmsServerFE extends DcmsPOA {
 		replica1Receiver = new DcmsServerMultiCastReceiver(false);
 		replica1Receiver.start();
 		DatagramSocket socket2 = new DatagramSocket();
-		DcmsServerImpl replica1MtlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.MTL,5555,socket2, s2_MTL_sender_isAlive, MTLserverName2, s2_MTL_receive_port, s1_MTL_receive_port,0);
-		DcmsServerImpl replica1LvlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.LVL,4444,socket2, s2_LVL_sender_isAlive, LVLserverName2, s2_LVL_receive_port, s1_LVL_receive_port,0);
-		DcmsServerImpl replica1DdoServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.DDO,2222,socket2, s2_DDO_sender_isAlive, DDOserverName2, s2_DDO_receive_port, s1_DDO_receive_port,0);
+		DcmsServerImpl replica1MtlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.MTL,5555,socket2, s2_MTL_sender_isAlive, MTLserverName2, s2_MTL_receive_port, s1_MTL_receive_port,0,replicas);
+		DcmsServerImpl replica1LvlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.LVL,4444,socket2, s2_LVL_sender_isAlive, LVLserverName2, s2_LVL_receive_port, s1_LVL_receive_port,0,replicas);
+		DcmsServerImpl replica1DdoServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.DDO,2222,socket2, s2_DDO_sender_isAlive, DDOserverName2, s2_DDO_receive_port, s1_DDO_receive_port,0,replicas);
 		replica1ServerMap.put("MTL", replica1MtlServer);
 		replica1ServerMap.put("LVL", replica1LvlServer);
 		replica1ServerMap.put("DDO", replica1DdoServer);
@@ -224,8 +225,8 @@ public class DcmsServerFE extends DcmsPOA {
 
 			try {
 				Thread.sleep(10000);
-				setStatus();
-				replica1MtlServer.receiver.setStatus(false);
+				//setStatus();
+				//primaryMtlServer.receiver.setStatus(false);
 				//primaryLvlServer.receiver.setStatus(false);
 				//replica1DdoServer.receiver.setStatus(false);
 			} catch (InterruptedException e) {
@@ -387,7 +388,7 @@ public class DcmsServerFE extends DcmsPOA {
 		}
 	}
 	private static void setStatus() {
-		s2_MTL_sender_isAlive = false;
+		s1_MTL_sender_isAlive = false;
 		//s1_LVL_sender_isAlive = false;
 		//s2_DDO_sender_isAlive = false;
 	}

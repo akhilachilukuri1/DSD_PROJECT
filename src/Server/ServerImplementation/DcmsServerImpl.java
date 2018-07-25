@@ -41,6 +41,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	int port1, port2;
 	boolean isAlive;
 	DatagramSocket ds = null;
+	public ArrayList<Integer> replicas;
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
@@ -48,7 +49,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * @param loc The server location for which the server implementation should be
 	 * initialized
 	 */
-	public DcmsServerImpl(int serverID, boolean isPrimary, ServerCenterLocation loc, int locUDPPort,DatagramSocket ds, boolean isAlive, String name, int receivePort, int port1, int port2) {
+	public DcmsServerImpl(int serverID, boolean isPrimary, ServerCenterLocation loc, int locUDPPort,DatagramSocket ds, boolean isAlive, String name, int receivePort, int port1, int port2,ArrayList<Integer> replicas) {
 		logManager = new LogManager(loc.toString());
 		recordsMap = new HashMap<>();
 		this.locUDPPort = locUDPPort;
@@ -64,6 +65,10 @@ public class DcmsServerImpl extends DcmsPOA {
 		receiver = new Receiver(isAlive, name, receivePort);
 		receiver.start();
 		this.ds = ds;
+		if(isPrimary)
+		{
+		this.replicas=replicas;	
+		}
 	}
 
 	/**
@@ -80,8 +85,11 @@ public class DcmsServerImpl extends DcmsPOA {
 	@Override
 	public synchronized String createTRecord(String managerID, String teacher) {
 		if(isPrimary) {
-			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
+			for(Integer replicaId:replicas)
+			{
+			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
 			req.createTRecord(managerID, teacher);
+			}
 		}
 		String temp[] = teacher.split(",");
 		// String managerID = temp[0];
@@ -120,8 +128,11 @@ public class DcmsServerImpl extends DcmsPOA {
 	@Override
 	public synchronized String createSRecord(String managerID, String student) {
 		if(isPrimary) {
-			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
+			for(Integer replicaId:replicas)
+			{
+			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
 			req.createSRecord(managerID, student);
+			}
 		}
 		String temp[] = student.split(",");
 		// String managerID = temp[0];
@@ -218,8 +229,11 @@ public class DcmsServerImpl extends DcmsPOA {
 	@Override
 	public String getRecordCount(String manager) {
 		if(isPrimary) {
-			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
+			for(Integer replicaId:replicas)
+			{
+			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
 			req.getRecordCount(manager);
+			}
 		}
 		String data[]=manager.split(Constants.RECEIVED_DATA_SEPERATOR);
 		String managerID=data[0];
@@ -277,8 +291,11 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String editRecord(String managerID, String recordID, String fieldname,
 			String newvalue) {
 		if(isPrimary) {
-			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
+			for(Integer replicaId:replicas)
+			{
+			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
 			req.editRecord(managerID, recordID, fieldname, newvalue);
+			}
 		}
 		String data[]=newvalue.split(Constants.RECEIVED_DATA_SEPERATOR);
 		String requestID=data[1];
@@ -309,8 +326,11 @@ public class DcmsServerImpl extends DcmsPOA {
 			String data) {
 		
 		if(isPrimary) {
-			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest();
+			for(Integer replicaId:replicas)
+			{
+			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
 			req.transferRecord(managerID, recordID, data);
+			}
 		}
 		String parsedata[]=data.split(Constants.RECEIVED_DATA_SEPERATOR);
 		String remoteCenterServerName=parsedata[0];

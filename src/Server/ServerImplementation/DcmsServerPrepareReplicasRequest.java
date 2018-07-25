@@ -31,6 +31,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	String location;
 	Integer requestId;
 	HashMap<Integer, String> requestBuffer;
+	Integer replicaID;
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
@@ -38,10 +39,11 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	 * @param loc The server location for which the server implementation should be
 	 * initialized
 	 */
-	public DcmsServerPrepareReplicasRequest() {
+	public DcmsServerPrepareReplicasRequest(Integer replicaID) {
 		recordsMap = new HashMap<>();
 		requestBuffer = new HashMap<>();
 		requestId = 0;
+		this.replicaID=replicaID;
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	}
 	@Override
 	public String createTRecord(String managerID, String teacher) {
-		teacher = ServerOperations.CREATE_T_RECORD + 
+		teacher =Integer.toString(replicaID)+ Constants.RECEIVED_DATA_SEPERATOR + ServerOperations.CREATE_T_RECORD + 
 				Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + 
 				Constants.RECEIVED_DATA_SEPERATOR + teacher;
@@ -88,7 +90,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 
 	@Override
 	public String createSRecord(String managerID, String student) {
-		student = ServerOperations.CREATE_S_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
+		student =Integer.toString(replicaID)+ Constants.RECEIVED_DATA_SEPERATOR +ServerOperations.CREATE_S_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + student;
 		sendMulticastRequest(student);
 		return "";
@@ -104,7 +106,8 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	@Override
 	public String getRecordCount(String manager) {
 		String data[]=manager.split(Constants.RECEIVED_DATA_SEPERATOR);
-		String req = ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(data[0])
+		String req = Integer.toString(replicaID)+ Constants.RECEIVED_DATA_SEPERATOR+
+				ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(data[0])
 				+ Constants.RECEIVED_DATA_SEPERATOR + manager;
 		sendMulticastRequest(req);
 		return "";
@@ -127,7 +130,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 
 	@Override
 	public String editRecord(String managerID, String recordID, String fieldname, String newvalue) {
-		String editData = ServerOperations.EDIT_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
+		String editData = Integer.toString(replicaID)+ Constants.RECEIVED_DATA_SEPERATOR+ServerOperations.EDIT_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + fieldname + Constants.RECEIVED_DATA_SEPERATOR + newvalue;
 		sendMulticastRequest(editData);
@@ -148,7 +151,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	 *            gets the location to transfer the recordID from the client
 	 */
 	public String transferRecord(String managerID, String recordID, String remoteCenterServerName) {
-		String req = ServerOperations.TRANSFER_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
+		String req = Integer.toString(replicaID)+ Constants.RECEIVED_DATA_SEPERATOR+ServerOperations.TRANSFER_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + remoteCenterServerName;
 		sendMulticastRequest(req);

@@ -1,0 +1,32 @@
+Jul 24, 2018 9:50:37 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 9:50:37 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 9:58:57 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 9:58:57 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 10:28:24 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 10:28:24 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 10:28:57 PM Server.ServerImplementation.DcmsServerImpl createTRecord
+INFO: Teacher record created TR1 by Manager : MTL3333 for the request ID: 1
+Jul 24, 2018 10:28:57 PM Server.ServerImplementation.DcmsServerImpl createTRecord
+INFO: Teacher record created TR1 by Manager : MTL3333 for the request ID: 1
+Jul 24, 2018 10:29:23 PM Server.ServerImplementation.DcmsServerImpl createSRecord
+INFO: Student record created SR1 by manager : MTL3333 for the requestID 2
+Jul 24, 2018 10:29:23 PM Server.ServerImplementation.DcmsServerImpl createSRecord
+INFO: Student record created SR1 by manager : MTL3333 for the requestID 2
+Jul 24, 2018 10:30:58 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 10:30:58 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 10:31:41 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 10:31:41 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: MTL UDP Server Started
+Jul 24, 2018 10:32:31 PM Server.ServerImplementation.DcmsServerImpl createTRecord
+INFO: Teacher record created TR1 by Manager : MTL4444 for the request ID: 1
+Jul 24, 2018 10:32:31 PM Server.ServerImplementation.DcmsServerImpl createTRecord
+INFO: Teacher record created TR1 by Manager : MTL4444 for the request ID: 1
