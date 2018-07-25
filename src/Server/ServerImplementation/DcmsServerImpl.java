@@ -65,10 +65,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		receiver = new Receiver(isAlive, name, receivePort);
 		receiver.start();
 		this.ds = ds;
-		if(isPrimary)
-		{
 		this.replicas=replicas;	
-		}
 	}
 
 	/**

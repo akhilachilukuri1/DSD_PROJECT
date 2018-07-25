@@ -55,6 +55,7 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 			this.server = chooseServer(replicaId, dataToBeSent[2]);
 			String newdata = dataToBeSent[6] + Constants.RECEIVED_DATA_SEPERATOR + dataToBeSent[7];
 			response = this.server.editRecord(dataToBeSent[3], dataToBeSent[4], dataToBeSent[5], newdata);
+			System.out.println("=======================================RESPONSE :: "+response);
 			sendReply(response);
 			break;
 		case TRANSFER_RECORD:

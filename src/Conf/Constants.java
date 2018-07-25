@@ -18,7 +18,7 @@ public class Constants {
 	public static int CURRENT_PRIMARY_PORT_FOR_REPLICAS = 2323;
 	
 	public static int MAX_RETRY_ATTEMPT = 10;
-	public static int RETRY_TIME = 100;
+	public static int RETRY_TIME = 1000;
 
 	public static String RECEIVED_DATA_SEPERATOR = ",";
 	public static String RESPONSE_DATA_SEPERATOR = "_";
