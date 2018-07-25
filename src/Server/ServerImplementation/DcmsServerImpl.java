@@ -2,6 +2,7 @@ package Server.ServerImplementation;
 
 import DcmsApp.*;
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -34,6 +35,12 @@ public class DcmsServerImpl extends DcmsPOA {
 	int locUDPPort = 0;
 	boolean isPrimary;
 	Integer serverID = 0;
+	Sender sender;
+	public Receiver receiver;
+	String name;
+	int port1, port2;
+	boolean isAlive;
+	DatagramSocket ds = null;
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
@@ -41,7 +48,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * @param loc The server location for which the server implementation should be
 	 * initialized
 	 */
-	public DcmsServerImpl(int serverID, boolean isPrimary, ServerCenterLocation loc, int locUDPPort) {
+	public DcmsServerImpl(int serverID, boolean isPrimary, ServerCenterLocation loc, int locUDPPort,DatagramSocket ds, boolean isAlive, String name, int receivePort, int port1, int port2) {
 		logManager = new LogManager(loc.toString());
 		recordsMap = new HashMap<>();
 		this.locUDPPort = locUDPPort;
@@ -50,6 +57,13 @@ public class DcmsServerImpl extends DcmsPOA {
 		location = loc.toString();
 		this.isPrimary = isPrimary;
 		this.serverID = serverID;
+		this.name = name;
+		this.port1 = port1;
+		this.port2 = port2;
+		this.isAlive = isAlive;
+		receiver = new Receiver(isAlive, name, receivePort);
+		receiver.start();
+		this.ds = ds;
 	}
 
 	/**
@@ -508,5 +522,11 @@ public class DcmsServerImpl extends DcmsPOA {
 			}
 		}
 		return "Record with " + recordID + " not found";
+	}
+	
+	public void send() {
+		sender = new Sender(ds,name, port1, port2);
+		sender.start();
+
 	}
 }
