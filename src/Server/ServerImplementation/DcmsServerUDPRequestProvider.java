@@ -10,11 +10,8 @@ import Conf.Constants;
 import Models.Record;
 
 public class DcmsServerUDPRequestProvider extends Thread {
-	private static final String MTL = null;
-	private static final String LVL = null;
-	private static final String DDO = null;
-	private String recordCount, transferResult;
-	private Logger logger;
+	private String recordCount = "";
+	private String transferResult = "";
 	private DcmsServerImpl server;
 	private String requestType;
 	private Record recordForTransfer;
@@ -63,10 +60,12 @@ public class DcmsServerUDPRequestProvider extends Thread {
 			case "GET_RECORD_COUNT":
 				socket = new DatagramSocket();
 				byte[] data = "GET_RECORD_COUNT".getBytes();
+				System.out.println("data in udp req provider :: "+new String(data));
+				System.out.println("port here :: "+server.dcmsServerUDPReceiver.udpPortNum);
 				/*Create a datagram packet for the respective server address.*/
 				DatagramPacket packet = new DatagramPacket(data, data.length,
 						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
-						server.dcmsServerUDPReceiver.udpPortNum);
+						server.locUDPPort);
 				socket.send(packet);
 				data = new byte[100];
 				socket.receive(new DatagramPacket(data, data.length));
@@ -81,12 +80,12 @@ public class DcmsServerUDPRequestProvider extends Thread {
 				
 				DatagramPacket packet1 = new DatagramPacket(data1, data1.length,
 						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
-						server.dcmsServerUDPReceiver.udpPortNum);
+						server.locUDPPort);
 				socket.send(packet1);
 				data1 = new byte[100];
 				socket.receive(new DatagramPacket(data1, data1.length));
 				transferResult = new String(data1);
-				System.out.println("============="+transferResult);
+				//System.out.println("============="+transferResult);
 				break;
 			}
 		} catch (Exception e) {

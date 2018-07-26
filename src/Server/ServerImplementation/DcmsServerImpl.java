@@ -42,6 +42,10 @@ public class DcmsServerImpl extends DcmsPOA {
 	boolean isAlive;
 	DatagramSocket ds = null;
 	public ArrayList<Integer> replicas;
+	
+	public int getlocUDPPort(){
+		return this.locUDPPort;
+	}
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
@@ -53,7 +57,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		logManager = new LogManager(loc.toString());
 		recordsMap = new HashMap<>();
 		this.locUDPPort = locUDPPort;
-		dcmsServerUDPReceiver = new DcmsServerUDPReceiver(locUDPPort, loc, logManager.logger, this);
+		dcmsServerUDPReceiver = new DcmsServerUDPReceiver(true, locUDPPort, loc, logManager.logger, this);
 		dcmsServerUDPReceiver.start();
 		location = loc.toString();
 		this.isPrimary = isPrimary;
@@ -225,13 +229,13 @@ public class DcmsServerImpl extends DcmsPOA {
 
 	@Override
 	public String getRecordCount(String manager) {
-		if(isPrimary) {
-			for(Integer replicaId:replicas)
-			{
-			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
-			req.getRecordCount(manager);
-			}
-		}
+//		if(isPrimary) {
+//			for(Integer replicaId:replicas)
+//			{
+//			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
+//			req.getRecordCount(manager);
+//			}
+//		}
 		String data[]=manager.split(Constants.RECEIVED_DATA_SEPERATOR);
 		String managerID=data[0];
 		String requestID=data[1];
@@ -247,6 +251,7 @@ public class DcmsServerImpl extends DcmsPOA {
 				recordCount = loc + " " + getCurrServerCnt();
 			} else {
 				try {
+					System.out.println("===================Sending req for :: "+loc+"with server id :: "+this.serverID);
 					req[counter] = new DcmsServerUDPRequestProvider(
 							DcmsServerFE.centralRepository.get(serverID).get(loc), "GET_RECORD_COUNT",
 							null);

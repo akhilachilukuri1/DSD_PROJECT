@@ -26,6 +26,7 @@ public class DcmsServerUDPReceiver extends Thread {
 	String recordCount;
 	DcmsServerImpl server;
 	int c;
+	boolean isAlive;
 
 	/**
 	 * 
@@ -40,11 +41,12 @@ public class DcmsServerUDPReceiver extends Thread {
 	 *            object that holds the corba server instance for communication
 	 */
 
-	public DcmsServerUDPReceiver(int udpPort, ServerCenterLocation loc, Logger logger,
+	public DcmsServerUDPReceiver(boolean isAlive, int udpPort, ServerCenterLocation loc, Logger logger,
 			DcmsServerImpl serverImp) {
 		location = loc;
 		loggerInstance = logger;
 		this.server = serverImp;
+		this.isAlive = isAlive;
 		c = 0;
 		try {
 			
@@ -84,19 +86,23 @@ public class DcmsServerUDPReceiver extends Thread {
 	@Override
 	public void run() {
 		byte[] receiveData;
-		while (true) {
+		while (isAlive) {
 			try {
 				receiveData = new byte[1024];
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
-//				System.out.println(
-//						"Received pkt :: " + new String(receivePacket.getData()));
+				System.out.println(
+						"LOc :: "+location +"1 Received pkt in udp receiver :: " + new String(receivePacket.getData()));
 				String inputPkt = new String(receivePacket.getData()).trim();
 				new DcmsServerUDPRequestServer(receivePacket, server).start();
 				loggerInstance.log(Level.INFO,
-						"Received " + inputPkt + " from " + location);
+						"2 Received in udp receiver " + inputPkt + " from " + location);
 			} catch (Exception e) {
 			}
 		}
+	}
+	
+	public void killUDPReceiver(){
+		isAlive = false;
 	}
 }

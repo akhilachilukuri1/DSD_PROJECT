@@ -191,7 +191,7 @@ public class ClientImp {
 		String message = "";
 		logManager.logger.log(Level.INFO, "Initiating Server Kill Request at location "+location);
 		message = serverLoc.killServer(location);
-		System.out.println(message);
+		//System.out.println(message);
 		logManager.logger.log(Level.INFO, message);
 		return message;
 	}

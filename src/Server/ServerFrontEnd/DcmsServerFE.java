@@ -30,13 +30,13 @@ public class DcmsServerFE extends DcmsPOA {
 	Integer requestId;
 	HashMap<Integer, String> requestBuffer;
 	ArrayList<TransferReqToCurrentServer> requests;
-	public static HashMap<Integer,TransferResponseToFE> responses;
+	public static HashMap<Integer, TransferResponseToFE> responses;
 	public static ArrayList<String> receivedResponses;
-	public static HashMap<String, DcmsServerImpl> primaryServerMap,replica1ServerMap,replica2ServerMap;
-	DcmsServerMultiCastReceiver primaryReceiver, replica1Receiver,replica2Receiver;
+	public static HashMap<String, DcmsServerImpl> primaryServerMap, replica1ServerMap, replica2ServerMap;
+	DcmsServerMultiCastReceiver primaryReceiver, replica1Receiver, replica2Receiver;
 	DcmsServerReplicaResponseReceiver replicaResponseReceiver;
 	public static HashMap<Integer, HashMap<String, DcmsServerImpl>> centralRepository;
-	DcmsServerImpl s1,s2,s3;
+	DcmsServerImpl s1, s2, s3;
 	DcmsServerImpl primaryMtlServer;
 	DcmsServerImpl primaryLvlServer;
 	DcmsServerImpl primaryDdoServer;
@@ -50,11 +50,11 @@ public class DcmsServerFE extends DcmsPOA {
 	static boolean s2_DDO_sender_isAlive = true;
 	static boolean s3_DDO_sender_isAlive = true;
 
-	static int TIME_OUT = 6000;
+	static int TIME_OUT = 1000;
 	static int LEADER_ID = 100;
 	static int S1_ID = 1;
 	static int S2_ID = 2;
-	static int S3_ID = 3 ;
+	static int S3_ID = 3;
 	static Object mapAccessor = new Object();
 	static HashMap<String, Integer> currentIds = new HashMap<>();
 	public static HashMap<String, Boolean> server_leader_status = new HashMap<>();
@@ -68,8 +68,8 @@ public class DcmsServerFE extends DcmsPOA {
 	int s1_DDO_receive_port = 5451;
 	int s2_DDO_receive_port = 5452;
 	int s3_DDO_receive_port = 5453;
-	//int s2_receive_port = 6543;
-	//int s3_receive_port = 3332;
+	// int s2_receive_port = 6543;
+	// int s3_receive_port = 3332;
 	String MTLserverName1 = "MTL1";
 	String MTLserverName2 = "MTL2";
 	String MTLserverName3 = "MTL3";
@@ -84,8 +84,8 @@ public class DcmsServerFE extends DcmsPOA {
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
 	 * 
-	 * @param loc The server location for which the server implementation should be
-	 * initialized
+	 * @param loc The server location for which the server implementation should
+	 * be initialized
 	 */
 	public DcmsServerFE() {
 		recordsMap = new HashMap<>();
@@ -136,47 +136,67 @@ public class DcmsServerFE extends DcmsPOA {
 
 	public void init() {
 		try {
-		ArrayList<Integer> replicas =new ArrayList<>();
-		replicas.add(Constants.REPLICA1_SERVER_ID);
-		replicas.add(Constants.REPLICA2_SERVER_ID);
-		boolean isPrimary = true;
-		primaryReceiver = new DcmsServerMultiCastReceiver(isPrimary);
-		primaryReceiver.start();
-		
-		replicaResponseReceiver = new DcmsServerReplicaResponseReceiver();
-		replicaResponseReceiver.start();
-		DatagramSocket socket1 = new DatagramSocket();
-		primaryMtlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.MTL,9999,socket1, s1_MTL_sender_isAlive, MTLserverName1, s1_MTL_receive_port, s2_MTL_receive_port,s3_MTL_receive_port,replicas);
-		primaryLvlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.LVL,7777,socket1, s1_LVL_sender_isAlive, LVLserverName1, s1_LVL_receive_port, s2_LVL_receive_port,s3_LVL_receive_port,replicas);
-		primaryDdoServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.DDO,6666,socket1, s1_DDO_sender_isAlive, DDOserverName1, s1_DDO_receive_port, s2_DDO_receive_port,s3_DDO_receive_port,replicas);
-		primaryServerMap.put("MTL", primaryMtlServer);
-		primaryServerMap.put("LVL", primaryLvlServer);
-		primaryServerMap.put("DDO", primaryDdoServer);
+			ArrayList<Integer> replicas = new ArrayList<>();
+			replicas.add(Constants.REPLICA1_SERVER_ID);
+			replicas.add(Constants.REPLICA2_SERVER_ID);
+			boolean isPrimary = true;
+			primaryReceiver = new DcmsServerMultiCastReceiver(isPrimary);
+			primaryReceiver.start();
 
-		replica1Receiver = new DcmsServerMultiCastReceiver(false);
-		replica1Receiver.start();
-		DatagramSocket socket2 = new DatagramSocket();
-		DcmsServerImpl replica1MtlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.MTL,5555,socket2, s2_MTL_sender_isAlive, MTLserverName2, s2_MTL_receive_port, s1_MTL_receive_port,s3_MTL_receive_port,replicas);
-		DcmsServerImpl replica1LvlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.LVL,4444,socket2, s2_LVL_sender_isAlive, LVLserverName2, s2_LVL_receive_port, s1_LVL_receive_port,s3_LVL_receive_port,replicas);
-		DcmsServerImpl replica1DdoServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID,false, ServerCenterLocation.DDO,2222,socket2, s2_DDO_sender_isAlive, DDOserverName2, s2_DDO_receive_port, s1_DDO_receive_port,s3_DDO_receive_port,replicas);
-		replica1ServerMap.put("MTL", replica1MtlServer);
-		replica1ServerMap.put("LVL", replica1LvlServer);
-		replica1ServerMap.put("DDO", replica1DdoServer);
-		
-		/*replica2Receiver = new DcmsServerMultiCastReceiver(false);
-		replica2Receiver.start();*/
-		DatagramSocket socket3 = new DatagramSocket();
-		DcmsServerImpl replica2MtlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID,false, ServerCenterLocation.MTL,3333,socket3, s3_MTL_sender_isAlive, MTLserverName3, s3_MTL_receive_port, s1_MTL_receive_port,s2_MTL_receive_port,replicas);
-		DcmsServerImpl replica2LvlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID,false, ServerCenterLocation.LVL,8888,socket3, s3_LVL_sender_isAlive, LVLserverName3, s3_LVL_receive_port, s1_LVL_receive_port,s2_LVL_receive_port,replicas);
-		DcmsServerImpl replica2DdoServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID,false, ServerCenterLocation.DDO,5655,socket3, s3_DDO_sender_isAlive, DDOserverName3, s3_DDO_receive_port, s1_DDO_receive_port,s2_DDO_receive_port,replicas);
-		replica2ServerMap.put("MTL", replica2MtlServer);
-		replica2ServerMap.put("LVL", replica2LvlServer);
-		replica2ServerMap.put("DDO", replica2DdoServer);
-		
-		centralRepository.put(Constants.PRIMARY_SERVER_ID, primaryServerMap);
-		centralRepository.put(Constants.REPLICA1_SERVER_ID, replica1ServerMap);
-		centralRepository.put(Constants.REPLICA2_SERVER_ID, replica2ServerMap);
-			
+			replicaResponseReceiver = new DcmsServerReplicaResponseReceiver();
+			replicaResponseReceiver.start();
+			DatagramSocket socket1 = new DatagramSocket();
+			primaryMtlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID, isPrimary, ServerCenterLocation.MTL,
+					9999, socket1, s1_MTL_sender_isAlive, MTLserverName1, s1_MTL_receive_port, s2_MTL_receive_port,
+					s3_MTL_receive_port, replicas);
+			primaryLvlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID, isPrimary, ServerCenterLocation.LVL,
+					7777, socket1, s1_LVL_sender_isAlive, LVLserverName1, s1_LVL_receive_port, s2_LVL_receive_port,
+					s3_LVL_receive_port, replicas);
+			primaryDdoServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID, isPrimary, ServerCenterLocation.DDO,
+					6666, socket1, s1_DDO_sender_isAlive, DDOserverName1, s1_DDO_receive_port, s2_DDO_receive_port,
+					s3_DDO_receive_port, replicas);
+			primaryServerMap.put("MTL", primaryMtlServer);
+			primaryServerMap.put("LVL", primaryLvlServer);
+			primaryServerMap.put("DDO", primaryDdoServer);
+
+			replica1Receiver = new DcmsServerMultiCastReceiver(false);
+			replica1Receiver.start();
+			DatagramSocket socket2 = new DatagramSocket();
+			DcmsServerImpl replica1MtlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID, false,
+					ServerCenterLocation.MTL, 5555, socket2, s2_MTL_sender_isAlive, MTLserverName2, s2_MTL_receive_port,
+					s1_MTL_receive_port, s3_MTL_receive_port, replicas);
+			DcmsServerImpl replica1LvlServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID, false,
+					ServerCenterLocation.LVL, 4444, socket2, s2_LVL_sender_isAlive, LVLserverName2, s2_LVL_receive_port,
+					s1_LVL_receive_port, s3_LVL_receive_port, replicas);
+			DcmsServerImpl replica1DdoServer = new DcmsServerImpl(Constants.REPLICA1_SERVER_ID, false,
+					ServerCenterLocation.DDO, 2222, socket2, s2_DDO_sender_isAlive, DDOserverName2, s2_DDO_receive_port,
+					s1_DDO_receive_port, s3_DDO_receive_port, replicas);
+			replica1ServerMap.put("MTL", replica1MtlServer);
+			replica1ServerMap.put("LVL", replica1LvlServer);
+			replica1ServerMap.put("DDO", replica1DdoServer);
+
+			/*
+			 * replica2Receiver = new DcmsServerMultiCastReceiver(false);
+			 * replica2Receiver.start();
+			 */
+			DatagramSocket socket3 = new DatagramSocket();
+			DcmsServerImpl replica2MtlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
+					ServerCenterLocation.MTL, 9878, socket3, s3_MTL_sender_isAlive, MTLserverName3, s3_MTL_receive_port,
+					s1_MTL_receive_port, s2_MTL_receive_port, replicas);
+			DcmsServerImpl replica2LvlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
+					ServerCenterLocation.LVL, 9701, socket3, s3_LVL_sender_isAlive, LVLserverName3, s3_LVL_receive_port,
+					s1_LVL_receive_port, s2_LVL_receive_port, replicas);
+			DcmsServerImpl replica2DdoServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
+					ServerCenterLocation.DDO, 5655, socket3, s3_DDO_sender_isAlive, DDOserverName3, s3_DDO_receive_port,
+					s1_DDO_receive_port, s2_DDO_receive_port, replicas);
+			replica2ServerMap.put("MTL", replica2MtlServer);
+			replica2ServerMap.put("LVL", replica2LvlServer);
+			replica2ServerMap.put("DDO", replica2DdoServer);
+
+			centralRepository.put(Constants.PRIMARY_SERVER_ID, primaryServerMap);
+			centralRepository.put(Constants.REPLICA1_SERVER_ID, replica1ServerMap);
+			centralRepository.put(Constants.REPLICA2_SERVER_ID, replica2ServerMap);
+
 			Thread thread1 = new Thread() {
 				public void run() {
 					while (getStatus(MTLserverName1)) {
@@ -269,10 +289,10 @@ public class DcmsServerFE extends DcmsPOA {
 
 			try {
 				Thread.sleep(10000);
-				//setStatus();
-				//primaryMtlServer.receiver.setStatus(false);
-				//primaryLvlServer.receiver.setStatus(false);
-				//replica1DdoServer.receiver.setStatus(false);
+				// setStatus();
+				// primaryMtlServer.receiver.setStatus(false);
+				// primaryLvlServer.receiver.setStatus(false);
+				// replica1DdoServer.receiver.setStatus(false);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -288,17 +308,15 @@ public class DcmsServerFE extends DcmsPOA {
 	 * @param managerID
 	 *            gets the managerID
 	 * @param teacherField
-	 *            values of the teacher attribute concatenated by the comma which
-	 *            are received from the client
+	 *            values of the teacher attribute concatenated by the comma
+	 *            which are received from the client
 	 * 
 	 */
 
 	@Override
 	public String createTRecord(String managerID, String teacher) {
-		teacher = ServerOperations.CREATE_T_RECORD + 
-				Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
-				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + 
-				Constants.RECEIVED_DATA_SEPERATOR + teacher;
+		teacher = ServerOperations.CREATE_T_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
+				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + teacher;
 		return sendRequestToServer(teacher);
 	}
 
@@ -307,14 +325,14 @@ public class DcmsServerFE extends DcmsPOA {
 	}
 
 	/**
-	 * Once the student record is created, the function createSRecord returns the
-	 * record ID of the student record created to the client
+	 * Once the student record is created, the function createSRecord returns
+	 * the record ID of the student record created to the client
 	 * 
 	 * @param managerID
 	 *            gets the managerID
 	 * @param studentFields
-	 *            values of the student attribute concatenated by the comma which
-	 *            are received the client
+	 *            values of the student attribute concatenated by the comma
+	 *            which are received the client
 	 * 
 	 */
 
@@ -326,10 +344,10 @@ public class DcmsServerFE extends DcmsPOA {
 	}
 
 	/**
-	 * Invokes record count request on MTL/LVL/DDO server to get record count from
-	 * all the servers Creates UDPRequest Provider objects for each request and
-	 * creates separate thread for each request. And makes sure each thread is
-	 * complete and returns the result
+	 * Invokes record count request on MTL/LVL/DDO server to get record count
+	 * from all the servers Creates UDPRequest Provider objects for each request
+	 * and creates separate thread for each request. And makes sure each thread
+	 * is complete and returns the result
 	 */
 
 	@Override
@@ -350,8 +368,8 @@ public class DcmsServerFE extends DcmsPOA {
 	 * @param fieldname
 	 *            gets the fieldname to be edited for the given recordID
 	 * @param newvalue
-	 *            gets the newvalue to be replaced to the given fieldname from the
-	 *            client
+	 *            gets the newvalue to be replaced to the given fieldname from
+	 *            the client
 	 */
 
 	@Override
@@ -365,8 +383,9 @@ public class DcmsServerFE extends DcmsPOA {
 	/**
 	 * Performs the transfer record to the remoteCenterServer by sending the
 	 * appropriate packet to the DcmsServerUDPRequestProvider thread Creates
-	 * UDPRequest Provider objects for each request and creates separate thread for
-	 * each request. And makes sure each thread is complete and returns the result
+	 * UDPRequest Provider objects for each request and creates separate thread
+	 * for each request. And makes sure each thread is complete and returns the
+	 * result
 	 * 
 	 * @param managerID
 	 *            gets the managerID
@@ -386,15 +405,14 @@ public class DcmsServerFE extends DcmsPOA {
 		try {
 			requestId += 1;
 			DatagramSocket ds = new DatagramSocket();
-			data = data + Constants.RECEIVED_DATA_SEPERATOR+ Integer.toString(requestId);
+			data = data + Constants.RECEIVED_DATA_SEPERATOR + Integer.toString(requestId);
 			byte[] dataBytes = data.getBytes();
 			DatagramPacket dp = new DatagramPacket(dataBytes, dataBytes.length,
-					InetAddress.getByName(Constants.CURRENT_SERVER_IP)
-					, Constants.CURRENT_SERVER_UDP_PORT);
+					InetAddress.getByName(Constants.CURRENT_SERVER_IP), Constants.CURRENT_SERVER_UDP_PORT);
 			ds.send(dp);
-			System.out.println("Adding request to request buffer with req id..."+requestId);
+			System.out.println("Adding request to request buffer with req id..." + requestId);
 			requestBuffer.put(requestId, data);
-			//waitForAck();
+			// waitForAck();
 			System.out.println("Waiting for acknowledgement from current server...");
 			Thread.sleep(Constants.RETRY_TIME);
 			return getResponse(requestId);
@@ -408,43 +426,37 @@ public class DcmsServerFE extends DcmsPOA {
 		try {
 			responses.get(requestId).join();
 		} catch (InterruptedException e) {
-			System.out.println(e.getMessage());		
+			System.out.println(e.getMessage());
 		}
 		requestBuffer.remove(requestId);
 		return responses.get(requestId).getResponse();
 	}
 
-	private void waitForAck() {
-		int counter = 0;
-		while (true) {
-			if (counter >= Constants.MAX_RETRY_ATTEMPT) {
-				break;
-			} else {
-				try {
-					System.out.println("Waiting");
-					Thread.sleep(Constants.RETRY_TIME);
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-				//sendRequestToServer(requestBuffer.get(requestId));
-				counter++;
-			}
-		}
-	}
-	private static void setStatus() {
-		s1_MTL_sender_isAlive = false;
-		//s1_LVL_sender_isAlive = false;
-		//s2_DDO_sender_isAlive = false;
-	}
+//	private void waitForAck() {
+//		int counter = 0;
+//		while (true) {
+//			if (counter >= Constants.MAX_RETRY_ATTEMPT) {
+//				break;
+//			} else {
+//				try {
+//					System.out.println("Waiting");
+//					Thread.sleep(Constants.RETRY_TIME);
+//				} catch (Exception e) {
+//					System.out.println(e.getMessage());
+//				}
+//				// sendRequestToServer(requestBuffer.get(requestId));
+//				counter++;
+//			}
+//		}
+//	}
 
 	private static synchronized void checkServerStatus(String serverName) {
 		synchronized (mapAccessor) {
 			long currentTime = System.nanoTime() / 1000000;
-			if(server_last_updated_time.containsKey(serverName)) {
+			if (server_last_updated_time.containsKey(serverName)) {
 				if (currentTime - server_last_updated_time.get(serverName) > TIME_OUT) {
-					//System.out.println(serverName + "Failed");
-					if(server_leader_status.get(serverName)) {
-						System.out.println(serverName+ " Leader Failed Found!!!");
+					if (server_leader_status.get(serverName)) {
+						System.out.println(serverName + " Leader Failed Found!!!");
 						electNewLeader(serverName);
 					}
 				}
@@ -456,64 +468,72 @@ public class DcmsServerFE extends DcmsPOA {
 		server_leader_status.remove(oldLeader);
 		server_last_updated_time.remove(oldLeader);
 		currentIds.remove(oldLeader);
-		String loc=oldLeader.substring(0, 3);
+		String loc = oldLeader.substring(0, 3);
 		Map.Entry<String, Integer> maxEntry = null;
-		for (Map.Entry<String, Integer> entry : currentIds.entrySet())
-		{
-			if(entry.getKey().contains(loc))
-			{
-		    if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
-		    {
-		        maxEntry = entry;
-		    }
-		}
-		}
-		server_leader_status.put(maxEntry.getKey(),true);
-		currentIds.put(maxEntry.getKey(), LEADER_ID);
-		System.out.println("++++Elected new leader :: "+maxEntry.getKey()+" in the location"+loc);
-		HashMap<String,DcmsServerImpl> replaceserver=centralRepository.get(Constants.PRIMARY_SERVER_ID);
-			if(maxEntry.getKey().contains("2"))
-			{
-				ArrayList<Integer> replicas =new ArrayList<>();
-				replicas.add(Constants.REPLICA2_SERVER_ID);
-				HashMap<String,DcmsServerImpl> getnewserver=centralRepository.get(Constants.REPLICA1_SERVER_ID);
-				DcmsServerImpl newPrimary=getnewserver.get(loc);
-				newPrimary.setPrimary(true);
-				newPrimary.setReplicas(replicas);
-				replaceserver.put(loc, newPrimary);
-				centralRepository.put(Constants.PRIMARY_SERVER_ID, replaceserver);
-				getnewserver.remove(loc);
-				centralRepository.put(Constants.REPLICA1_SERVER_ID, getnewserver);
-				HashMap<String,DcmsServerImpl> replicamap=centralRepository.get(Constants.REPLICA2_SERVER_ID);
-				DcmsServerImpl replica=replicamap.get(loc);
-				replica.setReplicas(replicas);
-				replicamap.put(loc, replica);
-				centralRepository.put(Constants.REPLICA2_SERVER_ID, replicamap);
-				
-			
-			}else
-				if(maxEntry.getKey().contains("3"))
-				{
-					ArrayList<Integer> replicas =new ArrayList<>();
-					replicas.add(Constants.REPLICA1_SERVER_ID);
-					HashMap<String,DcmsServerImpl> getnewserver=centralRepository.get(Constants.REPLICA2_SERVER_ID);
-					DcmsServerImpl newPrimary=getnewserver.get(loc);
-					newPrimary.setPrimary(true);
-					newPrimary.setReplicas(replicas);
-					replaceserver.put(loc, newPrimary);
-					centralRepository.put(Constants.PRIMARY_SERVER_ID, replaceserver);
-					getnewserver.remove(loc);
-					centralRepository.put(Constants.REPLICA2_SERVER_ID, getnewserver);
-					HashMap<String,DcmsServerImpl> replicamap=centralRepository.get(Constants.REPLICA1_SERVER_ID);
-					DcmsServerImpl replica=replicamap.get(loc);
-					replica.setReplicas(replicas);
-					replicamap.put(loc, replica);
-					centralRepository.put(Constants.REPLICA1_SERVER_ID, replicamap);
-					
-					
+		for (Map.Entry<String, Integer> entry : currentIds.entrySet()) {
+			if (entry.getKey().contains(loc)) {
+				if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+					maxEntry = entry;
 				}
-			
+			}
+		}
+		server_leader_status.put(maxEntry.getKey(), true);
+		currentIds.put(maxEntry.getKey(), LEADER_ID);
+		System.out.println("++++Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
+		HashMap<String, DcmsServerImpl> replaceserver = centralRepository.get(Constants.PRIMARY_SERVER_ID);
+		if (maxEntry.getKey().contains("2")) {
+			ArrayList<Integer> replicas = new ArrayList<>();
+			replicas.add(Constants.REPLICA2_SERVER_ID);
+			HashMap<String, DcmsServerImpl> getnewserver = centralRepository.get(Constants.REPLICA1_SERVER_ID);
+			DcmsServerImpl newPrimary = getnewserver.get(loc);
+			newPrimary.setPrimary(true);
+			newPrimary.setReplicas(replicas);
+
+			replaceserver.remove(loc);
+
+			replaceserver.put(loc, newPrimary);
+			centralRepository.put(Constants.PRIMARY_SERVER_ID, replaceserver);
+
+			getnewserver.remove(loc);
+			centralRepository.put(Constants.REPLICA1_SERVER_ID, getnewserver);
+
+			HashMap<String, DcmsServerImpl> replicamap = centralRepository.get(Constants.REPLICA2_SERVER_ID);
+			DcmsServerImpl replica = replicamap.get(loc);
+			replica.setReplicas(replicas);
+			replicamap.put(loc, replica);
+			centralRepository.put(Constants.REPLICA2_SERVER_ID, replicamap);
+
+		} else if (maxEntry.getKey().contains("3")) {
+			ArrayList<Integer> replicas = new ArrayList<>();
+			replicas.add(Constants.REPLICA1_SERVER_ID);
+			HashMap<String, DcmsServerImpl> getnewserver = centralRepository.get(Constants.REPLICA2_SERVER_ID);
+			DcmsServerImpl newPrimary = getnewserver.get(loc);
+			newPrimary.setPrimary(true);
+			newPrimary.setReplicas(replicas);
+
+			replaceserver.put(loc, newPrimary);
+			centralRepository.put(Constants.PRIMARY_SERVER_ID, replaceserver);
+
+			getnewserver.remove(loc);
+			centralRepository.put(Constants.REPLICA2_SERVER_ID, getnewserver);
+
+			HashMap<String, DcmsServerImpl> replicamap = centralRepository.get(Constants.REPLICA1_SERVER_ID);
+			DcmsServerImpl replica = replicamap.get(loc);
+			replica.setReplicas(replicas);
+			replicamap.put(loc, replica);
+			centralRepository.put(Constants.REPLICA1_SERVER_ID, replicamap);
+
+		}
+
+//		for (Map.Entry<Integer, HashMap<String, DcmsServerImpl>> entry : centralRepository.entrySet()) {
+//			System.out.println("ID :: " + entry.getKey());
+//			for (Map.Entry<String, DcmsServerImpl> entry1 : entry.getValue().entrySet()) {
+//				System.out.println("LOC :: " + entry1.getKey() + " REF :: " + entry1.getValue());
+//			}
+//		}
+
 	}
+
 	private static boolean getStatus(String name) {
 		if (name.equals("MTL1")) {
 			return s1_MTL_sender_isAlive;
@@ -521,44 +541,38 @@ public class DcmsServerFE extends DcmsPOA {
 			return s2_MTL_sender_isAlive;
 		} else if (name.equals("MTL3")) {
 			return s3_MTL_sender_isAlive;
-		}else if (name.equals("LVL1")) {
-				return s1_LVL_sender_isAlive;
-			} else if (name.equals("LVL2")) {
-				return s2_LVL_sender_isAlive;
-			} else if (name.equals("LVL3")) {
-				return s3_LVL_sender_isAlive;
-			}else if (name.equals("DDO1")) {
-					return s1_DDO_sender_isAlive;
-				} else if (name.equals("DDO2")) {
-					return s2_DDO_sender_isAlive;
-				} else if (name.equals("DDO3")) {
-					return s3_DDO_sender_isAlive;
-				}
+		} else if (name.equals("LVL1")) {
+			return s1_LVL_sender_isAlive;
+		} else if (name.equals("LVL2")) {
+			return s2_LVL_sender_isAlive;
+		} else if (name.equals("LVL3")) {
+			return s3_LVL_sender_isAlive;
+		} else if (name.equals("DDO1")) {
+			return s1_DDO_sender_isAlive;
+		} else if (name.equals("DDO2")) {
+			return s2_DDO_sender_isAlive;
+		} else if (name.equals("DDO3")) {
+			return s3_DDO_sender_isAlive;
+		}
 		return false;
 	}
 
 	@Override
 	public String killServer(String location) {
-		String msg="";
-		if(location.equals("MTL"))
-		{
+		String msg = "";
+		if (location.equals("MTL")) {
 			s1_MTL_sender_isAlive = false;
 			primaryMtlServer.receiver.setStatus(false);
-			msg="MTL Server is Killed";
-		}else
-			if(location.equals("LVL"))
-			{
-				s1_LVL_sender_isAlive = false;
-				primaryLvlServer.receiver.setStatus(false);
-				msg="LVL Server is Killed";
-			}else
-				if(location.equals("DDO"))
-				{
-					s1_DDO_sender_isAlive = false;
-					primaryDdoServer.receiver.setStatus(false);
-					msg="DDO Server is Killed";
-				}
-		
+			msg = "MTL Server is Killed";
+		} else if (location.equals("LVL")) {
+			s1_LVL_sender_isAlive = false;
+			primaryLvlServer.receiver.setStatus(false);
+			msg = "LVL Server is Killed";
+		} else if (location.equals("DDO")) {
+			s1_DDO_sender_isAlive = false;
+			primaryDdoServer.receiver.setStatus(false);
+			msg = "DDO Server is Killed";
+		}
 		return msg;
 	}
 }

@@ -65,6 +65,7 @@ public class DcmsServerUDPRequestServer extends Thread {
 				break;
 			case "GET_RECORD_COUNT":
 				responseData = Integer.toString(getRecCount()).getBytes();
+				System.out.println("data in udp req server :: "+Integer.toString(getRecCount()));
 				serverSocket.send(new DatagramPacket(responseData,
 						responseData.length, receivePacket.getAddress(),
 						receivePacket.getPort()));

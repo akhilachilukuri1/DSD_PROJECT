@@ -44,6 +44,7 @@ public class TransferReqToCurrentServer extends Thread {
 		case GET_REC_COUNT:
 			this.server = chooseServer(dataToBeSent[1]);
 			response = this.server.getRecordCount(dataToBeSent[2]+Constants.RECEIVED_DATA_SEPERATOR+dataToBeSent[3]);
+			System.out.println("Received response here ::::::::::::::::::::::: "+response);
 			sendReply(requestId, response);
 			break;
 		case EDIT_RECORD:

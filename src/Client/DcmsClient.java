@@ -14,11 +14,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * DcmsClient perform operations for MTL, DDO and LVL locations 
- * by sending the request calls to the server.
+ * DcmsClient perform operations for MTL, DDO and LVL locations by sending the
+ * request calls to the server.
  * 
- * Receives the Success/Failure message for the corresponding operations
- * and forwards them to the client.
+ * Receives the Success/Failure message for the corresponding operations and
+ * forwards them to the client.
  * 
  */
 
@@ -30,7 +30,8 @@ public class DcmsClient {
 	 * Client code to get the inputs from the user for the operations and sends
 	 * calls to the corresponding server locations
 	 * 
-	 * @param args[] port number and IP address
+	 * @param args[]
+	 *            port number and IP address
 	 * 
 	 */
 	public static void main(String args[]) throws IOException {
@@ -75,14 +76,15 @@ public class DcmsClient {
 					System.out.println("5) Transfer the record");
 					System.out.println("6) Kill the Primary Server");
 					System.out.println("7) Logout manager");
-					
+
 					try {
 						Integer choice = Integer.parseInt(br.readLine().trim());
 
 						switch (choice) {
 						case 1:
 							/*
-							 * Getting input for Creating the Teacher record operation
+							 * Getting input for Creating the Teacher record
+							 * operation
 							 */
 							System.out.println("Enter the first name of the teacher");
 							String firstNameT = br.readLine().trim();
@@ -146,7 +148,8 @@ public class DcmsClient {
 							break;
 						case 2:
 							/*
-							 *  Getting input for creating the Student record operation
+							 * Getting input for creating the Student record
+							 * operation
 							 */
 							System.out.println("Enter the first name of the student");
 							String firstNameS = br.readLine().trim();
@@ -217,14 +220,15 @@ public class DcmsClient {
 							break;
 						case 3:
 							/*
-							 *  Get the record count of all the server operation
+							 * Get the record count of all the server operation
 							 */
 							System.out.println("Total Record Count from all " + Constants.TOTAL_SERVERS_COUNT
 									+ " servers is :: " + serverloc.getRecordCounts(managerID));
 							break;
 						case 4:
 							/*
-							 * Getting the record ID as input for Edit record operation 
+							 * Getting the record ID as input for Edit record
+							 * operation
 							 */
 							System.out.println("Enter the Record ID");
 							String recordID = br.readLine().trim();
@@ -373,22 +377,19 @@ public class DcmsClient {
 							serverloc.transferRecord(managerID, recordID, location);
 							break;
 						case 6:
-						 while(true)
-						 {
-							 System.out.println("Enter the Location (MTL/LVL/DDO)");
-							 location = br.readLine();
-						     if(!location.equalsIgnoreCase("MTL")&&!location.equalsIgnoreCase("LVL")&&!location.equalsIgnoreCase("DDO"))
-						     {
-						    	 continue;
-						     }
-						     else 
-						    	 {
-						    	 System.out.println(serverloc.killServer(location));
-						    	 break;
-						    	 }
-							
-						 }
-						 break;
+							while (true) {
+								System.out.println("Enter the Location (MTL/LVL/DDO)");
+								location = br.readLine();
+								if (!location.equalsIgnoreCase("MTL") && !location.equalsIgnoreCase("LVL")
+										&& !location.equalsIgnoreCase("DDO")) {
+									continue;
+								} else {
+									System.out.println(serverloc.killServer(location));
+									break;
+								}
+
+							}
+							break;
 						case 7:
 							i = 0;
 							break;
