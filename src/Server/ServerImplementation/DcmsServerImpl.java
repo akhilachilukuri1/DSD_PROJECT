@@ -28,6 +28,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	DcmsServerUDPReceiver dcmsServerUDPReceiver;
 	String IPaddress;
 	public HashMap<String, List<Record>> recordsMap;
+	
 	int studentCount = 0;
 	int teacherCount = 0;
 	String recordsCount;
@@ -93,7 +94,6 @@ public class DcmsServerImpl extends DcmsPOA {
 			}
 		}
 		String temp[] = teacher.split(",");
-		// String managerID = temp[0];
 		String teacherID = "TR" + (++teacherCount);
 		String firstName = temp[0];
 		String lastname = temp[1];
@@ -229,13 +229,13 @@ public class DcmsServerImpl extends DcmsPOA {
 
 	@Override
 	public String getRecordCount(String manager) {
-//		if(isPrimary) {
-//			for(Integer replicaId:replicas)
-//			{
-//			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
-//			req.getRecordCount(manager);
-//			}
-//		}
+		if(isPrimary) {
+			for(Integer replicaId:replicas)
+			{
+			DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
+			req.getRecordCount(manager);
+			}
+		}
 		String data[]=manager.split(Constants.RECEIVED_DATA_SEPERATOR);
 		String managerID=data[0];
 		String requestID=data[1];
