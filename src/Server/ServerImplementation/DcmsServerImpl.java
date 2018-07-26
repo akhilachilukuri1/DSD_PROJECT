@@ -562,4 +562,10 @@ public class DcmsServerImpl extends DcmsPOA {
 	public void setReplicas(ArrayList<Integer> replicas) {
 		this.replicas = replicas;
 	}
+
+	@Override
+	public String killServer(String location) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -157,4 +157,10 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 		sendMulticastRequest(req);
 		return "";
 	}
+
+	@Override
+	public String killServer(String location) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

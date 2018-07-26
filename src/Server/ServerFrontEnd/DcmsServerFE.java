@@ -37,6 +37,9 @@ public class DcmsServerFE extends DcmsPOA {
 	DcmsServerReplicaResponseReceiver replicaResponseReceiver;
 	public static HashMap<Integer, HashMap<String, DcmsServerImpl>> centralRepository;
 	DcmsServerImpl s1,s2,s3;
+	DcmsServerImpl primaryMtlServer;
+	DcmsServerImpl primaryLvlServer;
+	DcmsServerImpl primaryDdoServer;
 	static boolean s1_MTL_sender_isAlive = true;
 	static boolean s2_MTL_sender_isAlive = true;
 	static boolean s3_MTL_sender_isAlive = true;
@@ -143,9 +146,9 @@ public class DcmsServerFE extends DcmsPOA {
 		replicaResponseReceiver = new DcmsServerReplicaResponseReceiver();
 		replicaResponseReceiver.start();
 		DatagramSocket socket1 = new DatagramSocket();
-		DcmsServerImpl primaryMtlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.MTL,9999,socket1, s1_MTL_sender_isAlive, MTLserverName1, s1_MTL_receive_port, s2_MTL_receive_port,s3_MTL_receive_port,replicas);
-		DcmsServerImpl primaryLvlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.LVL,7777,socket1, s1_LVL_sender_isAlive, LVLserverName1, s1_LVL_receive_port, s2_LVL_receive_port,s3_LVL_receive_port,replicas);
-		DcmsServerImpl primaryDdoServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.DDO,6666,socket1, s1_DDO_sender_isAlive, DDOserverName1, s1_DDO_receive_port, s2_DDO_receive_port,s3_DDO_receive_port,replicas);
+		primaryMtlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.MTL,9999,socket1, s1_MTL_sender_isAlive, MTLserverName1, s1_MTL_receive_port, s2_MTL_receive_port,s3_MTL_receive_port,replicas);
+		primaryLvlServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.LVL,7777,socket1, s1_LVL_sender_isAlive, LVLserverName1, s1_LVL_receive_port, s2_LVL_receive_port,s3_LVL_receive_port,replicas);
+		primaryDdoServer = new DcmsServerImpl(Constants.PRIMARY_SERVER_ID,isPrimary, ServerCenterLocation.DDO,6666,socket1, s1_DDO_sender_isAlive, DDOserverName1, s1_DDO_receive_port, s2_DDO_receive_port,s3_DDO_receive_port,replicas);
 		primaryServerMap.put("MTL", primaryMtlServer);
 		primaryServerMap.put("LVL", primaryLvlServer);
 		primaryServerMap.put("DDO", primaryDdoServer);
@@ -266,8 +269,8 @@ public class DcmsServerFE extends DcmsPOA {
 
 			try {
 				Thread.sleep(10000);
-				setStatus();
-				primaryMtlServer.receiver.setStatus(false);
+				//setStatus();
+				//primaryMtlServer.receiver.setStatus(false);
 				//primaryLvlServer.receiver.setStatus(false);
 				//replica1DdoServer.receiver.setStatus(false);
 			} catch (InterruptedException e) {
@@ -532,5 +535,30 @@ public class DcmsServerFE extends DcmsPOA {
 					return s3_DDO_sender_isAlive;
 				}
 		return false;
+	}
+
+	@Override
+	public String killServer(String location) {
+		String msg="";
+		if(location.equals("MTL"))
+		{
+			s1_MTL_sender_isAlive = false;
+			primaryMtlServer.receiver.setStatus(false);
+			msg="MTL Server is Killed";
+		}else
+			if(location.equals("LVL"))
+			{
+				s1_LVL_sender_isAlive = false;
+				primaryLvlServer.receiver.setStatus(false);
+				msg="LVL Server is Killed";
+			}else
+				if(location.equals("DDO"))
+				{
+					s1_DDO_sender_isAlive = false;
+					primaryDdoServer.receiver.setStatus(false);
+					msg="DDO Server is Killed";
+				}
+		
+		return msg;
 	}
 }

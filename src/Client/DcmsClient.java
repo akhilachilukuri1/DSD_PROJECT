@@ -73,7 +73,9 @@ public class DcmsClient {
 					System.out.println("3) Get the record count");
 					System.out.println("4) Edit the record");
 					System.out.println("5) Transfer the record");
-					System.out.println("6) Logout manager");
+					System.out.println("6) Kill the Primary Server");
+					System.out.println("7) Logout manager");
+					
 					try {
 						Integer choice = Integer.parseInt(br.readLine().trim());
 
@@ -371,6 +373,23 @@ public class DcmsClient {
 							serverloc.transferRecord(managerID, recordID, location);
 							break;
 						case 6:
+						 while(true)
+						 {
+							 System.out.println("Enter the Location (MTL/LVL/DDO)");
+							 location = br.readLine();
+						     if(!location.equalsIgnoreCase("MTL")&&!location.equalsIgnoreCase("LVL")&&!location.equalsIgnoreCase("DDO"))
+						     {
+						    	 continue;
+						     }
+						     else 
+						    	 {
+						    	 System.out.println(serverloc.killServer(location));
+						    	 break;
+						    	 }
+							
+						 }
+						 break;
+						case 7:
 							i = 0;
 							break;
 						default:

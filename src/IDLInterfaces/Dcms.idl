@@ -11,6 +11,8 @@ module DcmsApp
 		string editRecord(in string managerID,in string recordID, in string fieldname, in string newvalue);
 		
 		string transferRecord(in string managerID, in string recordID, in string location);
+		
+		string killServer(in string location);
 			
   };
 };
