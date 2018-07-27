@@ -561,17 +561,38 @@ public class DcmsServerFE extends DcmsPOA {
 	public String killServer(String location) {
 		String msg = "";
 		if (location.equals("MTL")) {
+			if(s1_MTL_sender_isAlive&&s2_MTL_sender_isAlive&&s3_MTL_sender_isAlive)
+			{
 			s1_MTL_sender_isAlive = false;
 			primaryMtlServer.receiver.setStatus(false);
 			msg = "MTL Server is Killed";
+			}
+			else
+			{
+				msg="Primary is already killed!!";
+			}
 		} else if (location.equals("LVL")) {
+			if(s1_LVL_sender_isAlive&&s2_LVL_sender_isAlive&&s3_LVL_sender_isAlive)
+			{
 			s1_LVL_sender_isAlive = false;
 			primaryLvlServer.receiver.setStatus(false);
 			msg = "LVL Server is Killed";
+			}
+			else
+			{
+				msg="Primary is already killed!!";
+			}
 		} else if (location.equals("DDO")) {
+			if(s1_DDO_sender_isAlive&&s2_DDO_sender_isAlive&&s3_DDO_sender_isAlive)
+			{
 			s1_DDO_sender_isAlive = false;
 			primaryDdoServer.receiver.setStatus(false);
 			msg = "DDO Server is Killed";
+			}
+			else
+			{
+				msg="Primary is already killed!!";
+			}
 		}
 		return msg;
 	}
