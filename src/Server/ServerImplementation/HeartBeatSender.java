@@ -5,11 +5,11 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 
-public class Sender extends Thread {
+public class HeartBeatSender extends Thread {
 	int port1,port2;
 	String name;
 	DatagramSocket ds;
-	public Sender(DatagramSocket ds, String name, int port1, int port2) {
+	public HeartBeatSender(DatagramSocket ds, String name, int port1, int port2) {
 		this.port1 = port1;
 		this.port2 = port2;
 		this.name = name;

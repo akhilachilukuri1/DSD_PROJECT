@@ -36,14 +36,23 @@ public class DcmsServerMain {
 	 * directory per location to separate the events
 	 */
 	private static void init() {
+		new File(Constants.LOG_DIR + "ServerFE").mkdir();
+		
+		new File(Constants.LOG_DIR + "PRIMARY_SERVER").mkdir();
+		new File(Constants.LOG_DIR + "PRIMARY_SERVER"+ "\\"+ServerCenterLocation.MTL.toString()).mkdir();
+		new File(Constants.LOG_DIR + "PRIMARY_SERVER"+ "\\"+ServerCenterLocation.LVL.toString()).mkdir();
+		new File(Constants.LOG_DIR + "PRIMARY_SERVER"+ "\\"+ServerCenterLocation.DDO.toString()).mkdir();
 
-		new File(
-				Constants.LOG_DIR + ServerCenterLocation.MTL.toString()).mkdir();
-		new File(
-				Constants.LOG_DIR + ServerCenterLocation.LVL.toString()).mkdir();
-		new File(
-				Constants.LOG_DIR + ServerCenterLocation.DDO.toString()).mkdir();
-		new File(Constants.LOG_DIR + "ServerGlobal").mkdir();
+		new File(Constants.LOG_DIR + "REPLICA1_SERVER").mkdir();
+		new File(Constants.LOG_DIR + "REPLICA1_SERVER"+ "\\"+ServerCenterLocation.MTL.toString()).mkdir();
+		new File(Constants.LOG_DIR + "REPLICA1_SERVER"+ "\\"+ServerCenterLocation.LVL.toString()).mkdir();
+		new File(Constants.LOG_DIR + "REPLICA1_SERVER"+ "\\"+ServerCenterLocation.DDO.toString()).mkdir();
+		
+		new File(Constants.LOG_DIR + "REPLICA2_SERVER").mkdir();
+		new File(Constants.LOG_DIR + "REPLICA2_SERVER"+ "\\"+ServerCenterLocation.MTL.toString()).mkdir();
+		new File(Constants.LOG_DIR + "REPLICA2_SERVER"+ "\\"+ServerCenterLocation.LVL.toString()).mkdir();
+		new File(Constants.LOG_DIR + "REPLICA2_SERVER"+ "\\"+ServerCenterLocation.DDO.toString()).mkdir();
+		
 	}
 
 	/**

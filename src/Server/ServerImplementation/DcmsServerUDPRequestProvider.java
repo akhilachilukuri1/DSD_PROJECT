@@ -15,6 +15,7 @@ public class DcmsServerUDPRequestProvider extends Thread {
 	private DcmsServerImpl server;
 	private String requestType;
 	private Record recordForTransfer;
+	Logger logger;
 
 	/**
 	 * DcmsServerUDPRequestProvider handles the incoming messages call (Get Rec ,
@@ -28,13 +29,15 @@ public class DcmsServerUDPRequestProvider extends Thread {
 	 *            UDP request type - transfer/record count
 	 * @param recordForTransfer
 	 *            The record to be transferred
+	 * @param logger 
 	 * 
 	 */
 	public DcmsServerUDPRequestProvider(DcmsServerImpl server, String requestType,
-			Record recordForTransfer) throws IOException {
+			Record recordForTransfer, Logger logger) throws IOException {
 		this.server = server;
 		this.requestType = requestType;
 		this.recordForTransfer = recordForTransfer;
+		this.logger=logger;
 	}
 
 	public String getRemoteRecordCount() {

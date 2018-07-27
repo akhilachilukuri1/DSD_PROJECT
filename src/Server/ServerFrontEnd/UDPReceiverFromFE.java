@@ -44,7 +44,7 @@ public class UDPReceiverFromFE extends Thread {
 				System.out.println(
 						"Received pkt :: " + new String(receivedData));
 				FIFORequest.add(new String(receivedData));
-				TransferReqToCurrentServer transferReq = new TransferReqToCurrentServer(FIFORequest.poll().getBytes());
+				TransferReqToCurrentServer transferReq = new TransferReqToCurrentServer(FIFORequest.poll().getBytes(),loggerInstance);
 				transferReq.start();
 				requests.add(transferReq);
 				String inputPkt = new String(receivePacket.getData()).trim();

@@ -29,9 +29,10 @@ public class DcmsServerUDPRequestServer extends Thread {
 	 * 
 	 */
 
-	public DcmsServerUDPRequestServer(DatagramPacket pkt, DcmsServerImpl serverImp) {
+	public DcmsServerUDPRequestServer(DatagramPacket pkt, DcmsServerImpl serverImp,Logger logger) {
 		receivePacket = pkt;
 		server = serverImp;
+		this.loggerInstance = logger;
 		try {
 			serverSocket = new DatagramSocket();
 		} catch (SocketException e) {
@@ -58,6 +59,7 @@ public class DcmsServerUDPRequestServer extends Thread {
 			switch (inputPkt) {
 			case "TRANSFER_RECORD":
 				System.out.println("Transferring :: " + pktSplit[1]);
+				loggerInstance.log(Level.INFO,"Transferring :: " + pktSplit[1]);
 				responseData = transferRecord(pktSplit[1]).getBytes();
 				serverSocket.send(new DatagramPacket(responseData,
 						responseData.length, receivePacket.getAddress(),
@@ -66,12 +68,14 @@ public class DcmsServerUDPRequestServer extends Thread {
 			case "GET_RECORD_COUNT":
 				responseData = Integer.toString(getRecCount()).getBytes();
 				System.out.println("data in udp req server :: "+Integer.toString(getRecCount()));
+				loggerInstance.log(Level.INFO,"data in udp req server :: "+Integer.toString(getRecCount()));
 				serverSocket.send(new DatagramPacket(responseData,
 						responseData.length, receivePacket.getAddress(),
 						receivePacket.getPort()));
 				break;
 			default:
 				System.out.println("Invalid UDP request type");
+				loggerInstance.log(Level.INFO,"Invalid UDP request type");
 			}
 
 			loggerInstance.log(Level.INFO,

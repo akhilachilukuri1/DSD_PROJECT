@@ -4,7 +4,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import Conf.Constants;
+import Conf.LogManager;
+
 import java.util.Arrays;
+import java.util.logging.Level;
+
+import com.sun.istack.internal.logging.Logger;
+
 import Conf.ServerOperations;
 import Server.ServerFrontEnd.DcmsServerFE;
 
@@ -13,11 +19,13 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 	String currentOperationData;
 	DcmsServerImpl server;
 	String response;
+	LogManager logManager;
 
-	public DcmsServerReplicaRequestProcessor(String operationData) {
+	public DcmsServerReplicaRequestProcessor(String operationData, LogManager logManager) {
 		this.currentOperationData = operationData;
 		this.server = null;
 		response = null;
+		this.logManager=logManager;
 	}
 
 	public synchronized void run() {
@@ -26,10 +34,13 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 
 		Integer replicaId = Integer.parseInt(dataToBeSent[0]);
 		System.out.println("====================Currently serving replica with ID :: " + replicaId);
+		//logManager.logger.log(Level.INFO,"====================Currently serving replica with ID :: " + replicaId);
 		ServerOperations oprn = ServerOperations.valueOf(dataToBeSent[1]);
 		
 		String requestId = dataToBeSent[dataToBeSent.length - 1];
 		System.out.println("Currently serving request with id :: " + requestId);
+	//	logManager.logger.log(Level.INFO,"Currently serving ReplicaRequest request with id :: " + requestId);
+		
 		switch (oprn) {
 		case CREATE_T_RECORD:
 			this.server = chooseServer(replicaId, dataToBeSent[2]);

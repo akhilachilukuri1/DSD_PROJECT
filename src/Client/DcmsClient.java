@@ -7,6 +7,7 @@ import Conf.LogManager;
 import Conf.ServerCenterLocation;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
@@ -53,15 +54,15 @@ public class DcmsClient {
 							+ "enter in (LOCXXXX) format,where XXXX can only be numbers");
 					continue;
 				}
+				new File(Constants.LOG_DIR + managerID).mkdir();
+				logManager = new LogManager(managerID);
+				logManager.logger.log(Level.INFO, "Log client started!");
 				if (managerID.contains("MTL")) {
 					serverloc = new ClientImp(args, ServerCenterLocation.MTL, managerID);
-					logManager = new LogManager("MTL");
 				} else if (managerID.contains("LVL")) {
 					serverloc = new ClientImp(args, ServerCenterLocation.LVL, managerID);
-					logManager = new LogManager("LVL");
 				} else if (managerID.contains("DDO")) {
 					serverloc = new ClientImp(args, ServerCenterLocation.DDO, managerID);
-					logManager = new LogManager("DDO");
 				} else {
 					System.out.println("wrong manager ID.please enter again");
 					continue;
@@ -401,6 +402,7 @@ public class DcmsClient {
 						System.out.println("Invalid Input!!...Please enter values from 1-6 only...Try again!!");
 						continue;
 					} catch (Exception e) {
+						System.out.println("Exception in Client :::: "+e.getMessage());
 						System.out.println("Invalid Input!!.....Try again!!");
 						continue;
 					}

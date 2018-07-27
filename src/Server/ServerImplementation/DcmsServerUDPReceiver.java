@@ -22,7 +22,7 @@ public class DcmsServerUDPReceiver extends Thread {
 	DatagramPacket sendPacket;
 	int udpPortNum;
 	ServerCenterLocation location;
-	Logger loggerInstance;
+	private Logger loggerInstance;
 	String recordCount;
 	DcmsServerImpl server;
 	int c;
@@ -92,11 +92,11 @@ public class DcmsServerUDPReceiver extends Thread {
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
 				System.out.println(
-						"LOc :: "+location +"1 Received pkt in udp receiver :: " + new String(receivePacket.getData()));
+						"LOc :: "+location +"1 Received pkt in udp heartBeatReceiver :: " + new String(receivePacket.getData()));
 				String inputPkt = new String(receivePacket.getData()).trim();
-				new DcmsServerUDPRequestServer(receivePacket, server).start();
+				new DcmsServerUDPRequestServer(receivePacket, server,loggerInstance).start();
 				loggerInstance.log(Level.INFO,
-						"2 Received in udp receiver " + inputPkt + " from " + location);
+						"2 Received in udp heartBeatReceiver " + inputPkt + " from " + location);
 			} catch (Exception e) {
 			}
 		}
