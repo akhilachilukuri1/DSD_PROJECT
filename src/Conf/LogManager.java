@@ -26,6 +26,7 @@ public class LogManager {
 			logger.setUseParentHandlers(false);
 			logger.addHandler(fileHandler);
 			logger.setLevel(Level.INFO);
+			logger.setLevel(Level.SEVERE);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception in logger :: " + e.getMessage());
 		}

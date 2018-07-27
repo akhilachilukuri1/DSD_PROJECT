@@ -35,6 +35,7 @@ public class DcmsServerFE extends DcmsPOA {
 	public static HashMap<String, DcmsServerImpl> primaryServerMap, replica1ServerMap, replica2ServerMap;
 	DcmsServerMultiCastReceiver primaryReceiver, replica1Receiver, replica2Receiver;
 	DcmsServerReplicaResponseReceiver replicaResponseReceiver;
+	Object crlock = new Object();
 	public static HashMap<Integer, HashMap<String, DcmsServerImpl>> centralRepository;
 	DcmsServerImpl s1, s2, s3;
 	DcmsServerImpl primaryMtlServer;
@@ -192,10 +193,12 @@ public class DcmsServerFE extends DcmsPOA {
 			replica2ServerMap.put("MTL", replica2MtlServer);
 			replica2ServerMap.put("LVL", replica2LvlServer);
 			replica2ServerMap.put("DDO", replica2DdoServer);
-
+               synchronized(centralRepository)
+               {
 			centralRepository.put(Constants.PRIMARY_SERVER_ID, primaryServerMap);
 			centralRepository.put(Constants.REPLICA1_SERVER_ID, replica1ServerMap);
 			centralRepository.put(Constants.REPLICA2_SERVER_ID, replica2ServerMap);
+              }
 
 			Thread thread1 = new Thread() {
 				public void run() {
@@ -480,28 +483,44 @@ public class DcmsServerFE extends DcmsPOA {
 		server_leader_status.put(maxEntry.getKey(), true);
 		currentIds.put(maxEntry.getKey(), LEADER_ID);
 		System.out.println("++++Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
-		HashMap<String, DcmsServerImpl> replaceserver = centralRepository.get(Constants.PRIMARY_SERVER_ID);
+		HashMap<String, DcmsServerImpl> replaceserver=new HashMap<String, DcmsServerImpl>();
+		synchronized(centralRepository)
+		{
+		 replaceserver = centralRepository.get(Constants.PRIMARY_SERVER_ID);
+		}
 		if (maxEntry.getKey().contains("2")) {
 			ArrayList<Integer> replicas = new ArrayList<>();
 			replicas.add(Constants.REPLICA2_SERVER_ID);
-			HashMap<String, DcmsServerImpl> getnewserver = centralRepository.get(Constants.REPLICA1_SERVER_ID);
+			HashMap<String, DcmsServerImpl> getnewserver=new HashMap<String, DcmsServerImpl>();
+			synchronized(centralRepository)
+			{
+			getnewserver = centralRepository.get(Constants.REPLICA1_SERVER_ID);
+			}
 			DcmsServerImpl newPrimary = getnewserver.get(loc);
 			newPrimary.setPrimary(true);
 			newPrimary.setReplicas(replicas);
-
+			newPrimary.setServerID(Constants.PRIMARY_SERVER_ID);
+			
 			replaceserver.remove(loc);
 
 			replaceserver.put(loc, newPrimary);
+			synchronized(centralRepository)
+			{
 			centralRepository.put(Constants.PRIMARY_SERVER_ID, replaceserver);
-
+			}
 			getnewserver.remove(loc);
+			synchronized(centralRepository)
+			{
 			centralRepository.put(Constants.REPLICA1_SERVER_ID, getnewserver);
-
+			}
 			HashMap<String, DcmsServerImpl> replicamap = centralRepository.get(Constants.REPLICA2_SERVER_ID);
 			DcmsServerImpl replica = replicamap.get(loc);
 			replica.setReplicas(replicas);
 			replicamap.put(loc, replica);
+			synchronized(centralRepository)
+			{
 			centralRepository.put(Constants.REPLICA2_SERVER_ID, replicamap);
+			}
 
 		} else if (maxEntry.getKey().contains("3")) {
 			ArrayList<Integer> replicas = new ArrayList<>();
@@ -510,27 +529,36 @@ public class DcmsServerFE extends DcmsPOA {
 			DcmsServerImpl newPrimary = getnewserver.get(loc);
 			newPrimary.setPrimary(true);
 			newPrimary.setReplicas(replicas);
+			newPrimary.setServerID(Constants.PRIMARY_SERVER_ID);
 
 			replaceserver.put(loc, newPrimary);
+			synchronized(centralRepository)
+			{
 			centralRepository.put(Constants.PRIMARY_SERVER_ID, replaceserver);
-
+			}
 			getnewserver.remove(loc);
+			synchronized(centralRepository)
+			{
 			centralRepository.put(Constants.REPLICA2_SERVER_ID, getnewserver);
-
+			}
 			HashMap<String, DcmsServerImpl> replicamap = centralRepository.get(Constants.REPLICA1_SERVER_ID);
 			DcmsServerImpl replica = replicamap.get(loc);
 			replica.setReplicas(replicas);
 			replicamap.put(loc, replica);
+			synchronized(centralRepository)
+			{
 			centralRepository.put(Constants.REPLICA1_SERVER_ID, replicamap);
-
+			}
 		}
-
-//		for (Map.Entry<Integer, HashMap<String, DcmsServerImpl>> entry : centralRepository.entrySet()) {
-//			System.out.println("ID :: " + entry.getKey());
-//			for (Map.Entry<String, DcmsServerImpl> entry1 : entry.getValue().entrySet()) {
-//				System.out.println("LOC :: " + entry1.getKey() + " REF :: " + entry1.getValue());
-//			}
-//		}
+		synchronized(centralRepository)
+		{
+		for (Map.Entry<Integer, HashMap<String, DcmsServerImpl>> entry : centralRepository.entrySet()) {
+		System.out.println("ID :: " + entry.getKey());
+			for (Map.Entry<String, DcmsServerImpl> entry1 : entry.getValue().entrySet()) {
+				System.out.println("LOC :: " + entry1.getKey() + " REF :: " + entry1.getValue());
+			}
+		}
+		}
 
 	}
 

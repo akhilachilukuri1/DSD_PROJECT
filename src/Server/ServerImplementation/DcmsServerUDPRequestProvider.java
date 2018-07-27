@@ -56,12 +56,13 @@ public class DcmsServerUDPRequestProvider extends Thread {
 	public void run() {
 		DatagramSocket socket = null;
 		try {
+			System.out.println("Req type :: "+requestType);
 			switch (requestType) {
 			case "GET_RECORD_COUNT":
 				socket = new DatagramSocket();
 				byte[] data = "GET_RECORD_COUNT".getBytes();
 				System.out.println("data in udp req provider :: "+new String(data));
-				System.out.println("port here :: "+server.dcmsServerUDPReceiver.udpPortNum);
+				System.out.println("port here :: "+server.locUDPPort);
 				/*Create a datagram packet for the respective server address.*/
 				DatagramPacket packet = new DatagramPacket(data, data.length,
 						InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()),
@@ -89,7 +90,7 @@ public class DcmsServerUDPRequestProvider extends Thread {
 				break;
 			}
 		} catch (Exception e) {
-			//System.out.println(e.getMessage());
+			System.out.println("Exception :::::::::::::::::::::"+e.getMessage());
 		} finally {
 			if (socket != null) {
 				socket.close();
