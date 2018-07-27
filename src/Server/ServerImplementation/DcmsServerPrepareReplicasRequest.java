@@ -3,6 +3,7 @@ package Server.ServerImplementation;
 import DcmsApp.*;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Conf.Constants;
 import Conf.LogManager;
@@ -23,6 +24,7 @@ import Server.ServerImplementation.*;
 
 public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	LogManager logManager;
+	Logger logger;
 	String IPaddress;
 	public HashMap<String, List<Record>> recordsMap;
 	int studentCount = 0;
@@ -39,11 +41,12 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	 * @param loc The server location for which the server implementation should be
 	 * initialized
 	 */
-	public DcmsServerPrepareReplicasRequest(Integer replicaID) {
+	public DcmsServerPrepareReplicasRequest(Integer replicaID, Logger logger) {
 		recordsMap = new HashMap<>();
 		requestBuffer = new HashMap<>();
 		requestId = 0;
 		this.replicaID=replicaID;
+		this.logger=logger;
 	}
 
 	/**
@@ -59,7 +62,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 	 */
 
 	private void sendMulticastRequest(String req) {
-		DcmsServerMultiCastSender sender = new DcmsServerMultiCastSender(req);
+		DcmsServerMultiCastSender sender = new DcmsServerMultiCastSender(req,logger);
 		sender.start();
 	}
 	@Override
@@ -68,6 +71,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 				Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + 
 				Constants.RECEIVED_DATA_SEPERATOR + teacher;
+		logger.log(Level.INFO,"Preparing Multicast request for Create Teacher record : " + teacher);
 		sendMulticastRequest(teacher);
 		return "";
 	}
@@ -93,6 +97,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 		student =Integer.toString(replicaID)+ Constants.RECEIVED_DATA_SEPERATOR +ServerOperations.CREATE_S_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + student;
 		sendMulticastRequest(student);
+		logger.log(Level.INFO,"Preparing Multicast request for Create Student record : " + student);
 		return "";
 	}
 
@@ -110,6 +115,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 				ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(data[0])
 				+ Constants.RECEIVED_DATA_SEPERATOR + manager;
 		sendMulticastRequest(req);
+		logger.log(Level.INFO,"Preparing Multicast request for get record Count :" + req);
 		return "";
 	}
 
@@ -134,6 +140,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + fieldname + Constants.RECEIVED_DATA_SEPERATOR + newvalue;
 		sendMulticastRequest(editData);
+		logger.log(Level.INFO,"Preparing Multicast request for editRecord : " + editData);
 		return "";
 	}
 
@@ -155,6 +162,7 @@ public class DcmsServerPrepareReplicasRequest extends DcmsPOA {
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + remoteCenterServerName;
 		sendMulticastRequest(req);
+		logger.log(Level.INFO,"Preparing Multicast request for transferRecord : " + req);
 		return "";
 	}
 

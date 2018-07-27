@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Conf.Constants;
 import Conf.LogManager;
@@ -24,7 +25,7 @@ import Server.ServerFrontEnd.DcmsServerFE;
  */
 
 public class DcmsServerImpl extends DcmsPOA {
-	LogManager logManager;
+    private LogManager logManager;
 	DcmsServerUDPReceiver dcmsServerUDPReceiver;
 	String IPaddress;
 	Object recordsMapAccessorLock = new Object();
@@ -39,8 +40,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	Integer serverID = 0;
 	
 
-	Sender sender;
-	public Receiver receiver;
+	HeartBeatSender heartBeatSender;
+	public HeartBeatReceiver heartBeatReceiver;
 	String name;
 	int port1, port2;
 	boolean isAlive;
@@ -59,8 +60,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * be initialized
 	 */
 	public DcmsServerImpl(int serverID, boolean isPrimary, ServerCenterLocation loc, int locUDPPort, DatagramSocket ds,
-			boolean isAlive, String name, int receivePort, int port1, int port2, ArrayList<Integer> replicas) {
-		logManager = new LogManager(loc.toString());
+			boolean isAlive, String name, int receivePort, int port1, int port2, ArrayList<Integer> replicas, LogManager logger) {
+		logManager = logger;
 		synchronized (recordsMapAccessorLock) {
 			recordsMap = new HashMap<>();
 		}
@@ -74,8 +75,8 @@ public class DcmsServerImpl extends DcmsPOA {
 		this.port1 = port1;
 		this.port2 = port2;
 		this.isAlive = isAlive;
-		receiver = new Receiver(isAlive, name, receivePort);
-		receiver.start();
+		heartBeatReceiver = new HeartBeatReceiver(isAlive, name, receivePort,logManager.logger);
+		heartBeatReceiver.start();
 		this.ds = ds;
 		this.replicas = replicas;
 	}
@@ -95,7 +96,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String createTRecord(String managerID, String teacher) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
 				req.createTRecord(managerID, teacher);
 			}
 		}
@@ -118,6 +119,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			logManager.logger.log(Level.INFO, "Teacher record created " + teacherID + " by Manager : " + managerID
 					+ " for the request ID: " + requestID);
 		} else {
+			logManager.logger.log(Level.INFO, "Error in creating T record" + requestID);
 			return "Error in creating T record";
 		}
 		
@@ -141,7 +143,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String createSRecord(String managerID, String student) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
 				req.createSRecord(managerID, student);
 			}
 		}
@@ -252,7 +254,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String getRecordCount(String manager) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
 				req.getRecordCount(manager);
 			}
 		}
@@ -280,7 +282,7 @@ public class DcmsServerImpl extends DcmsPOA {
 					}
 					System.out.println("Server id :: "+serverID);
 					req[counter] = new DcmsServerUDPRequestProvider(
-							DcmsServerFE.centralRepository.get(serverID).get(loc), "GET_RECORD_COUNT", null);
+							DcmsServerFE.centralRepository.get(serverID).get(loc), "GET_RECORD_COUNT", null,logManager.logger);
 				} catch (IOException e) {
 					System.out.println("Exception in get rec count :: "+e.getMessage());
 					logManager.logger.log(Level.SEVERE, e.getMessage());
@@ -299,6 +301,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		}
 		System.out.println(
 				recordCount + " for the request ID " + requestID + " as requested by the managerID " + managerID);
+		logManager.logger.log(Level.INFO, recordCount + " for the request ID " + requestID + " as requested by the managerID " + managerID);
 		return recordCount;
 	}
 
@@ -321,7 +324,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String editRecord(String managerID, String recordID, String fieldname, String newvalue) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
 				req.editRecord(managerID, recordID, fieldname, newvalue);
 			}
 		}
@@ -355,7 +358,7 @@ public class DcmsServerImpl extends DcmsPOA {
 
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
 				req.transferRecord(managerID, recordID, data);
 			}
 		}
@@ -373,7 +376,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			}
 			req = new DcmsServerUDPRequestProvider(
 					DcmsServerFE.centralRepository.get(serverID).get(remoteCenterServerName.trim()), "TRANSFER_RECORD",
-					record);
+					record,logManager.logger);
 		} catch (IOException e) {
 			logManager.logger.log(Level.SEVERE, e.getMessage());
 		}
@@ -576,8 +579,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	}
 
 	public void send() {
-		sender = new Sender(ds, name, port1, port2);
-		sender.start();
+		heartBeatSender = new HeartBeatSender(ds, name, port1, port2);
+		heartBeatSender.start();
 	}
 
 	public boolean isPrimary() {

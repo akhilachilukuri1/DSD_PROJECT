@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.logging.Logger;
 
 import Server.ServerFrontEnd.DcmsServerFE;
 
-public class Receiver extends Thread {
+public class HeartBeatReceiver extends Thread {
 
 	DatagramSocket ds = null;
 	String name;
 	boolean isAlive;
 	Object mapAccessor;
-	public Receiver(boolean isAlive, String name, int port) {
+	public HeartBeatReceiver(boolean isAlive, String name, int port, Logger logger) {
 		try {
 			this.isAlive = isAlive;
 			this.name = name;

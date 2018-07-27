@@ -1,6 +1,5 @@
 package Conf;
 
-import java.io.File;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -26,7 +25,23 @@ public class LogManager {
 			logger.setUseParentHandlers(false);
 			logger.addHandler(fileHandler);
 			logger.setLevel(Level.INFO);
-			logger.setLevel(Level.SEVERE);
+			//logger.setLevel(Level.SEVERE);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Exception in logger :: " + e.getMessage());
+		}
+	}
+	
+	
+	public LogManager(String replicaId,String serverName ) {
+		logger = Logger.getLogger(replicaId+"_"+serverName);
+		try {
+			fileHandler = new FileHandler(
+					Constants.LOG_DIR + "\\" + replicaId +"\\" + serverName + "\\" + replicaId+"_"+serverName + ".log", true);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fileHandler.setFormatter(formatter);
+			logger.setUseParentHandlers(false);
+			logger.addHandler(fileHandler);
+			logger.setLevel(Level.INFO);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception in logger :: " + e.getMessage());
 		}

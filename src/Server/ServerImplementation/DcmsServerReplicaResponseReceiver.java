@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Conf.Constants;
+import Conf.LogManager;
 import Conf.ServerCenterLocation;
 import Server.ServerFrontEnd.TransferResponseToFE;
 
@@ -23,7 +24,7 @@ public class DcmsServerReplicaResponseReceiver extends Thread{
 	HashMap<Integer, TransferResponseToFE> responses;
 	int c;
 	
-	public DcmsServerReplicaResponseReceiver() {
+	public DcmsServerReplicaResponseReceiver(LogManager logManager) {
 			try {
 				serverSocket = new DatagramSocket(Constants.CURRENT_PRIMARY_PORT_FOR_REPLICAS);
 			} catch (SocketException e) {

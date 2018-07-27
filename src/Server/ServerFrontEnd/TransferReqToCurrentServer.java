@@ -4,8 +4,11 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Conf.Constants;
+import Conf.LogManager;
 import Conf.ServerOperations;
 import Conf.ServerCenterLocation;
 import Server.ServerFrontEnd.DcmsServerFE;
@@ -14,10 +17,12 @@ public class TransferReqToCurrentServer extends Thread {
 	String currentOperationData;
 	DcmsServerImpl server;
 	String response;
-	public TransferReqToCurrentServer(byte[] operationData) {
+	Logger loggerInstance;
+	public TransferReqToCurrentServer(byte[] operationData,Logger loggerInstance) {
 		this.currentOperationData = new String(operationData);
 		this.server = null;
 		response = null;
+		this.loggerInstance= loggerInstance;
 	}
 	public void run() {
 		String[] dataArr; 
@@ -25,6 +30,7 @@ public class TransferReqToCurrentServer extends Thread {
 		ServerOperations oprn = ServerOperations.valueOf(dataToBeSent[0]);
 		String requestId = dataToBeSent[dataToBeSent.length-1];
 		System.out.println("Currently serving request with id :: "+ requestId);
+	//	loggerInstance.log(Level.INFO,"Currently serving request with id :: "+ requestId);
 		switch (oprn) {
 		case CREATE_T_RECORD:
 			System.out.println(dataToBeSent[1]);

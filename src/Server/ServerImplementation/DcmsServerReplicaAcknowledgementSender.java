@@ -8,11 +8,12 @@ import java.net.SocketException;
 
 
 import Conf.Constants;
+import Conf.LogManager;
 
 public class DcmsServerReplicaAcknowledgementSender extends Thread {
 	String request;
 	DatagramSocket ds;
-	public DcmsServerReplicaAcknowledgementSender(String request) {
+	public DcmsServerReplicaAcknowledgementSender(String request,LogManager logManger) {
 		request="RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: "+request;
 		this.request=request;
 	}

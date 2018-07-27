@@ -30,10 +30,10 @@ import Conf.*;
  **/
 
 public class ClientImp {
-	LogManager logManager = null;
 	Dcms serverLoc = null;
 	static NamingContextExt ncRef = null;
 
+	LogManager logManager;
 	/**
 	 * creates the client instance with
 	 * 
@@ -49,6 +49,7 @@ public class ClientImp {
 	 */
 	ClientImp(String[] args, ServerCenterLocation location, String ManagerID) {
 		try {
+			this.logManager = DcmsClient.logManager;
 			/*
 			 * Initialize the ORB service with the given input arguments Host
 			 * name and port number
@@ -69,8 +70,7 @@ public class ClientImp {
 					|| (location == ServerCenterLocation.DDO)){
 				serverLoc = DcmsHelper.narrow(ncRef.resolve_str("FE"));
 			}
-			boolean mgrID = new File(Constants.LOG_DIR + ManagerID).mkdir();
-			logManager = new LogManager(ManagerID);
+			
 		} catch (Exception e) {
 			System.out.println("ERROR : " + e);
 			e.printStackTrace(System.out);
@@ -92,7 +92,7 @@ public class ClientImp {
 	 * 
 	 */
 	public String createTRecord(String managerID, String teacherField) {
-		logManager.logger.log(Level.INFO, "Initiating T record object creation request");
+		DcmsClient.logManager.logger.log(Level.INFO, "Initiating T record object creation request");
 		String result = "";
 		String teacherID = "";
 		teacherID = serverLoc.createTRecord(managerID, teacherField);
