@@ -16,7 +16,7 @@ public class test {
 
 	public static void main(String... strings) {
 
-		DCMS_backup obj = new DCMS_backup();
+		DcmsServerBackupWriter obj = new DcmsServerBackupWriter("backup1.txt");
 
 		String teacherID = "TR";
 		String firstName = "mas";
@@ -45,7 +45,7 @@ public class test {
 		String key1 = lastname1.substring(0, 1);
 		String message1 = addRecordToHashMap(key1, teacherObj1, null);
 
-		DCMS_backup.backupMap(recordsMap);
+		obj.backupMap(recordsMap);
 
 	}
 

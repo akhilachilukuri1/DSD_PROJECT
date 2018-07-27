@@ -5,14 +5,16 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import Conf.Constants;
+
 public class DcmsServerMultiCastReceiver extends Thread {
 	MulticastSocket multicastsocket;
 	InetAddress address;
 	boolean isPrimary;
 	public DcmsServerMultiCastReceiver(boolean isPrimary) {
 		try {
-			multicastsocket = new MulticastSocket(6789);
-			address = InetAddress.getByName("224.0.0.1");
+			multicastsocket = new MulticastSocket(Constants.MULTICAST_PORT_NUMBER);
+			address = InetAddress.getByName(Constants.MULTICAST_IP_ADDRESS);
 			multicastsocket.joinGroup(address);
 			this.isPrimary = isPrimary;
 		} catch (IOException e) {

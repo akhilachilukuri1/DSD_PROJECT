@@ -120,6 +120,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		} else {
 			return "Error in creating T record";
 		}
+		
 		return teacherID;
 
 	}
@@ -219,6 +220,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			recordsMap.put(key, recordList);
 			message = "success";
 		}
+		takeTheBackup();
 		return message;
 	}
 
@@ -383,6 +385,8 @@ public class DcmsServerImpl extends DcmsPOA {
 						+ location + " with requestID " + requestID);
 				System.out.println("Record created in " + remoteCenterServerName + "and removed from " + location
 						+ " with requestID " + requestID);
+				takeTheBackup();
+				backupAfterTransferRecord(remoteCenterServerName);
 				return "Record created in " + remoteCenterServerName + "and removed from " + location;
 			}
 		} catch (Exception e) {
@@ -480,6 +484,7 @@ public class DcmsServerImpl extends DcmsPOA {
 							+ requestID + " and Updated the records\t" + location);
 					System.out.println("Record with recordID " + recordID + "update with new " + fieldname + " as "
 							+ newvalue + " with requestID " + requestID);
+					takeTheBackup();
 					return "Updated record with status :: " + newvalue;
 				} else if (record.isPresent() && fieldname.equals("StatusDate")) {
 					((Student) record.get()).setStatusDate(newvalue);
@@ -487,6 +492,7 @@ public class DcmsServerImpl extends DcmsPOA {
 							+ requestID + "Updated the records\t" + location);
 					System.out.println("Record with recordID " + recordID + "update with new " + fieldname + " as "
 							+ newvalue + " with requestID " + requestID);
+					takeTheBackup();
 					return "Updated record with status date :: " + newvalue;
 				} else if (record.isPresent() && fieldname.equals("CoursesRegistered")) {
 					List<String> courseList = putCoursesinList(newvalue);
@@ -495,6 +501,7 @@ public class DcmsServerImpl extends DcmsPOA {
 							+ requestID + "Updated the courses registered\t" + location);
 					System.out.println("Record with recordID " + recordID + "update with new " + fieldname + " as "
 							+ newvalue + " with requestID " + requestID);
+					takeTheBackup();
 					return "Updated record with courses :: " + courseList;
 				} else {
 					System.out.println("Record with " + recordID + " not found");
@@ -536,6 +543,7 @@ public class DcmsServerImpl extends DcmsPOA {
 							+ requestID + "Updated the records\t" + location);
 					System.out.println("Record with recordID " + recordID + "update with new " + fieldname + " as "
 							+ newvalue + " with requestID " + requestID);
+					takeTheBackup();
 					return "Updated record with Phone :: " + newvalue;
 				}
 
@@ -545,6 +553,7 @@ public class DcmsServerImpl extends DcmsPOA {
 							+ requestID + "Updated the records\t" + location);
 					System.out.println("Record with recordID " + recordID + "update with new " + fieldname + " as "
 							+ newvalue + " with requestID " + requestID);
+					takeTheBackup();
 					return "Updated record with address :: " + newvalue;
 				}
 
@@ -554,6 +563,7 @@ public class DcmsServerImpl extends DcmsPOA {
 							+ requestID + "Updated the records\t" + location);
 					System.out.println("Record with recordID " + recordID + "update with new " + fieldname + " as "
 							+ newvalue + " with requestID " + requestID);
+					takeTheBackup();
 					return "Updated record with location :: " + newvalue;
 				} else {
 					System.out.println("Record with " + recordID + " not found");
@@ -598,5 +608,45 @@ public class DcmsServerImpl extends DcmsPOA {
 
 	public void setServerID(Integer serverID) {
 		this.serverID = serverID;
+	}
+	public void takeTheBackup()
+	{
+		if(this.location.equalsIgnoreCase("MTL")&&serverID==1&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S1_MTL.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("LVL")&&serverID==1&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S1_LVL.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("DDO")&&serverID==1&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S1_DDO.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("MTL")&&serverID==2&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S2_MTL.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("LVL")&&serverID==2&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S2_LVL.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("DDO")&&serverID==2&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S2_DDO.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("MTL")&&serverID==3&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S3_MTL.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("LVL")&&serverID==3&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S3_LVL.backupMap(this.recordsMap);
+		}else if(this.location.equalsIgnoreCase("DDO")&&serverID==3&&recordsMap.size()>0)
+		{
+			DcmsServerFE.S3_DDO.backupMap(this.recordsMap);
+		}
+	}
+	public void backupAfterTransferRecord(String remoteCenterServerName)
+	{
+		HashMap<String, DcmsServerImpl> serverList=DcmsServerFE.centralRepository.get(serverID);
+		DcmsServerImpl remoteServer=serverList.get(remoteCenterServerName);
+		if(remoteServer!=null)
+		{
+		remoteServer.takeTheBackup();
+		}
 	}
 }
