@@ -25,6 +25,7 @@ public class Constants {
 	public static String RESPONSE_DATA_SEPERATOR = "_";
 	public static String PROJECT_DIR = System.getProperty("user.dir");
 	public static String LOG_DIR = PROJECT_DIR + "\\Logs\\";
+	public static String BACKUP_DIR = PROJECT_DIR + "\\Backup\\";
 
 	
 	public static final int PORT_FRONT_END_TO_LEADER = 1231; 

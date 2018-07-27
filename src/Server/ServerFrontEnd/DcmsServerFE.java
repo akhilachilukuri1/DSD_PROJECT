@@ -86,15 +86,15 @@ public class DcmsServerFE extends DcmsPOA {
 	String DDOserverName1 = "DDO1";
 	String DDOserverName2 = "DDO2";
 	String DDOserverName3 = "DDO3";
-	public static DcmsServerBackupWriter S1_MTL=new DcmsServerBackupWriter("MTL1_backup.txt");
-	public static DcmsServerBackupWriter S2_MTL=new DcmsServerBackupWriter("MTL2_backup.txt");
-	public static DcmsServerBackupWriter S3_MTL=new DcmsServerBackupWriter("MTL3_backup.txt");
-	public static DcmsServerBackupWriter S1_LVL=new DcmsServerBackupWriter("LVL1_backup.txt");
-	public static DcmsServerBackupWriter S2_LVL=new DcmsServerBackupWriter("LVL2_backup.txt");
-	public static DcmsServerBackupWriter S3_LVL=new DcmsServerBackupWriter("LVL3_backup.txt");
-	public static DcmsServerBackupWriter S1_DDO=new DcmsServerBackupWriter("DDO1_backup.txt");
-	public static DcmsServerBackupWriter S2_DDO=new DcmsServerBackupWriter("DDO2_backup.txt");
-	public static DcmsServerBackupWriter S3_DDO=new DcmsServerBackupWriter("DDO3_backup.txt");
+	public static DcmsServerBackupWriter S1_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL1_backup.txt");
+	public static DcmsServerBackupWriter S2_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL2_backup.txt");
+	public static DcmsServerBackupWriter S3_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL3_backup.txt");
+	public static DcmsServerBackupWriter S1_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL1_backup.txt");
+	public static DcmsServerBackupWriter S2_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL2_backup.txt");
+	public static DcmsServerBackupWriter S3_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL3_backup.txt");
+	public static DcmsServerBackupWriter S1_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO1_backup.txt");
+	public static DcmsServerBackupWriter S2_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO2_backup.txt");
+	public static DcmsServerBackupWriter S3_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO3_backup.txt");
 
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
