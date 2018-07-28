@@ -5,8 +5,6 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import Conf.Constants;
 import Conf.LogManager;
 import Conf.ServerCenterLocation;
@@ -23,13 +21,14 @@ public class DcmsServerReplicaResponseReceiver extends Thread {
 	DatagramPacket sendPacket;
 	int udpPortNum;
 	ServerCenterLocation location;
-	Logger loggerInstance;
+	LogManager loggerInstance;
 	String recordCount;
 	HashMap<Integer, TransferResponseToFE> responses;
 	int c;
 
 	public DcmsServerReplicaResponseReceiver(LogManager logManager) {
 		try {
+			loggerInstance = logManager;
 			serverSocket = new DatagramSocket(Constants.CURRENT_PRIMARY_PORT_FOR_REPLICAS);
 		} catch (SocketException e) {
 			System.out.println(e.getMessage());
@@ -52,10 +51,10 @@ public class DcmsServerReplicaResponseReceiver extends Thread {
 				String inputPkt = new String(receivedData).trim();
 				if (inputPkt.contains("ACKNOWLEDGEMENT")) {
 					System.out.println(new String(receivedData));
-					loggerInstance.log(Level.INFO, inputPkt + " from " + location);
+					loggerInstance.logger.log(Level.INFO, inputPkt);
 				} else {
 					System.out.println("Received response packet in PRIMARY:: " + new String(receivedData));
-					loggerInstance.log(Level.INFO, "Received " + inputPkt + " from " + location);
+					loggerInstance.logger.log(Level.INFO, "Received response in Primary " + inputPkt);
 				}
 			} catch (Exception e) {
 

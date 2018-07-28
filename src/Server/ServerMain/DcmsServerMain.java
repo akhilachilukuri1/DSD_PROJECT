@@ -37,6 +37,7 @@ public class DcmsServerMain {
 	 */
 	private static void init() {
 		new File(Constants.LOG_DIR + "ServerFE").mkdir();
+		new File(Constants.LOG_DIR + "ReplicasResponse").mkdir();
 		
 		new File(Constants.LOG_DIR + "PRIMARY_SERVER").mkdir();
 		new File(Constants.LOG_DIR + "PRIMARY_SERVER"+ "\\"+ServerCenterLocation.MTL.toString()).mkdir();

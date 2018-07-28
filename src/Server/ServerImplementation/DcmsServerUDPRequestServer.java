@@ -77,7 +77,7 @@ public class DcmsServerUDPRequestServer extends Thread {
 				loggerInstance.log(Level.INFO, "Invalid UDP request type");
 			}
 
-			loggerInstance.log(Level.INFO, "Received " + inputPkt + " from " + location);
+			//loggerInstance.log(Level.INFO, "Received " + inputPkt + " from " + location);
 		} catch (Exception e) {
 			// System.out.println(
 			// "Exception in UDP Request server Thread :: " + e.getMessage());

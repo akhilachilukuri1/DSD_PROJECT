@@ -52,7 +52,7 @@ public class DcmsServerMultiCastSender extends Thread {
 		try {
 			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.length(), address,
 					Constants.MULTICAST_PORT_NUMBER);
-			logger.log(Level.INFO, "Sending Multicast request" + data);
+			//logger.log(Level.INFO, "Sending Multicast request" + data);
 			multicastsocket.send(packet);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

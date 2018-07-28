@@ -175,7 +175,7 @@ public class DcmsServerFE extends DcmsPOA {
 			primaryReceiver = new DcmsServerMultiCastReceiver(isPrimary, ackManager);
 			primaryReceiver.start();
 
-			replicaResponseReceiver = new DcmsServerReplicaResponseReceiver(ackManager);
+			replicaResponseReceiver = new DcmsServerReplicaResponseReceiver(new LogManager("ReplicasResponse"));
 			replicaResponseReceiver.start();
 			DatagramSocket socket1 = new DatagramSocket();
 
