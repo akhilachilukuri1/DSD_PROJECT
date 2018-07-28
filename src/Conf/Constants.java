@@ -14,7 +14,7 @@ public class Constants {
 	public static int FRONT_END_UDP_PORT = 3232;
 
 	public static int MULTICAST_PORT_NUMBER = 6779;
-	public static String MULTICAST_IP_ADDRESS = "224.0.0.150";
+	public static String MULTICAST_IP_ADDRESS = "224.0.0.1";
 	
 	public static int CURRENT_PRIMARY_PORT_FOR_REPLICAS = 2323;
 	

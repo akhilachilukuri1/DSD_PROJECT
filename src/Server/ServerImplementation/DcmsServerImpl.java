@@ -25,11 +25,14 @@ import Server.ServerFrontEnd.DcmsServerFE;
  */
 
 public class DcmsServerImpl extends DcmsPOA {
-    private LogManager logManager;
+	private LogManager logManager;
+	public HashMap<String, List<Record>> recordsMap;
+	public HeartBeatReceiver heartBeatReceiver;
+	public ArrayList<Integer> replicas;
+
 	DcmsServerUDPReceiver dcmsServerUDPReceiver;
 	String IPaddress;
 	Object recordsMapAccessorLock = new Object();
-	public HashMap<String, List<Record>> recordsMap;
 
 	int studentCount = 0;
 	int teacherCount = 0;
@@ -38,15 +41,12 @@ public class DcmsServerImpl extends DcmsPOA {
 	int locUDPPort = 0;
 	boolean isPrimary;
 	Integer serverID = 0;
-	
 
 	HeartBeatSender heartBeatSender;
-	public HeartBeatReceiver heartBeatReceiver;
 	String name;
 	int port1, port2;
 	boolean isAlive;
 	DatagramSocket ds = null;
-	public ArrayList<Integer> replicas;
 
 	public int getlocUDPPort() {
 		return this.locUDPPort;
@@ -60,7 +60,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * be initialized
 	 */
 	public DcmsServerImpl(int serverID, boolean isPrimary, ServerCenterLocation loc, int locUDPPort, DatagramSocket ds,
-			boolean isAlive, String name, int receivePort, int port1, int port2, ArrayList<Integer> replicas, LogManager logger) {
+			boolean isAlive, String name, int receivePort, int port1, int port2, ArrayList<Integer> replicas,
+			LogManager logger) {
 		logManager = logger;
 		synchronized (recordsMapAccessorLock) {
 			recordsMap = new HashMap<>();
@@ -75,7 +76,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		this.port1 = port1;
 		this.port2 = port2;
 		this.isAlive = isAlive;
-		heartBeatReceiver = new HeartBeatReceiver(isAlive, name, receivePort,logManager.logger);
+		heartBeatReceiver = new HeartBeatReceiver(isAlive, name, receivePort, logManager.logger);
 		heartBeatReceiver.start();
 		this.ds = ds;
 		this.replicas = replicas;
@@ -96,7 +97,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String createTRecord(String managerID, String teacher) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,
+						logManager.logger);
 				req.createTRecord(managerID, teacher);
 			}
 		}
@@ -122,7 +124,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			logManager.logger.log(Level.INFO, "Error in creating T record" + requestID);
 			return "Error in creating T record";
 		}
-		
+
 		return teacherID;
 
 	}
@@ -143,12 +145,12 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String createSRecord(String managerID, String student) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,
+						logManager.logger);
 				req.createSRecord(managerID, student);
 			}
 		}
 		String temp[] = student.split(",");
-		// String managerID = temp[0];
 		String firstName = temp[0];
 		String lastName = temp[1];
 		String CoursesRegistered = temp[2];
@@ -234,7 +236,7 @@ public class DcmsServerImpl extends DcmsPOA {
 
 	private synchronized int getCurrServerCnt() {
 		int count = 0;
-		synchronized(recordsMapAccessorLock){
+		synchronized (recordsMapAccessorLock) {
 			for (Map.Entry<String, List<Record>> entry : this.recordsMap.entrySet()) {
 				List<Record> list = entry.getValue();
 				count += list.size();
@@ -254,7 +256,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String getRecordCount(String manager) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,
+						logManager.logger);
 				req.getRecordCount(manager);
 			}
 		}
@@ -269,22 +272,23 @@ public class DcmsServerImpl extends DcmsPOA {
 		locList.add("LVL");
 		locList.add("DDO");
 		for (String loc : locList) {
-			System.out.println("11>>>>>>>>>>>>>>>>>>>>>>>>>>>Now serving location :: "+loc);
+			System.out.println("11>>>>>>>>>>>>>>>>>>>>>>>>>>>Now serving location :: " + loc);
 			if (loc == this.location) {
 				recordCount = loc + " " + getCurrServerCnt();
 			} else {
 				try {
-					System.out.println("22>>>>>>>>>>>>>>>>>>>>>>>>>>>Now serving location :: "+loc);
+					System.out.println("22>>>>>>>>>>>>>>>>>>>>>>>>>>>Now serving location :: " + loc);
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					System.out.println("Server id :: "+serverID);
+					System.out.println("Server id :: " + serverID);
 					req[counter] = new DcmsServerUDPRequestProvider(
-							DcmsServerFE.centralRepository.get(serverID).get(loc), "GET_RECORD_COUNT", null,logManager.logger);
+							DcmsServerFE.centralRepository.get(serverID).get(loc), "GET_RECORD_COUNT", null,
+							logManager.logger);
 				} catch (IOException e) {
-					System.out.println("Exception in get rec count :: "+e.getMessage());
+					System.out.println("Exception in get rec count :: " + e.getMessage());
 					logManager.logger.log(Level.SEVERE, e.getMessage());
 				}
 				req[counter].start();
@@ -301,7 +305,8 @@ public class DcmsServerImpl extends DcmsPOA {
 		}
 		System.out.println(
 				recordCount + " for the request ID " + requestID + " as requested by the managerID " + managerID);
-		logManager.logger.log(Level.INFO, recordCount + " for the request ID " + requestID + " as requested by the managerID " + managerID);
+		logManager.logger.log(Level.INFO,
+				recordCount + " for the request ID " + requestID + " as requested by the managerID " + managerID);
 		return recordCount;
 	}
 
@@ -324,7 +329,8 @@ public class DcmsServerImpl extends DcmsPOA {
 	public synchronized String editRecord(String managerID, String recordID, String fieldname, String newvalue) {
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,
+						logManager.logger);
 				req.editRecord(managerID, recordID, fieldname, newvalue);
 			}
 		}
@@ -358,7 +364,8 @@ public class DcmsServerImpl extends DcmsPOA {
 
 		if (isPrimary) {
 			for (Integer replicaId : replicas) {
-				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,logManager.logger);
+				DcmsServerPrepareReplicasRequest req = new DcmsServerPrepareReplicasRequest(replicaId,
+						logManager.logger);
 				req.transferRecord(managerID, recordID, data);
 			}
 		}
@@ -376,7 +383,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			}
 			req = new DcmsServerUDPRequestProvider(
 					DcmsServerFE.centralRepository.get(serverID).get(remoteCenterServerName.trim()), "TRANSFER_RECORD",
-					record,logManager.logger);
+					record, logManager.logger);
 		} catch (IOException e) {
 			logManager.logger.log(Level.SEVERE, e.getMessage());
 		}
@@ -406,7 +413,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * @param recordID record id of the student/teacher to be removed
 	 */
 	private synchronized String removeRecordAfterTransfer(String recordID) {
-		synchronized(recordsMapAccessorLock){
+		synchronized (recordsMapAccessorLock) {
 			for (Entry<String, List<Record>> element : recordsMap.entrySet()) {
 				List<Record> mylist = element.getValue();
 				for (int i = 0; i < mylist.size(); i++) {
@@ -426,7 +433,7 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * record ID of the student/teacher
 	 */
 	private synchronized Record getRecordForTransfer(String recordID) {
-		synchronized(recordsMapAccessorLock){
+		synchronized (recordsMapAccessorLock) {
 			for (Entry<String, List<Record>> value : recordsMap.entrySet()) {
 				List<Record> mylist = value.getValue();
 				Optional<Record> record = mylist.stream().filter(x -> x.getRecordID().equals(recordID)).findFirst();
@@ -604,7 +611,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public Integer getServerID() {
 		return serverID;
 	}
@@ -612,44 +619,46 @@ public class DcmsServerImpl extends DcmsPOA {
 	public void setServerID(Integer serverID) {
 		this.serverID = serverID;
 	}
-	public void takeTheBackup()
-	{
-		if(this.location.equalsIgnoreCase("MTL")&&serverID==1&&recordsMap.size()>0)
-		{
+
+	/**
+	 * The Function passes the respective HashMap to the DcmsServerBackupWriter
+	 * class to store a written backup of the Repository
+	 */
+
+	public void takeTheBackup() {
+		if (this.location.equalsIgnoreCase("MTL") && serverID == 1 && recordsMap.size() > 0) {
 			DcmsServerFE.S1_MTL.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("LVL")&&serverID==1&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("LVL") && serverID == 1 && recordsMap.size() > 0) {
 			DcmsServerFE.S1_LVL.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("DDO")&&serverID==1&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("DDO") && serverID == 1 && recordsMap.size() > 0) {
 			DcmsServerFE.S1_DDO.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("MTL")&&serverID==2&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("MTL") && serverID == 2 && recordsMap.size() > 0) {
 			DcmsServerFE.S2_MTL.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("LVL")&&serverID==2&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("LVL") && serverID == 2 && recordsMap.size() > 0) {
 			DcmsServerFE.S2_LVL.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("DDO")&&serverID==2&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("DDO") && serverID == 2 && recordsMap.size() > 0) {
 			DcmsServerFE.S2_DDO.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("MTL")&&serverID==3&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("MTL") && serverID == 3 && recordsMap.size() > 0) {
 			DcmsServerFE.S3_MTL.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("LVL")&&serverID==3&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("LVL") && serverID == 3 && recordsMap.size() > 0) {
 			DcmsServerFE.S3_LVL.backupMap(this.recordsMap);
-		}else if(this.location.equalsIgnoreCase("DDO")&&serverID==3&&recordsMap.size()>0)
-		{
+		} else if (this.location.equalsIgnoreCase("DDO") && serverID == 3 && recordsMap.size() > 0) {
 			DcmsServerFE.S3_DDO.backupMap(this.recordsMap);
 		}
 	}
-	public void backupAfterTransferRecord(String remoteCenterServerName)
-	{
-		HashMap<String, DcmsServerImpl> serverList=DcmsServerFE.centralRepository.get(serverID);
-		DcmsServerImpl remoteServer=serverList.get(remoteCenterServerName);
-		if(remoteServer!=null)
-		{
-		remoteServer.takeTheBackup();
+
+	/**
+	 * This function calls the takeTheBackup method to send the respective
+	 * HashMap
+	 * 
+	 * @param remoteCenterServerName
+	 */
+
+	public void backupAfterTransferRecord(String remoteCenterServerName) {
+		HashMap<String, DcmsServerImpl> serverList = DcmsServerFE.centralRepository.get(serverID);
+		DcmsServerImpl remoteServer = serverList.get(remoteCenterServerName);
+		if (remoteServer != null) {
+			remoteServer.takeTheBackup();
 		}
 	}
 }

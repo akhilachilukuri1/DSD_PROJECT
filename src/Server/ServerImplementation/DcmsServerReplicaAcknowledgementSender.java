@@ -6,17 +6,24 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-
 import Conf.Constants;
 import Conf.LogManager;
 
 public class DcmsServerReplicaAcknowledgementSender extends Thread {
 	String request;
 	DatagramSocket ds;
-	public DcmsServerReplicaAcknowledgementSender(String request,LogManager logManger) {
-		request="RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: "+request;
-		this.request=request;
+
+	public DcmsServerReplicaAcknowledgementSender(String request, LogManager logManger) {
+		request = "RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: " + request;
+		this.request = request;
 	}
+
+	/**
+	 * This thread is called to send the acknowledgement from the respective
+	 * replicas to the primary server
+	 * 
+	 */
+
 	public synchronized void run() {
 		try {
 			ds = new DatagramSocket();
@@ -32,6 +39,6 @@ public class DcmsServerReplicaAcknowledgementSender extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }

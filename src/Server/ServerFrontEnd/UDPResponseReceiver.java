@@ -30,6 +30,14 @@ public class UDPResponseReceiver extends Thread {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	/**
+	 * This thread is initialized by the FrontEnd server 
+	 * in order to receive the responses from the servers and replicas
+	 * and the data is added to the responses HashMap
+	 */
+	
+	
 	@Override
 	public void run() {
 		byte[] receiveData;

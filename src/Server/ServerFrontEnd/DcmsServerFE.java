@@ -8,8 +8,6 @@ import Conf.Constants;
 import Conf.LogManager;
 import Conf.ServerCenterLocation;
 import Conf.ServerOperations;
-
-import java.io.File;
 import java.net.*;
 import Models.Record;
 import Server.ServerImplementation.*;
@@ -86,26 +84,33 @@ public class DcmsServerFE extends DcmsPOA {
 	String DDOserverName1 = "DDO1";
 	String DDOserverName2 = "DDO2";
 	String DDOserverName3 = "DDO3";
-	public static DcmsServerBackupWriter S1_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL1_backup.txt");
-	public static DcmsServerBackupWriter S2_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL2_backup.txt");
-	public static DcmsServerBackupWriter S3_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL3_backup.txt");
-	public static DcmsServerBackupWriter S1_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL1_backup.txt");
-	public static DcmsServerBackupWriter S2_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL2_backup.txt");
-	public static DcmsServerBackupWriter S3_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL3_backup.txt");
-	public static DcmsServerBackupWriter S1_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO1_backup.txt");
-	public static DcmsServerBackupWriter S2_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO2_backup.txt");
-	public static DcmsServerBackupWriter S3_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO3_backup.txt");
+	public static DcmsServerBackupWriter S1_MTL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "MTL1_backup.txt");
+	public static DcmsServerBackupWriter S2_MTL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "MTL2_backup.txt");
+	public static DcmsServerBackupWriter S3_MTL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "MTL3_backup.txt");
+	public static DcmsServerBackupWriter S1_LVL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "LVL1_backup.txt");
+	public static DcmsServerBackupWriter S2_LVL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "LVL2_backup.txt");
+	public static DcmsServerBackupWriter S3_LVL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "LVL3_backup.txt");
+	public static DcmsServerBackupWriter S1_DDO = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "DDO1_backup.txt");
+	public static DcmsServerBackupWriter S2_DDO = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "DDO2_backup.txt");
+	public static DcmsServerBackupWriter S3_DDO = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "DDO3_backup.txt");
 
-	/*
+	/**
 	 * DcmsServerImpl Constructor to initializes the variables used for the
 	 * implementation
 	 * 
-	 * @param loc The server location for which the server implementation should
-	 * be initialized
 	 */
 	public DcmsServerFE() {
 		logManager = new LogManager("ServerFE");
-		
+
 		recordsMap = new HashMap<>();
 		requests = new ArrayList<>();
 		responses = new HashMap<>();
@@ -115,11 +120,13 @@ public class DcmsServerFE extends DcmsPOA {
 		udpReceiverFromFE.start();
 		UDPResponseReceiver udpResponse = new UDPResponseReceiver(responses);
 		udpResponse.start();
+
 		centralRepository = new HashMap<>();
 		primaryServerMap = new HashMap<>();
 		replica1ServerMap = new HashMap<>();
 		replica2ServerMap = new HashMap<>();
 		requestId = 0;
+
 		server_leader_status.put(MTLserverName1, true);
 		server_leader_status.put(LVLserverName1, true);
 		server_leader_status.put(DDOserverName1, true);
@@ -149,8 +156,7 @@ public class DcmsServerFE extends DcmsPOA {
 		server_last_updated_time.put(DDOserverName1, System.nanoTime() / 1000000);
 		server_last_updated_time.put(DDOserverName2, System.nanoTime() / 1000000);
 		server_last_updated_time.put(DDOserverName3, System.nanoTime() / 1000000);
-		
-		
+
 		init();
 	}
 
@@ -215,20 +221,23 @@ public class DcmsServerFE extends DcmsPOA {
 			DatagramSocket socket3 = new DatagramSocket();
 			DcmsServerImpl replica2MtlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
 					ServerCenterLocation.MTL, 9878, socket3, s3_MTL_sender_isAlive, MTLserverName3, s3_MTL_receive_port,
-					s1_MTL_receive_port, s2_MTL_receive_port, replicas, getLogInstance("REPLICA2_SERVER",ServerCenterLocation.MTL));
+					s1_MTL_receive_port, s2_MTL_receive_port, replicas,
+					getLogInstance("REPLICA2_SERVER", ServerCenterLocation.MTL));
 
 			DcmsServerImpl replica2LvlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
 					ServerCenterLocation.LVL, 9701, socket3, s3_LVL_sender_isAlive, LVLserverName3, s3_LVL_receive_port,
-					s1_LVL_receive_port, s2_LVL_receive_port, replicas, getLogInstance("REPLICA2_SERVER",ServerCenterLocation.LVL));
+					s1_LVL_receive_port, s2_LVL_receive_port, replicas,
+					getLogInstance("REPLICA2_SERVER", ServerCenterLocation.LVL));
 
 			DcmsServerImpl replica2DdoServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
 					ServerCenterLocation.DDO, 5655, socket3, s3_DDO_sender_isAlive, DDOserverName3, s3_DDO_receive_port,
-					s1_DDO_receive_port, s2_DDO_receive_port, replicas, getLogInstance("REPLICA2_SERVER",ServerCenterLocation.DDO));
+					s1_DDO_receive_port, s2_DDO_receive_port, replicas,
+					getLogInstance("REPLICA2_SERVER", ServerCenterLocation.DDO));
 
 			replica2ServerMap.put("MTL", replica2MtlServer);
 			replica2ServerMap.put("LVL", replica2LvlServer);
 			replica2ServerMap.put("DDO", replica2DdoServer);
-			
+
 			synchronized (centralRepository) {
 				centralRepository.put(Constants.PRIMARY_SERVER_ID, primaryServerMap);
 				centralRepository.put(Constants.REPLICA1_SERVER_ID, replica1ServerMap);
@@ -307,8 +316,7 @@ public class DcmsServerFE extends DcmsPOA {
 			thread7.start();
 			thread8.start();
 			thread9.start();
-			
-			
+
 			Thread statusChecker = new Thread() {
 				public void run() {
 					while (true) {
@@ -347,6 +355,7 @@ public class DcmsServerFE extends DcmsPOA {
 	public String createTRecord(String managerID, String teacher) {
 		teacher = ServerOperations.CREATE_T_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + teacher;
+		logManager.logger.log(Level.INFO, " Sending request to Server to create Teacher record: : " + teacher);
 		return sendRequestToServer(teacher);
 	}
 
@@ -370,6 +379,7 @@ public class DcmsServerFE extends DcmsPOA {
 	public String createSRecord(String managerID, String student) {
 		student = ServerOperations.CREATE_S_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + student;
+		logManager.logger.log(Level.INFO, " Sending request to Server to create student record: : " + student);
 		return sendRequestToServer(student);
 	}
 
@@ -378,12 +388,16 @@ public class DcmsServerFE extends DcmsPOA {
 	 * from all the servers Creates UDPRequest Provider objects for each request
 	 * and creates separate thread for each request. And makes sure each thread
 	 * is complete and returns the result
+	 * 
+	 * @param managerID
+	 *            gets the managerID
 	 */
 
 	@Override
 	public String getRecordCount(String managerID) {
 		String req = ServerOperations.GET_REC_COUNT + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID;
+		logManager.logger.log(Level.INFO, " Sending request to Server for getRecordCount: : " + req);
 		return sendRequestToServer(req);
 	}
 
@@ -407,6 +421,7 @@ public class DcmsServerFE extends DcmsPOA {
 		String editData = ServerOperations.EDIT_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + fieldname + Constants.RECEIVED_DATA_SEPERATOR + newvalue;
+		logManager.logger.log(Level.INFO, " Sending request to Server for editRecord: : " + editData);
 		return sendRequestToServer(editData);
 	}
 
@@ -428,8 +443,19 @@ public class DcmsServerFE extends DcmsPOA {
 		String req = ServerOperations.TRANSFER_RECORD + Constants.RECEIVED_DATA_SEPERATOR + getServerLoc(managerID)
 				+ Constants.RECEIVED_DATA_SEPERATOR + managerID + Constants.RECEIVED_DATA_SEPERATOR + recordID
 				+ Constants.RECEIVED_DATA_SEPERATOR + remoteCenterServerName;
+		logManager.logger.log(Level.INFO, " Sending request to Server for transferRecord: : " + req);
 		return sendRequestToServer(req);
 	}
+
+	/**
+	 * Performs the transfer of the request to the primary server by sending the
+	 * appropriate packet request to request buffer and then waiting for the
+	 * acknowledgement to the current server.
+	 * 
+	 * @param data
+	 *            gets the data for the request from the client.
+	 * 
+	 */
 
 	public String sendRequestToServer(String data) {
 		try {
@@ -441,8 +467,10 @@ public class DcmsServerFE extends DcmsPOA {
 					InetAddress.getByName(Constants.CURRENT_SERVER_IP), Constants.CURRENT_SERVER_UDP_PORT);
 			ds.send(dp);
 			System.out.println("Adding request to request buffer with req id..." + requestId);
+			logManager.logger.log(Level.INFO, "Adding request to request buffer with req id..." + requestId);
 			requestBuffer.put(requestId, data);
 			System.out.println("Waiting for acknowledgement from current server...");
+			logManager.logger.log(Level.INFO, "Waiting for acknowledgement from current server...");
 			Thread.sleep(Constants.RETRY_TIME);
 			return getResponse(requestId);
 		} catch (Exception e) {
@@ -450,6 +478,14 @@ public class DcmsServerFE extends DcmsPOA {
 			return e.getMessage();
 		}
 	}
+
+	/**
+	 * Gets the requestId from the sendRequestToServer and removes the requestId
+	 * from the buffer.
+	 * 
+	 * @param requestId
+	 *            gets the requestId to be removed.
+	 **/
 
 	public String getResponse(Integer requestId) {
 		try {
@@ -460,6 +496,15 @@ public class DcmsServerFE extends DcmsPOA {
 		requestBuffer.remove(requestId);
 		return responses.get(requestId).getResponse();
 	}
+
+	/**
+	 * Performs the server status by checking the server_last_updated_time with
+	 * the current time to find out if the server has failed. If the failed
+	 * server is the leader, electNewLeader used to find out the new leader.
+	 * 
+	 * @param serverName
+	 *            gets the serverName to be checked for failure.
+	 */
 
 	private static synchronized void checkServerStatus(String serverName) {
 		synchronized (mapAccessor) {
@@ -475,6 +520,18 @@ public class DcmsServerFE extends DcmsPOA {
 			}
 		}
 	}
+
+	/**
+	 * Performs the election process to elect the new leader using bully
+	 * election process after receiving the failed serverName from
+	 * checkServerStatus, the elected leader will act as the primary server
+	 * henceforth.
+	 * 
+	 * @param oldLeader
+	 *            gets the name of the failed leader as oldLeader
+	 * @param logManager
+	 *            gets the LogManager instance to perform logging.
+	 */
 
 	private static void electNewLeader(String oldLeader, LogManager logManager) {
 		server_leader_status.remove(oldLeader);
@@ -563,6 +620,14 @@ public class DcmsServerFE extends DcmsPOA {
 
 	}
 
+	/**
+	 * Performs the status check for server with the given server name.
+	 * 
+	 * @param name
+	 *            gets the name of the server to be checked.
+	 * 
+	 */
+
 	private static boolean getStatus(String name) {
 		if (name.equals("MTL1")) {
 			return s1_MTL_sender_isAlive;
@@ -585,6 +650,14 @@ public class DcmsServerFE extends DcmsPOA {
 		}
 		return false;
 	}
+
+	/**
+	 * Performs the server kill, for the given server location
+	 * 
+	 * @param location
+	 *            get the server location to be killed
+	 * 
+	 */
 
 	@Override
 	public String killServer(String location) {

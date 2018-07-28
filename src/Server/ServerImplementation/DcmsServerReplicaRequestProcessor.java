@@ -25,8 +25,12 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 		this.currentOperationData = operationData;
 		this.server = null;
 		response = null;
-		this.logManager=logManager;
+		this.logManager = logManager;
 	}
+	
+	/**
+	 * 
+	 */
 
 	public synchronized void run() {
 		String[] dataArr;
@@ -34,13 +38,15 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 
 		Integer replicaId = Integer.parseInt(dataToBeSent[0]);
 		System.out.println("====================Currently serving replica with ID :: " + replicaId);
-		//logManager.logger.log(Level.INFO,"====================Currently serving replica with ID :: " + replicaId);
+		// logManager.logger.log(Level.INFO,"====================Currently
+		// serving replica with ID :: " + replicaId);
 		ServerOperations oprn = ServerOperations.valueOf(dataToBeSent[1]);
-		
+
 		String requestId = dataToBeSent[dataToBeSent.length - 1];
 		System.out.println("Currently serving request with id :: " + requestId);
-	//	logManager.logger.log(Level.INFO,"Currently serving ReplicaRequest request with id :: " + requestId);
-		
+		// logManager.logger.log(Level.INFO,"Currently serving ReplicaRequest
+		// request with id :: " + requestId);
+
 		switch (oprn) {
 		case CREATE_T_RECORD:
 			this.server = chooseServer(replicaId, dataToBeSent[2]);
@@ -66,7 +72,7 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 			this.server = chooseServer(replicaId, dataToBeSent[2]);
 			String newdata = dataToBeSent[6] + Constants.RECEIVED_DATA_SEPERATOR + dataToBeSent[7];
 			response = this.server.editRecord(dataToBeSent[3], dataToBeSent[4], dataToBeSent[5], newdata);
-			System.out.println("=======================================RESPONSE :: "+response);
+			System.out.println("=======================================RESPONSE :: " + response);
 			sendReply(response);
 			break;
 		case TRANSFER_RECORD:
