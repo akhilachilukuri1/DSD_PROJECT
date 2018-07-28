@@ -367,6 +367,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		String requestID = parsedata[1];
 		String type = recordID.substring(0, 2);
 		DcmsServerUDPRequestProvider req = null;
+		DcmsServerUDPRequestProvider req1 = null;
 		try {
 			Record record = getRecordForTransfer(recordID);
 			if (record == null) {
@@ -377,23 +378,41 @@ public class DcmsServerImpl extends DcmsPOA {
 			req = new DcmsServerUDPRequestProvider(
 					DcmsServerFE.centralRepository.get(serverID).get(remoteCenterServerName.trim()), "TRANSFER_RECORD",
 					record,logManager.logger);
+			
+			if(isPrimary && this.replicas.size() == Constants.TOTAL_REPLICAS_COUNT - 1){
+				System.out.println("Replicas size is ::::::::::: 1"+remoteCenterServerName);
+				req1 = new DcmsServerUDPRequestProvider(
+						DcmsServerFE.centralRepository.get(Constants.REPLICA2_SERVER_ID).get(remoteCenterServerName.trim()), "TRANSFER_RECORD",
+						record,logManager.logger);
+				req1.start();
+				try {
+					req1.join();
+					backupAfterTransferRecord(Constants.REPLICA2_SERVER_ID,remoteCenterServerName);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		} catch (IOException e) {
 			logManager.logger.log(Level.SEVERE, e.getMessage());
 		}
-		req.start();
+		if (req!=null){
+			req.start();
+		}
 		try {
-			req.join();
+			if (req!=null){
+				req.join();
+			}
 			if (removeRecordAfterTransfer(recordID) == "success") {
 				logManager.logger.log(Level.INFO, "Record created in  " + remoteCenterServerName + "  and removed from "
 						+ location + " with requestID " + requestID);
 				System.out.println("Record created in " + remoteCenterServerName + "and removed from " + location
 						+ " with requestID " + requestID);
 				takeTheBackup();
-				backupAfterTransferRecord(remoteCenterServerName);
+				backupAfterTransferRecord(this.serverID,remoteCenterServerName);
 				return "Record created in " + remoteCenterServerName + "and removed from " + location;
 			}
 		} catch (Exception e) {
-
+			System.out.println("Exception in transfer record :: "+e.getMessage());
 		}
 
 		return "Transfer record operation unsuccessful!";
@@ -643,7 +662,7 @@ public class DcmsServerImpl extends DcmsPOA {
 			DcmsServerFE.S3_DDO.backupMap(this.recordsMap);
 		}
 	}
-	public void backupAfterTransferRecord(String remoteCenterServerName)
+	public void backupAfterTransferRecord(Integer serverID,String remoteCenterServerName)
 	{
 		HashMap<String, DcmsServerImpl> serverList=DcmsServerFE.centralRepository.get(serverID);
 		DcmsServerImpl remoteServer=serverList.get(remoteCenterServerName);

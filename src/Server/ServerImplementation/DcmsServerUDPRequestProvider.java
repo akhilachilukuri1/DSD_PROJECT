@@ -89,7 +89,7 @@ public class DcmsServerUDPRequestProvider extends Thread {
 				data1 = new byte[100];
 				socket.receive(new DatagramPacket(data1, data1.length));
 				transferResult = new String(data1);
-				//System.out.println("============="+transferResult);
+				System.out.println("TRANSFER IN UDP PROVIDER ============="+transferResult);
 				break;
 			}
 		} catch (Exception e) {

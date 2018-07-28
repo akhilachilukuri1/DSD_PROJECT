@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import Conf.Constants;
 import Conf.ServerCenterLocation;
 
-public class UDPReceiverFromFE extends Thread {
+public class DcmsServerPrimaryFIFO extends Thread {
 	
 	DatagramSocket serverSocket;
 	DatagramPacket receivePacket;
@@ -24,7 +24,7 @@ public class UDPReceiverFromFE extends Thread {
 	ArrayList<TransferReqToCurrentServer> requests;
 	int c;
 	Queue<String> FIFORequest = new LinkedList<String>();
-	public UDPReceiverFromFE(ArrayList<TransferReqToCurrentServer> requests) {
+	public DcmsServerPrimaryFIFO(ArrayList<TransferReqToCurrentServer> requests) {
 		try {
 			this.requests = requests;
 			serverSocket = new DatagramSocket(Constants.CURRENT_SERVER_UDP_PORT);

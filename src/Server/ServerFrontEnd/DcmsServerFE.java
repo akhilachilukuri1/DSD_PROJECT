@@ -86,15 +86,24 @@ public class DcmsServerFE extends DcmsPOA {
 	String DDOserverName1 = "DDO1";
 	String DDOserverName2 = "DDO2";
 	String DDOserverName3 = "DDO3";
-	public static DcmsServerBackupWriter S1_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL1_backup.txt");
-	public static DcmsServerBackupWriter S2_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL2_backup.txt");
-	public static DcmsServerBackupWriter S3_MTL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"MTL3_backup.txt");
-	public static DcmsServerBackupWriter S1_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL1_backup.txt");
-	public static DcmsServerBackupWriter S2_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL2_backup.txt");
-	public static DcmsServerBackupWriter S3_LVL=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"LVL3_backup.txt");
-	public static DcmsServerBackupWriter S1_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO1_backup.txt");
-	public static DcmsServerBackupWriter S2_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO2_backup.txt");
-	public static DcmsServerBackupWriter S3_DDO=new DcmsServerBackupWriter(Constants.BACKUP_DIR+"\\"+"DDO3_backup.txt");
+	public static DcmsServerBackupWriter S1_MTL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "MTL1_backup.txt");
+	public static DcmsServerBackupWriter S2_MTL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "MTL2_backup.txt");
+	public static DcmsServerBackupWriter S3_MTL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "MTL3_backup.txt");
+	public static DcmsServerBackupWriter S1_LVL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "LVL1_backup.txt");
+	public static DcmsServerBackupWriter S2_LVL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "LVL2_backup.txt");
+	public static DcmsServerBackupWriter S3_LVL = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "LVL3_backup.txt");
+	public static DcmsServerBackupWriter S1_DDO = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "DDO1_backup.txt");
+	public static DcmsServerBackupWriter S2_DDO = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "DDO2_backup.txt");
+	public static DcmsServerBackupWriter S3_DDO = new DcmsServerBackupWriter(
+			Constants.BACKUP_DIR + "\\" + "DDO3_backup.txt");
 
 	/*
 	 * DcmsServerImpl Constructor to initializes the variables used for the
@@ -105,13 +114,13 @@ public class DcmsServerFE extends DcmsPOA {
 	 */
 	public DcmsServerFE() {
 		logManager = new LogManager("ServerFE");
-		
+
 		recordsMap = new HashMap<>();
 		requests = new ArrayList<>();
 		responses = new HashMap<>();
 		requestBuffer = new HashMap<>();
 		receivedResponses = new ArrayList<>();
-		UDPReceiverFromFE udpReceiverFromFE = new UDPReceiverFromFE(requests);
+		DcmsServerPrimaryFIFO udpReceiverFromFE = new DcmsServerPrimaryFIFO(requests);
 		udpReceiverFromFE.start();
 		UDPResponseReceiver udpResponse = new UDPResponseReceiver(responses);
 		udpResponse.start();
@@ -149,8 +158,7 @@ public class DcmsServerFE extends DcmsPOA {
 		server_last_updated_time.put(DDOserverName1, System.nanoTime() / 1000000);
 		server_last_updated_time.put(DDOserverName2, System.nanoTime() / 1000000);
 		server_last_updated_time.put(DDOserverName3, System.nanoTime() / 1000000);
-		
-		
+
 		init();
 	}
 
@@ -215,20 +223,23 @@ public class DcmsServerFE extends DcmsPOA {
 			DatagramSocket socket3 = new DatagramSocket();
 			DcmsServerImpl replica2MtlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
 					ServerCenterLocation.MTL, 9878, socket3, s3_MTL_sender_isAlive, MTLserverName3, s3_MTL_receive_port,
-					s1_MTL_receive_port, s2_MTL_receive_port, replicas, getLogInstance("REPLICA2_SERVER",ServerCenterLocation.MTL));
+					s1_MTL_receive_port, s2_MTL_receive_port, replicas,
+					getLogInstance("REPLICA2_SERVER", ServerCenterLocation.MTL));
 
 			DcmsServerImpl replica2LvlServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
 					ServerCenterLocation.LVL, 9701, socket3, s3_LVL_sender_isAlive, LVLserverName3, s3_LVL_receive_port,
-					s1_LVL_receive_port, s2_LVL_receive_port, replicas, getLogInstance("REPLICA2_SERVER",ServerCenterLocation.LVL));
+					s1_LVL_receive_port, s2_LVL_receive_port, replicas,
+					getLogInstance("REPLICA2_SERVER", ServerCenterLocation.LVL));
 
 			DcmsServerImpl replica2DdoServer = new DcmsServerImpl(Constants.REPLICA2_SERVER_ID, false,
 					ServerCenterLocation.DDO, 5655, socket3, s3_DDO_sender_isAlive, DDOserverName3, s3_DDO_receive_port,
-					s1_DDO_receive_port, s2_DDO_receive_port, replicas, getLogInstance("REPLICA2_SERVER",ServerCenterLocation.DDO));
+					s1_DDO_receive_port, s2_DDO_receive_port, replicas,
+					getLogInstance("REPLICA2_SERVER", ServerCenterLocation.DDO));
 
 			replica2ServerMap.put("MTL", replica2MtlServer);
 			replica2ServerMap.put("LVL", replica2LvlServer);
 			replica2ServerMap.put("DDO", replica2DdoServer);
-			
+
 			synchronized (centralRepository) {
 				centralRepository.put(Constants.PRIMARY_SERVER_ID, primaryServerMap);
 				centralRepository.put(Constants.REPLICA1_SERVER_ID, replica1ServerMap);
@@ -307,8 +318,7 @@ public class DcmsServerFE extends DcmsPOA {
 			thread7.start();
 			thread8.start();
 			thread9.start();
-			
-			
+
 			Thread statusChecker = new Thread() {
 				public void run() {
 					while (true) {
@@ -466,17 +476,19 @@ public class DcmsServerFE extends DcmsPOA {
 			long currentTime = System.nanoTime() / 1000000;
 			if (server_last_updated_time.containsKey(serverName)) {
 				if (currentTime - server_last_updated_time.get(serverName) > TIME_OUT) {
-					if (server_leader_status.get(serverName)) {
-						System.out.println(serverName + " Leader Failed Found!!!");
-						logManager.logger.log(Level.INFO, serverName + " Leader Failed Found!!!");
-						electNewLeader(serverName, logManager);
+					if (server_leader_status.containsKey(serverName)) {
+						if (server_leader_status.get(serverName)) {
+							System.out.println(serverName + " Leader Failed Found!!!");
+							logManager.logger.log(Level.INFO, serverName + " Leader Failed Found!!!");
+							electNewLeader(serverName, logManager);
+						}
 					}
 				}
 			}
 		}
 	}
 
-	private static void electNewLeader(String oldLeader, LogManager logManager) {
+	private static String electNewLeader(String oldLeader, LogManager logManager) {
 		server_leader_status.remove(oldLeader);
 		server_last_updated_time.remove(oldLeader);
 		currentIds.remove(oldLeader);
@@ -491,7 +503,6 @@ public class DcmsServerFE extends DcmsPOA {
 		}
 		server_leader_status.put(maxEntry.getKey(), true);
 		currentIds.put(maxEntry.getKey(), LEADER_ID);
-		System.out.println("++++Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
 		logManager.logger.log(Level.INFO, "++++Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
 		HashMap<String, DcmsServerImpl> replaceserver = new HashMap<String, DcmsServerImpl>();
 		synchronized (centralRepository) {
@@ -560,7 +571,8 @@ public class DcmsServerFE extends DcmsPOA {
 				}
 			}
 		}
-
+		System.out.println("++++Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
+		return "and elected new leader " + maxEntry.getKey() + " in the location" + loc;
 	}
 
 	private static boolean getStatus(String name) {
@@ -593,7 +605,7 @@ public class DcmsServerFE extends DcmsPOA {
 			if (s1_MTL_sender_isAlive && s2_MTL_sender_isAlive && s3_MTL_sender_isAlive) {
 				s1_MTL_sender_isAlive = false;
 				primaryMtlServer.heartBeatReceiver.setStatus(false);
-				msg = "MTL Server is Killed";
+				msg = "MTL1 Server is killed " + electNewLeader("MTL1", logManager);
 			} else {
 				msg = "Primary is already killed!!";
 			}
@@ -601,7 +613,7 @@ public class DcmsServerFE extends DcmsPOA {
 			if (s1_LVL_sender_isAlive && s2_LVL_sender_isAlive && s3_LVL_sender_isAlive) {
 				s1_LVL_sender_isAlive = false;
 				primaryLvlServer.heartBeatReceiver.setStatus(false);
-				msg = "LVL Server is Killed";
+				msg = "LVL1 Server is killed " + electNewLeader("LVL1", logManager);
 			} else {
 				msg = "Primary is already killed!!";
 			}
@@ -609,7 +621,7 @@ public class DcmsServerFE extends DcmsPOA {
 			if (s1_DDO_sender_isAlive && s2_DDO_sender_isAlive && s3_DDO_sender_isAlive) {
 				s1_DDO_sender_isAlive = false;
 				primaryDdoServer.heartBeatReceiver.setStatus(false);
-				msg = "DDO Server is Killed";
+				msg = "DDO1 Server is killed " + electNewLeader("DDO1", logManager);
 			} else {
 				msg = "Primary is already killed!!";
 			}

@@ -3,6 +3,7 @@ package Conf;
 public class Constants {
 
 	public static int TOTAL_SERVERS_COUNT = 3;
+	public static int TOTAL_REPLICAS_COUNT = TOTAL_SERVERS_COUNT - 1;
 	
 	public static int PRIMARY_SERVER_ID = 1;
 	public static int REPLICA1_SERVER_ID = 2;
