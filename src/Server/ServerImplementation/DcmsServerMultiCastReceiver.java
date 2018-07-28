@@ -4,12 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.logging.Level;
-
-import com.sun.istack.internal.logging.Logger;
-
 import Conf.LogManager;
-
 import Conf.Constants;
 
 public class DcmsServerMultiCastReceiver extends Thread {
@@ -47,6 +42,10 @@ public class DcmsServerMultiCastReceiver extends Thread {
 	 * respective operation if it is a replica.
 	 * 
 	 */
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 
 	public synchronized void run() {
 		try {
@@ -58,10 +57,6 @@ public class DcmsServerMultiCastReceiver extends Thread {
 					System.out.println("Received data in multicast heartBeatReceiver " + new String(packet.getData()));
 					System.out.println("Sent the acknowledgement for the data recevied in replica to primary server "
 							+ new String(packet.getData()));
-
-					// logManager.logger.log(Level.INFO,"Sent the
-					// acknowledgement for the data recevied in replica to
-					// primary server" );
 
 					DcmsServerReplicaAcknowledgementSender ack = new DcmsServerReplicaAcknowledgementSender(
 							new String(packet.getData()), logManager);

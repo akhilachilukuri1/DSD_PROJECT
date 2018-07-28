@@ -14,15 +14,16 @@ public class DcmsServerMultiCastSender extends Thread {
 	InetAddress address;
 	String data;
 	Logger logger;
-	
-	
+
 	/**
-	 * Is a constructor that creates a Multicast socket and 
-	 * sets the address 
-	 * @param request Is the String that holds the data to be multicasted
-	 * @param logger Is an object for the Logger
+	 * Is a constructor that creates a Multicast socket and sets the address
+	 * 
+	 * @param request
+	 *            Is the String that holds the data to be multicasted
+	 * @param logger
+	 *            Is an object for the Logger
 	 */
-	
+
 	public DcmsServerMultiCastSender(String request, Logger logger) {
 		try {
 			multicastsocket = new MulticastSocket(Constants.MULTICAST_PORT_NUMBER);
@@ -34,20 +35,24 @@ public class DcmsServerMultiCastSender extends Thread {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * 
-	 * This thread forms the Datagram Packet that is to be multicasted
-	 * to the replicas list.
-	 *  
+	 * This thread forms the Datagram Packet that is to be multicasted to the
+	 * replicas list.
+	 * 
 	 */
-	
 
-	public void run() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Thread#run()
+	 */
+	public synchronized void run() {
 		try {
-			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.length(), address, Constants.MULTICAST_PORT_NUMBER);
-			logger.log(Level.INFO,"Sending Multicast request" + data);
+			DatagramPacket packet = new DatagramPacket(data.getBytes(), data.length(), address,
+					Constants.MULTICAST_PORT_NUMBER);
+			logger.log(Level.INFO, "Sending Multicast request" + data);
 			multicastsocket.send(packet);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

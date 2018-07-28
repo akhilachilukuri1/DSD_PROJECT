@@ -18,9 +18,11 @@ public class DcmsServerUDPRequestServer extends Thread {
 	private DatagramPacket receivePacket;
 	private DcmsServerImpl server;
 	private Logger loggerInstance;
+	private Object mapLock;
 
 	/**
-	 * DcmsServerUDPRequestServer forwards the request received to the respective server port
+	 * DcmsServerUDPRequestServer forwards the request received to the
+	 * respective server port
 	 * 
 	 * @param pkt
 	 *            datagram packet that holds the packet information
@@ -29,9 +31,10 @@ public class DcmsServerUDPRequestServer extends Thread {
 	 * 
 	 */
 
-	public DcmsServerUDPRequestServer(DatagramPacket pkt, DcmsServerImpl serverImp,Logger logger) {
+	public DcmsServerUDPRequestServer(DatagramPacket pkt, DcmsServerImpl serverImp, Logger logger) {
 		receivePacket = pkt;
 		server = serverImp;
+		mapLock = new Object();
 		this.loggerInstance = logger;
 		try {
 			serverSocket = new DatagramSocket();
@@ -40,13 +43,11 @@ public class DcmsServerUDPRequestServer extends Thread {
 		}
 	}
 
-	/**
-	 * Serves the actual UDP request by performing the required functionality
-	 * be it Get Record or Transfer Record
-	 * 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Thread#run()
 	 */
 
-	@Override
 	public void run() {
 		byte[] responseData;
 		try {
@@ -59,27 +60,24 @@ public class DcmsServerUDPRequestServer extends Thread {
 			switch (inputPkt) {
 			case "TRANSFER_RECORD":
 				System.out.println("Transferring :: " + pktSplit[1]);
-				loggerInstance.log(Level.INFO,"Transferring :: " + pktSplit[1]);
+				loggerInstance.log(Level.INFO, "Transferring :: " + pktSplit[1]);
 				responseData = transferRecord(pktSplit[1]).getBytes();
-				serverSocket.send(new DatagramPacket(responseData,
-						responseData.length, receivePacket.getAddress(),
+				serverSocket.send(new DatagramPacket(responseData, responseData.length, receivePacket.getAddress(),
 						receivePacket.getPort()));
 				break;
 			case "GET_RECORD_COUNT":
 				responseData = Integer.toString(getRecCount()).getBytes();
-				System.out.println("data in udp req server :: "+Integer.toString(getRecCount()));
-				loggerInstance.log(Level.INFO,"data in udp req server :: "+Integer.toString(getRecCount()));
-				serverSocket.send(new DatagramPacket(responseData,
-						responseData.length, receivePacket.getAddress(),
+				System.out.println("data in udp req server :: " + Integer.toString(getRecCount()));
+				loggerInstance.log(Level.INFO, "data in udp req server :: " + Integer.toString(getRecCount()));
+				serverSocket.send(new DatagramPacket(responseData, responseData.length, receivePacket.getAddress(),
 						receivePacket.getPort()));
 				break;
 			default:
 				System.out.println("Invalid UDP request type");
-				loggerInstance.log(Level.INFO,"Invalid UDP request type");
+				loggerInstance.log(Level.INFO, "Invalid UDP request type");
 			}
 
-			loggerInstance.log(Level.INFO,
-					"Received " + inputPkt + " from " + location);
+			loggerInstance.log(Level.INFO, "Received " + inputPkt + " from " + location);
 		} catch (Exception e) {
 			// System.out.println(
 			// "Exception in UDP Request server Thread :: " + e.getMessage());
@@ -87,11 +85,10 @@ public class DcmsServerUDPRequestServer extends Thread {
 	}
 
 	/**
-	 * This method the functionality of adding
-	 * the data to the respective server's hashmap
-	 * (Transfer Functionality)
+	 * This method the functionality of adding the data to the respective
+	 * server's hashmap (Transfer Functionality)
 	 */
-	private String transferRecord(String recordToBeAdded) {
+	private synchronized String transferRecord(String recordToBeAdded) {
 		String temp[] = recordToBeAdded.split(",");
 		String managerID = temp[0];
 		String recordID = temp[1];
@@ -103,10 +100,15 @@ public class DcmsServerUDPRequestServer extends Thread {
 			String specialization = temp[6];
 			String location = temp[7];
 			String key = lastName.substring(0, 1);
-			Teacher teacherObj = new Teacher(managerID, recordID, firstName,
-					lastName, address, phone, specialization, location);
-			String message = server.addRecordToHashMap(key, teacherObj, null);
-			return message + " " + server.recordsMap.get(key);
+			Teacher teacherObj = new Teacher(managerID, recordID, firstName, lastName, address, phone, specialization,
+					location);
+			String message;
+			List<Record> data;
+			synchronized (mapLock) {
+				message = server.addRecordToHashMap(key, teacherObj, null);
+				data = server.recordsMap.get(key);
+			}
+			return message + " " + data;
 		} else {
 			String firstName = temp[2];
 			String lastName = temp[3];
@@ -114,26 +116,32 @@ public class DcmsServerUDPRequestServer extends Thread {
 			List<String> courseList = server.putCoursesinList(CoursesRegistered);
 			String status = temp[3];
 			String statusDate = temp[5];
-			Student studentObj = new Student(managerID, recordID, firstName,
-					lastName, courseList, status, statusDate);
+			Student studentObj = new Student(managerID, recordID, firstName, lastName, courseList, status, statusDate);
 			String key = lastName.substring(0, 1);
-			String message = server.addRecordToHashMap(key, null, studentObj);
-			return message + " " + server.recordsMap.get(key);
+
+			String message;
+			List<Record> data;
+			synchronized (mapLock) {
+				message = server.addRecordToHashMap(key, null, studentObj);
+				data = server.recordsMap.get(key);
+			}
+			return message + " " + data;
 		}
 	}
 
 	/**
-	 * getRecCount is the function that 
-	 * returns the number of entries made in
+	 * getRecCount is the function that returns the number of entries made in
 	 * the respective hashmap
 	 *
 	 */
 
-	private int getRecCount() {
+	private synchronized int getRecCount() {
 		int count = 0;
-		for (Map.Entry<String, List<Record>> entry : server.recordsMap.entrySet()) {
-			List<Record> list = entry.getValue();
-			count += list.size();
+		synchronized (mapLock) {
+			for (Map.Entry<String, List<Record>> entry : server.recordsMap.entrySet()) {
+				List<Record> list = entry.getValue();
+				count += list.size();
+			}
 		}
 		return count;
 	}

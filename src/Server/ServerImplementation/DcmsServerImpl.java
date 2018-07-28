@@ -6,7 +6,6 @@ import java.net.DatagramSocket;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import Conf.Constants;
 import Conf.LogManager;
@@ -213,15 +212,23 @@ public class DcmsServerImpl extends DcmsPOA {
 		}
 
 		if (student != null) {
-			List<Record> recordList = recordsMap.get(key);
+			List<Record> recordList = null;
+			synchronized (recordsMapAccessorLock) {
+				recordList = recordsMap.get(key);
+			}
 			if (recordList != null) {
 				recordList.add(student);
 			} else {
-				List<Record> records = new ArrayList<Record>();
-				records.add(student);
+				List<Record> records = null;
+				synchronized (recordsMapAccessorLock) {
+					records = new ArrayList<Record>();
+					records.add(student);
+				}
 				recordList = records;
 			}
-			recordsMap.put(key, recordList);
+			synchronized (recordsMapAccessorLock) {
+				recordsMap.put(key, recordList);
+			}
 			message = "success";
 		}
 		takeTheBackup();
@@ -272,12 +279,14 @@ public class DcmsServerImpl extends DcmsPOA {
 		locList.add("LVL");
 		locList.add("DDO");
 		for (String loc : locList) {
-			System.out.println("11>>>>>>>>>>>>>>>>>>>>>>>>>>>Now serving location :: " + loc);
+			// System.out.println("11>>>>>>>>>>>>>>>>>>>>>>>>>>>Now serving
+			// location :: " + loc);
 			if (loc == this.location) {
 				recordCount = loc + " " + getCurrServerCnt();
 			} else {
 				try {
-					System.out.println("22>>>>>>>>>>>>>>>>>>>>>>>>>>>Now serving location :: " + loc);
+					// System.out.println("22>>>>>>>>>>>>>>>>>>>>>>>>>>>Now
+					// serving location :: " + loc);
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -374,6 +383,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		String requestID = parsedata[1];
 		String type = recordID.substring(0, 2);
 		DcmsServerUDPRequestProvider req = null;
+		DcmsServerUDPRequestProvider req1 = null;
 		try {
 			Record record = getRecordForTransfer(recordID);
 			if (record == null) {
@@ -384,31 +394,48 @@ public class DcmsServerImpl extends DcmsPOA {
 			req = new DcmsServerUDPRequestProvider(
 					DcmsServerFE.centralRepository.get(serverID).get(remoteCenterServerName.trim()), "TRANSFER_RECORD",
 					record, logManager.logger);
+
+			if (isPrimary && this.replicas.size() == Constants.TOTAL_REPLICAS_COUNT - 1) {
+				System.out.println("Replicas size is ::::::::::: 1" + remoteCenterServerName);
+				req1 = new DcmsServerUDPRequestProvider(DcmsServerFE.centralRepository.get(Constants.REPLICA2_SERVER_ID)
+						.get(remoteCenterServerName.trim()), "TRANSFER_RECORD", record, logManager.logger);
+				req1.start();
+				try {
+					req1.join();
+					backupAfterTransferRecord(Constants.REPLICA2_SERVER_ID, remoteCenterServerName);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		} catch (IOException e) {
 			logManager.logger.log(Level.SEVERE, e.getMessage());
 		}
-		req.start();
+		if (req != null) {
+			req.start();
+		}
 		try {
-			req.join();
+			if (req != null) {
+				req.join();
+			}
 			if (removeRecordAfterTransfer(recordID) == "success") {
 				logManager.logger.log(Level.INFO, "Record created in  " + remoteCenterServerName + "  and removed from "
 						+ location + " with requestID " + requestID);
 				System.out.println("Record created in " + remoteCenterServerName + "and removed from " + location
 						+ " with requestID " + requestID);
 				takeTheBackup();
-				backupAfterTransferRecord(remoteCenterServerName);
+				backupAfterTransferRecord(this.serverID, remoteCenterServerName);
 				return "Record created in " + remoteCenterServerName + "and removed from " + location;
 			}
 		} catch (Exception e) {
-
+			System.out.println("Exception in transfer record :: " + e.getMessage());
 		}
 
 		return "Transfer record operation unsuccessful!";
 	}
 
 	/*
-	 * Removerecordaftertransfer method, removes the record from current server
-	 * after the transfer operation is performed.
+	 * Remove record after transfer method, removes the record from current
+	 * server after the transfer operation is performed.
 	 * 
 	 * @param recordID record id of the student/teacher to be removed
 	 */
@@ -608,7 +635,6 @@ public class DcmsServerImpl extends DcmsPOA {
 
 	@Override
 	public String killServer(String location) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -625,40 +651,43 @@ public class DcmsServerImpl extends DcmsPOA {
 	 * class to store a written backup of the Repository
 	 */
 
-	public void takeTheBackup() {
-		if (this.location.equalsIgnoreCase("MTL") && serverID == 1 && recordsMap.size() > 0) {
-			DcmsServerFE.S1_MTL.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("LVL") && serverID == 1 && recordsMap.size() > 0) {
-			DcmsServerFE.S1_LVL.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("DDO") && serverID == 1 && recordsMap.size() > 0) {
-			DcmsServerFE.S1_DDO.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("MTL") && serverID == 2 && recordsMap.size() > 0) {
-			DcmsServerFE.S2_MTL.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("LVL") && serverID == 2 && recordsMap.size() > 0) {
-			DcmsServerFE.S2_LVL.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("DDO") && serverID == 2 && recordsMap.size() > 0) {
-			DcmsServerFE.S2_DDO.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("MTL") && serverID == 3 && recordsMap.size() > 0) {
-			DcmsServerFE.S3_MTL.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("LVL") && serverID == 3 && recordsMap.size() > 0) {
-			DcmsServerFE.S3_LVL.backupMap(this.recordsMap);
-		} else if (this.location.equalsIgnoreCase("DDO") && serverID == 3 && recordsMap.size() > 0) {
-			DcmsServerFE.S3_DDO.backupMap(this.recordsMap);
+	public synchronized void takeTheBackup() {
+		synchronized (recordsMapAccessorLock) {
+			if (this.location.equalsIgnoreCase("MTL") && serverID == 1 && recordsMap.size() > 0) {
+				DcmsServerFE.S1_MTL.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("LVL") && serverID == 1 && recordsMap.size() > 0) {
+				DcmsServerFE.S1_LVL.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("DDO") && serverID == 1 && recordsMap.size() > 0) {
+				DcmsServerFE.S1_DDO.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("MTL") && serverID == 2 && recordsMap.size() > 0) {
+				DcmsServerFE.S2_MTL.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("LVL") && serverID == 2 && recordsMap.size() > 0) {
+				DcmsServerFE.S2_LVL.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("DDO") && serverID == 2 && recordsMap.size() > 0) {
+				DcmsServerFE.S2_DDO.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("MTL") && serverID == 3 && recordsMap.size() > 0) {
+				DcmsServerFE.S3_MTL.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("LVL") && serverID == 3 && recordsMap.size() > 0) {
+				DcmsServerFE.S3_LVL.backupMap(this.recordsMap);
+			} else if (this.location.equalsIgnoreCase("DDO") && serverID == 3 && recordsMap.size() > 0) {
+				DcmsServerFE.S3_DDO.backupMap(this.recordsMap);
+			}
 		}
 	}
 
 	/**
-	 * This function calls the takeTheBackup method to send the respective
-	 * HashMap
+	 * Takes the backup after transfer record operation is performed
 	 * 
 	 * @param remoteCenterServerName
 	 */
 
-	public void backupAfterTransferRecord(String remoteCenterServerName) {
-		HashMap<String, DcmsServerImpl> serverList = DcmsServerFE.centralRepository.get(serverID);
-		DcmsServerImpl remoteServer = serverList.get(remoteCenterServerName);
-		if (remoteServer != null) {
-			remoteServer.takeTheBackup();
+	public void backupAfterTransferRecord(Integer serverID, String remoteCenterServerName) {
+		synchronized (recordsMapAccessorLock) {
+			HashMap<String, DcmsServerImpl> serverList = DcmsServerFE.centralRepository.get(serverID);
+			DcmsServerImpl remoteServer = serverList.get(remoteCenterServerName);
+			if (remoteServer != null) {
+				remoteServer.takeTheBackup();
+			}
 		}
 	}
 }

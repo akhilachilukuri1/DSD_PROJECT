@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 import Conf.Constants;
 import Conf.ServerCenterLocation;
 
-public class UDPReceiverFromFE extends Thread {
-	
+public class DcmsServerPrimaryFIFO extends Thread {
+
 	DatagramSocket serverSocket;
 	DatagramPacket receivePacket;
 	DatagramPacket sendPacket;
@@ -24,16 +24,16 @@ public class UDPReceiverFromFE extends Thread {
 	ArrayList<TransferReqToCurrentServer> requests;
 	int c;
 	Queue<String> FIFORequest = new LinkedList<String>();
-	
+
 	/**
 	 * Constructor to set the incoming request with the present ArrayList
-	 * @param requests 
-	 * 					gets the request 
+	 * 
+	 * @param requests
+	 *            gets the request
 	 * 
 	 */
-	
-	
-	public UDPReceiverFromFE(ArrayList<TransferReqToCurrentServer> requests) {
+
+	public DcmsServerPrimaryFIFO(ArrayList<TransferReqToCurrentServer> requests) {
 		try {
 			this.requests = requests;
 			serverSocket = new DatagramSocket(Constants.CURRENT_SERVER_UDP_PORT);
@@ -41,15 +41,13 @@ public class UDPReceiverFromFE extends Thread {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	/**
-	 * This Thread receives the input from the Front End
-	 * and adds the data to the FIFO Queue
-	 * and transfer the data to the TransferReqToCurrentServer class
+	 * This Thread receives the input from the Front End and adds the data to
+	 * the FIFO Queue and transfer the data to the TransferReqToCurrentServer
+	 * class
 	 */
-	
-	
+
 	@Override
 	public void run() {
 		byte[] receiveData;
@@ -59,17 +57,16 @@ public class UDPReceiverFromFE extends Thread {
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
 				byte[] receivedData = receivePacket.getData();
-				System.out.println(
-						"Received pkt :: " + new String(receivedData));
+				System.out.println("Received pkt :: " + new String(receivedData));
 				FIFORequest.add(new String(receivedData));
-				TransferReqToCurrentServer transferReq = new TransferReqToCurrentServer(FIFORequest.poll().getBytes(),loggerInstance);
+				TransferReqToCurrentServer transferReq = new TransferReqToCurrentServer(FIFORequest.poll().getBytes(),
+						loggerInstance);
 				transferReq.start();
 				requests.add(transferReq);
 				String inputPkt = new String(receivePacket.getData()).trim();
-				loggerInstance.log(Level.INFO,
-						"Received " + inputPkt + " from " + location);
+				loggerInstance.log(Level.INFO, "Received " + inputPkt + " from " + location);
 			} catch (Exception e) {
-		 
+
 			}
 		}
 	}

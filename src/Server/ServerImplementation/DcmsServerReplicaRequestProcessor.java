@@ -14,6 +14,9 @@ import com.sun.istack.internal.logging.Logger;
 import Conf.ServerOperations;
 import Server.ServerFrontEnd.DcmsServerFE;
 
+/*
+ * Thread class that processes the replica's request
+ */
 public class DcmsServerReplicaRequestProcessor extends Thread {
 
 	String currentOperationData;
@@ -29,7 +32,13 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 	}
 	
 	/**
-	 * 
+	 * Thread that processes the request, once the replica receives the request, and calls the appropriate
+	 * server's method and returns the response to the primary server, once the processing
+	 * is done.
+	 */
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Thread#run()
 	 */
 
 	public synchronized void run() {
@@ -72,7 +81,7 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 			this.server = chooseServer(replicaId, dataToBeSent[2]);
 			String newdata = dataToBeSent[6] + Constants.RECEIVED_DATA_SEPERATOR + dataToBeSent[7];
 			response = this.server.editRecord(dataToBeSent[3], dataToBeSent[4], dataToBeSent[5], newdata);
-			System.out.println("=======================================RESPONSE :: " + response);
+			//System.out.println("=======================================RESPONSE :: " + response);
 			sendReply(response);
 			break;
 		case TRANSFER_RECORD:
@@ -84,15 +93,25 @@ public class DcmsServerReplicaRequestProcessor extends Thread {
 		}
 	}
 
-	public String getResponse() {
+	/*
+	 * Gets the response, once the server has completed processing the request
+	 */
+	public synchronized String getResponse() {
 		return response;
 	}
 
+	/*
+	 * Choose the server given the replica id and location of the server
+	 */
 	private synchronized DcmsServerImpl chooseServer(int replicaId, String loc) {
 		return DcmsServerFE.centralRepository.get(replicaId).get(loc);
 	}
 
-	private void sendReply(String response) {
+	/*
+	 * Sends the response to the primary server
+	 * using reliable UDP communication
+	 */
+	private synchronized void sendReply(String response) {
 		DatagramSocket ds;
 		try {
 			ds = new DatagramSocket();

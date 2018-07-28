@@ -20,20 +20,19 @@ public class DcmsServerBackupWriter {
 	BufferedWriter bw;
 	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	Date date;
+
 	public DcmsServerBackupWriter() {
-	
+
 	}
 
-	
 	/**
-	 * Retrieves the current Date of the system
-	 * and checks for existence of the file. If no,
-	 * a new file is created and the timestamp is written to it
-	 *  
+	 * Retrieves the current Date of the system and checks for existence of the
+	 * file. If no, a new file is created and the timestamp is written to it
+	 * 
 	 * @param filename
-	 * 					Has the name of the Filename stored in it.
-	 */					
-	
+	 *            Has the name of the Filename stored in it.
+	 */
+
 	public DcmsServerBackupWriter(String filename) {
 		super();
 		date = new Date();
@@ -49,29 +48,24 @@ public class DcmsServerBackupWriter {
 				bw.close();
 				fw.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
 	}
-	
-	
+
 	/**
-	 * Receives the HashMap as a parameter and
-	 * writes it to the file as a backup 
+	 * Receives the HashMap as a parameter and writes it to the file as a backup
 	 * along with the current timestamp
 	 * 
 	 * @param temp
-	 * 				HashMap that is the repository of a server				
+	 *            HashMap that is the repository of a server
 	 */
 
 	public void backupMap(HashMap<String, List<Record>> temp) {
 		try {
-
 			date = new Date();
 			String timestamp = dateFormat.format(date).toString();
-
 			fw = new FileWriter(file.getAbsoluteFile(), true);
 			bw = new BufferedWriter(fw);
 			bw.write(timestamp + " : ");
@@ -79,7 +73,6 @@ public class DcmsServerBackupWriter {
 			print(bw, temp);
 			bw.close();
 			fw.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,14 +80,10 @@ public class DcmsServerBackupWriter {
 
 	private static void print(BufferedWriter bw, HashMap<String, List<Record>> temp) throws IOException {
 		for (String name : temp.keySet()) {
-
 			String key = name.toString();
 			String value = temp.get(name).toString();
 			bw.write(key + ": " + value);
 			bw.newLine();
-
-			// System.out.println(key + " " + value);
-
 		}
 
 	}

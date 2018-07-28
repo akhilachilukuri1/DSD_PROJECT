@@ -12,7 +12,11 @@ import Conf.LogManager;
 import Conf.ServerCenterLocation;
 import Server.ServerFrontEnd.TransferResponseToFE;
 
-public class DcmsServerReplicaResponseReceiver extends Thread{
+/*
+ * Thread class that receives the acknowledgement or response from the replicas 
+ * and passes it on to the primary server and 
+ */
+public class DcmsServerReplicaResponseReceiver extends Thread {
 
 	DatagramSocket serverSocket;
 	DatagramPacket receivePacket;
@@ -23,14 +27,19 @@ public class DcmsServerReplicaResponseReceiver extends Thread{
 	String recordCount;
 	HashMap<Integer, TransferResponseToFE> responses;
 	int c;
-	
+
 	public DcmsServerReplicaResponseReceiver(LogManager logManager) {
-			try {
-				serverSocket = new DatagramSocket(Constants.CURRENT_PRIMARY_PORT_FOR_REPLICAS);
-			} catch (SocketException e) {
-				System.out.println(e.getMessage());
-			}
+		try {
+			serverSocket = new DatagramSocket(Constants.CURRENT_PRIMARY_PORT_FOR_REPLICAS);
+		} catch (SocketException e) {
+			System.out.println(e.getMessage());
+		}
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	@Override
 	public synchronized void run() {
 		byte[] receiveData;
@@ -41,20 +50,15 @@ public class DcmsServerReplicaResponseReceiver extends Thread{
 				serverSocket.receive(receivePacket);
 				byte[] receivedData = receivePacket.getData();
 				String inputPkt = new String(receivedData).trim();
-				if(inputPkt.contains("ACKNOWLEDGEMENT"))
-				{
-					System.out.println(new String(receivedData));		
+				if (inputPkt.contains("ACKNOWLEDGEMENT")) {
+					System.out.println(new String(receivedData));
 					loggerInstance.log(Level.INFO, inputPkt + " from " + location);
-				}
-				else
-				{
-				System.out.println(
-						"Received response packet in PRIMARY:: " + new String(receivedData));		
-				loggerInstance.log(Level.INFO,
-						"Received " + inputPkt + " from " + location);
+				} else {
+					System.out.println("Received response packet in PRIMARY:: " + new String(receivedData));
+					loggerInstance.log(Level.INFO, "Received " + inputPkt + " from " + location);
 				}
 			} catch (Exception e) {
-		 
+
 			}
 		}
 	}

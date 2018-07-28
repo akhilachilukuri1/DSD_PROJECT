@@ -10,9 +10,8 @@ import Conf.ServerCenterLocation;
 
 /**
  * 
- * DcmsServerUDPReceiver is the class that serves other servers' requests
- * in form of UDP communication
- * with RECPAKT functionality
+ * DcmsServerUDPReceiver is the class that serves other servers' requests in
+ * form of UDP communication with RECPAKT functionality
  *
  */
 
@@ -30,8 +29,8 @@ public class DcmsServerUDPReceiver extends Thread {
 
 	/**
 	 * 
-	 * DcmsServerUDPReceiver constructor initializes the UDP socket port number of each location
-	 * based on the received location input
+	 * DcmsServerUDPReceiver constructor initializes the UDP socket port number
+	 * of each location based on the received location input
 	 * 
 	 * @param loc
 	 *            location of UDP server
@@ -49,60 +48,39 @@ public class DcmsServerUDPReceiver extends Thread {
 		this.isAlive = isAlive;
 		c = 0;
 		try {
-			
-			/*Switch case to create the datagram packet based on the location port number
-			 * and a logger to log the current event
-			 * */
-			
-//			switch (loc) {
-//			case MTL:
-				serverSocket = new DatagramSocket(udpPort);
-				udpPortNum = udpPort;
-				logger.log(Level.INFO, loc.toString()+ " UDP Server Started");
-//				break;
-//			case LVL:
-//				serverSocket = new DatagramSocket(Constants.PRIMARY_UDP_PORT_NUM_LVL);
-//				udpPortNum = Constants.PRIMARY_UDP_PORT_NUM_LVL;
-//				logger.log(Level.INFO, "LVL UDP Server Started");
-//				break;
-//			case DDO:
-//				serverSocket = new DatagramSocket(Constants.PRIMARY_UDP_PORT_NUM_DDO);
-//				udpPortNum = Constants.PRIMARY_UDP_PORT_NUM_DDO;
-//				logger.log(Level.INFO, "DDO UDP Server Started");
-//				break;
-//			}
-
+			serverSocket = new DatagramSocket(udpPort);
+			udpPortNum = udpPort;
+			logger.log(Level.INFO, loc.toString() + " UDP Server Started");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, e.getMessage());
 		}
 	}
 
-	/**
-	 * A UDP server thread is issued that continuously/periodically keeps listening
-	 * for any request or incoming data packet.
-	 * Calls DcmsServerUDPRequestServer based on the received data.
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Thread#run()
 	 */
-
-	@Override
-	public void run() {
+	public synchronized void run() {
 		byte[] receiveData;
 		while (isAlive) {
 			try {
 				receiveData = new byte[1024];
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
-				System.out.println(
-						"LOc :: "+location +"1 Received pkt in udp heartBeatReceiver :: " + new String(receivePacket.getData()));
+				System.out.println("LOc :: " + location + "1 Received pkt in udp heartBeatReceiver :: "
+						+ new String(receivePacket.getData()));
 				String inputPkt = new String(receivePacket.getData()).trim();
-				new DcmsServerUDPRequestServer(receivePacket, server,loggerInstance).start();
-				loggerInstance.log(Level.INFO,
-						"2 Received in udp heartBeatReceiver " + inputPkt + " from " + location);
+				new DcmsServerUDPRequestServer(receivePacket, server, loggerInstance).start();
+				loggerInstance.log(Level.INFO, "2 Received in udp heartBeatReceiver " + inputPkt + " from " + location);
 			} catch (Exception e) {
 			}
 		}
 	}
-	
-	public void killUDPReceiver(){
+
+	/*
+	 * Kills the current UDP receiver by assigning the isAlive flag to false
+	 */
+	public void killUDPReceiver() {
 		isAlive = false;
 	}
 }

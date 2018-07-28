@@ -116,7 +116,7 @@ public class DcmsServerFE extends DcmsPOA {
 		responses = new HashMap<>();
 		requestBuffer = new HashMap<>();
 		receivedResponses = new ArrayList<>();
-		UDPReceiverFromFE udpReceiverFromFE = new UDPReceiverFromFE(requests);
+		DcmsServerPrimaryFIFO udpReceiverFromFE = new DcmsServerPrimaryFIFO(requests);
 		udpReceiverFromFE.start();
 		UDPResponseReceiver udpResponse = new UDPResponseReceiver(responses);
 		udpResponse.start();
@@ -511,10 +511,12 @@ public class DcmsServerFE extends DcmsPOA {
 			long currentTime = System.nanoTime() / 1000000;
 			if (server_last_updated_time.containsKey(serverName)) {
 				if (currentTime - server_last_updated_time.get(serverName) > TIME_OUT) {
-					if (server_leader_status.get(serverName)) {
-						System.out.println(serverName + " Leader Failed Found!!!");
-						logManager.logger.log(Level.INFO, serverName + " Leader Failed Found!!!");
-						electNewLeader(serverName, logManager);
+					if (server_leader_status.containsKey(serverName)) {
+						if (server_leader_status.get(serverName)) {
+							System.out.println(serverName + " Leader Failed Found!!!");
+							logManager.logger.log(Level.INFO, serverName + " Leader Failed Found!!!");
+							electNewLeader(serverName, logManager);
+						}
 					}
 				}
 			}
@@ -533,7 +535,7 @@ public class DcmsServerFE extends DcmsPOA {
 	 *            gets the LogManager instance to perform logging.
 	 */
 
-	private static void electNewLeader(String oldLeader, LogManager logManager) {
+	private static String electNewLeader(String oldLeader, LogManager logManager) {
 		server_leader_status.remove(oldLeader);
 		server_last_updated_time.remove(oldLeader);
 		currentIds.remove(oldLeader);
@@ -548,7 +550,6 @@ public class DcmsServerFE extends DcmsPOA {
 		}
 		server_leader_status.put(maxEntry.getKey(), true);
 		currentIds.put(maxEntry.getKey(), LEADER_ID);
-		System.out.println("++++Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
 		logManager.logger.log(Level.INFO, "++++Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
 		HashMap<String, DcmsServerImpl> replaceserver = new HashMap<String, DcmsServerImpl>();
 		synchronized (centralRepository) {
@@ -609,15 +610,16 @@ public class DcmsServerFE extends DcmsPOA {
 				centralRepository.put(Constants.REPLICA1_SERVER_ID, replicamap);
 			}
 		}
-		synchronized (centralRepository) {
-			for (Map.Entry<Integer, HashMap<String, DcmsServerImpl>> entry : centralRepository.entrySet()) {
-				System.out.println("ID :: " + entry.getKey());
-				for (Map.Entry<String, DcmsServerImpl> entry1 : entry.getValue().entrySet()) {
-					System.out.println("LOC :: " + entry1.getKey() + " REF :: " + entry1.getValue());
-				}
-			}
-		}
-
+//		synchronized (centralRepository) {
+//			for (Map.Entry<Integer, HashMap<String, DcmsServerImpl>> entry : centralRepository.entrySet()) {
+//				System.out.println("ID :: " + entry.getKey());
+//				for (Map.Entry<String, DcmsServerImpl> entry1 : entry.getValue().entrySet()) {
+//					System.out.println("LOC :: " + entry1.getKey() + " REF :: " + entry1.getValue());
+//				}
+//			}
+//		}
+		System.out.println("Elected new leader :: " + maxEntry.getKey() + " in the location" + loc);
+		return "and elected new leader " + maxEntry.getKey() + " in the location" + loc;
 	}
 
 	/**
@@ -666,7 +668,7 @@ public class DcmsServerFE extends DcmsPOA {
 			if (s1_MTL_sender_isAlive && s2_MTL_sender_isAlive && s3_MTL_sender_isAlive) {
 				s1_MTL_sender_isAlive = false;
 				primaryMtlServer.heartBeatReceiver.setStatus(false);
-				msg = "MTL Server is Killed";
+				msg = "MTL1 Server is killed " + electNewLeader("MTL1", logManager);
 			} else {
 				msg = "Primary is already killed!!";
 			}
@@ -674,7 +676,7 @@ public class DcmsServerFE extends DcmsPOA {
 			if (s1_LVL_sender_isAlive && s2_LVL_sender_isAlive && s3_LVL_sender_isAlive) {
 				s1_LVL_sender_isAlive = false;
 				primaryLvlServer.heartBeatReceiver.setStatus(false);
-				msg = "LVL Server is Killed";
+				msg = "LVL1 Server is killed " + electNewLeader("LVL1", logManager);
 			} else {
 				msg = "Primary is already killed!!";
 			}
@@ -682,7 +684,7 @@ public class DcmsServerFE extends DcmsPOA {
 			if (s1_DDO_sender_isAlive && s2_DDO_sender_isAlive && s3_DDO_sender_isAlive) {
 				s1_DDO_sender_isAlive = false;
 				primaryDdoServer.heartBeatReceiver.setStatus(false);
-				msg = "DDO Server is Killed";
+				msg = "DDO1 Server is killed " + electNewLeader("DDO1", logManager);
 			} else {
 				msg = "Primary is already killed!!";
 			}

@@ -48,15 +48,11 @@ public class DcmsServerUDPRequestProvider extends Thread {
 		return transferResult;
 	}
 
-	/**
-	 * UDP Server thread that handles the incoming packets 
-	 * Routes the packet to the
-	 * respective server address based on the
-	 * required functionality
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Thread#run()
 	 */
-
-	@Override
-	public void run() {
+	public synchronized void run() {
 		DatagramSocket socket = null;
 		try {
 			System.out.println("Req type :: "+requestType);
@@ -89,7 +85,7 @@ public class DcmsServerUDPRequestProvider extends Thread {
 				data1 = new byte[100];
 				socket.receive(new DatagramPacket(data1, data1.length));
 				transferResult = new String(data1);
-				//System.out.println("============="+transferResult);
+				System.out.println("TRANSFER IN UDP PROVIDER ============="+transferResult);
 				break;
 			}
 		} catch (Exception e) {

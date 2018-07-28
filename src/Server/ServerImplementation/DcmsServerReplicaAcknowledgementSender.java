@@ -24,6 +24,10 @@ public class DcmsServerReplicaAcknowledgementSender extends Thread {
 	 * 
 	 */
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public synchronized void run() {
 		try {
 			ds = new DatagramSocket();
@@ -33,10 +37,8 @@ public class DcmsServerReplicaAcknowledgementSender extends Thread {
 					Constants.CURRENT_PRIMARY_PORT_FOR_REPLICAS);
 			ds.send(dp);
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
