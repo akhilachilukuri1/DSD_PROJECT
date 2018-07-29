@@ -172,68 +172,7 @@ public class DcmsServerImpl extends DcmsPOA {
 		return studentID;
 	}
 
-	/**
-	 * Adds the Teacher and Student to the HashMap the function
-	 * addRecordToHashMap returns the success message, if the student / teacher
-	 * record is created successfully else returns Error message
-	 * 
-	 * @param key
-	 *            gets the key of the recordID stored in the HashMap
-	 * @param teacher
-	 *            gets the teacher object if received from createTRecord
-	 *            function
-	 * @param student
-	 *            gets the student object if received from createSRecord
-	 *            function which are received the respective functions.
-	 * 
-	 */
-
-	public synchronized String addRecordToHashMap(String key, Teacher teacher, Student student) {
-		String message = "Error";
-		if (teacher != null) {
-			List<Record> recordList = null;
-			synchronized (recordsMapAccessorLock) {
-				recordList = recordsMap.get(key);
-			}
-			if (recordList != null) {
-				recordList.add(teacher);
-			} else {
-				List<Record> records = null;
-				synchronized (recordsMapAccessorLock) {
-					records = new ArrayList<Record>();
-					records.add(teacher);
-				}
-				recordList = records;
-			}
-			synchronized (recordsMapAccessorLock) {
-				recordsMap.put(key, recordList);
-			}
-			message = "success";
-		}
-
-		if (student != null) {
-			List<Record> recordList = null;
-			synchronized (recordsMapAccessorLock) {
-				recordList = recordsMap.get(key);
-			}
-			if (recordList != null) {
-				recordList.add(student);
-			} else {
-				List<Record> records = null;
-				synchronized (recordsMapAccessorLock) {
-					records = new ArrayList<Record>();
-					records.add(student);
-				}
-				recordList = records;
-			}
-			synchronized (recordsMapAccessorLock) {
-				recordsMap.put(key, recordList);
-			}
-			message = "success";
-		}
-		takeTheBackup();
-		return message;
-	}
+	
 
 	/**
 	 *
@@ -477,22 +416,6 @@ public class DcmsServerImpl extends DcmsPOA {
 	}
 
 	/**
-	 * The putCoursesinList function adds the newCourses to the List
-	 * 
-	 * @param newvalue
-	 *            gets the newcourses value and adds to the list
-	 *
-	 */
-
-	public synchronized List<String> putCoursesinList(String newvalue) {
-		String[] courses = newvalue.split("//");
-		ArrayList<String> courseList = new ArrayList<>();
-		for (String course : courses)
-			courseList.add(course);
-		return courseList;
-	}
-
-	/**
 	 * The editSRRecord function performs the edit operation on the student
 	 * record and returns the appropriate message
 	 * 
@@ -611,6 +534,11 @@ public class DcmsServerImpl extends DcmsPOA {
 		}
 		return "Record with " + recordID + " not found";
 	}
+	
+	
+	/*
+	 * Methods to access only from FE once the primary sever is killed.
+	 */
 
 	public void send() {
 		heartBeatSender = new HeartBeatSender(ds, name, port1, port2);
@@ -689,5 +617,84 @@ public class DcmsServerImpl extends DcmsPOA {
 				remoteServer.takeTheBackup();
 			}
 		}
+	}
+	
+	/**
+	 * Adds the Teacher and Student to the HashMap the function
+	 * addRecordToHashMap returns the success message, if the student / teacher
+	 * record is created successfully else returns Error message
+	 * 
+	 * @param key
+	 *            gets the key of the recordID stored in the HashMap
+	 * @param teacher
+	 *            gets the teacher object if received from createTRecord
+	 *            function
+	 * @param student
+	 *            gets the student object if received from createSRecord
+	 *            function which are received the respective functions.
+	 * 
+	 */
+
+	public synchronized String addRecordToHashMap(String key, Teacher teacher, Student student) {
+		String message = "Error";
+		if (teacher != null) {
+			List<Record> recordList = null;
+			synchronized (recordsMapAccessorLock) {
+				recordList = recordsMap.get(key);
+			}
+			if (recordList != null) {
+				recordList.add(teacher);
+			} else {
+				List<Record> records = null;
+				synchronized (recordsMapAccessorLock) {
+					records = new ArrayList<Record>();
+					records.add(teacher);
+				}
+				recordList = records;
+			}
+			synchronized (recordsMapAccessorLock) {
+				recordsMap.put(key, recordList);
+			}
+			message = "success";
+		}
+
+		if (student != null) {
+			List<Record> recordList = null;
+			synchronized (recordsMapAccessorLock) {
+				recordList = recordsMap.get(key);
+			}
+			if (recordList != null) {
+				recordList.add(student);
+			} else {
+				List<Record> records = null;
+				synchronized (recordsMapAccessorLock) {
+					records = new ArrayList<Record>();
+					records.add(student);
+				}
+				recordList = records;
+			}
+			synchronized (recordsMapAccessorLock) {
+				recordsMap.put(key, recordList);
+			}
+			message = "success";
+		}
+		takeTheBackup();
+		return message;
+	}
+	
+	/**
+	 * The putCoursesinList function adds the newCourses to the List
+	 * 
+	 * @param newvalue
+	 *            gets the newcourses value and adds to the list
+	 *
+	 */
+
+	public synchronized List<String> putCoursesinList(String newvalue) {
+		String[] courses = newvalue.split("//");
+		ArrayList<String> courseList = new ArrayList<>();
+		for (String course : courses)
+			courseList.add(course);
+		return courseList;
 	}
 }
