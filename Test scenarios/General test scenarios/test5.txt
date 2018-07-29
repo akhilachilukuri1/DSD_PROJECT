@@ -1,0 +1,95 @@
+TEST SCENARIO:
+
+CLIENT INPUT:
+
+Please enter the Client's ManagerID
+MTL4444
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Logout manager
+1
+Enter the first name of the teacher
+e
+Enter the last name of the teacher
+e
+Enter the address of the teacher
+rr
+Enter the Phone number in 123-456-7689 format
+444-444-4444
+Enter the specialization of the teacher
+r
+Enter the Location(MTL/LVL/DDO)
+MTL
+Teacher record is created and assigned with TR1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Logout manager
+3
+Total Record Count from all 3 servers is :: MTL 1 , LVL 0 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Logout manager
+6
+Manager with MTL4444is logged Out
+Please enter the Client's ManagerID
+LVL4444
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Logout manager
+3
+Total Record Count from all 3 servers is :: LVL 0 , MTL 1 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Logout manager
+1
+Enter the first name of the teacher
+r
+Enter the last name of the teacher
+r
+Enter the address of the teacher
+r
+Enter the Phone number in 123-456-7689 format
+333-333-3333
+Enter the specialization of the teacher
+r
+Enter the Location(MTL/LVL/DDO)
+LVL
+Teacher record is created and assigned with TR1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Logout manager
+3
+
+CLIENT OUTPUT ::
+Total Record Count from all 3 servers is :: LVL 1 , MTL 1 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Logout manager

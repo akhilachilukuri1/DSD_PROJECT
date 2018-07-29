@@ -1,0 +1,67 @@
+TEST CASE 21::
+kill the server
+add the student record
+get the record count
+
+CLIENT INPUT ::
+Please enter the Client's ManagerID
+LVL5555
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+LVL
+LVL1 Server is killed and elected new leader LVL3 in the locationLVL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+2
+Enter the first name of the student
+remo
+Enter the last name of the student
+rajnikanth
+Enter the number of courses registered by the student
+2
+Enter the 2 courses(one per line) registered by the student
+SQA
+AOL
+Enter the status of student (Active/Inactive)
+Active
+Enter the date when the student became active(Format :: 29-02-2018)
+01-02-2019
+student record is created and assigned with SR1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: LVL 1 , MTL 0 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+
+CLIENT OUTPUT ::
+LVL 1 , MTL 0 , DDO 0
+
+SERVER OUTPUT ::
+LVL 1 , MTL 0 , DDO 0

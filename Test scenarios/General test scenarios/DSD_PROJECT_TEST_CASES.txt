@@ -1,0 +1,161 @@
+TEST CASE 10::
+Kill all the Three servers
+Add a Teacher record
+Edit the Teacher record
+Get the record counts
+Transfer the records to another locations
+Get the record counts
+
+TEST CASE 11::
+add the teacher record in the server.
+get the record count
+kill the server
+get the record count
+
+TEST CASE 12::
+add the student record in the server.
+get the record count
+kill the server
+get the record count
+
+TEST CASE 13::
+add the teacher record in the server.
+get the record count
+kill the server
+edit the record
+get the record count
+
+TEST CASE 14::
+add the student record in the server.
+get the record count
+kill the server
+edit the record
+get the record count
+
+TEST CASE 15::
+add the teacher record in the server.
+get the record count
+kill the server in the LOC1 
+transfer the record from LOC1 to LOC2
+edit the record in LOC2
+get the record count
+
+TEST CASE 16::
+add the student record in the server.
+get the record count
+kill the server in the LOC1 
+transfer the record from LOC1 to LOC2
+edit the record in LOC2
+get the record count
+
+TEST CASE 17::
+add the student record
+get the record count
+kill the server
+transfer the student record
+get the record count
+
+TEST CASE 18::
+add the teacher record
+get the record count
+kill the server
+transfer the teacher record
+get the record count
+
+TEST CASE 19::
+add the student record
+get the record count
+kill the server
+transfer the student record to LOC
+Kill LOC server
+get the record count
+
+TEST CASE 20::
+add the teacher record
+get the record count
+kill the server
+transfer the teacher record to LOC
+Kill LOC server
+get the record count
+
+TEST CASE 21::
+kill the server
+add the student record
+get the record count
+
+TEST CASE 22::
+kill the server
+add the teacher record
+get the record count
+
+TEST CASE 23::
+kill the server
+add the student record
+get the record count
+edit the record
+get the record count
+
+TEST CASE 24::
+kill the server
+add the teacher record
+get the record count
+edit the record
+get the record count
+
+TEST CASE 25::
+add the teacher record 
+transfer the record from LOC1 to LOC2
+kill the server LOC1
+kill the server LOC2
+get the record count
+
+TEST CASE 26::
+add the student record 
+transfer the record from LOC1 to LOC2
+kill the server LOC1
+kill the server LOC2
+get the record count
+
+TEST CASE 27::
+add the student record
+get the record count
+kill the server in LOC1
+transfer the student record from LOC1 to LOC2
+Kill LOC2 server
+get the record count
+transfer the student record from LOC2 to LOC3
+Kill LOC3 server
+get the record count
+
+TEST CASE 28::
+add the teacher record
+get the record count
+kill the server in LOC1
+transfer the teacher record from LOC1 to LOC2
+Kill LOC2 server
+get the record count
+transfer the teacher record from LOC2 to LOC3
+Kill LOC3 server
+get the record count
+  
+TEST CASE 29::
+add the student record
+get the record count
+kill the server in LOC2
+transfer the student record from LOC1 to LOC2
+get the record count
+Kill LOC3 server
+get the record count
+transfer the student record from LOC2 to LOC3
+get the record count
+
+TEST CASE 30::
+add the teacher record
+get the record count
+kill the server in LOC2
+transfer the teacher record from LOC1 to LOC2
+get the record count
+Kill LOC3 server
+get the record count
+transfer the teacher record from LOC2 to LOC3
+get the record count

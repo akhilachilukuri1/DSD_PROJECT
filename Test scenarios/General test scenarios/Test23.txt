@@ -1,0 +1,98 @@
+TEST CASE 23::
+kill the server
+add the student record
+get the record count
+edit the record
+get the record count
+
+
+CLIENT INPUT ::
+Please enter the Client's ManagerID
+MTL4444
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+MTL
+MTL1 Server is killed and elected new leader MTL3 in the locationMTL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+2
+Enter the first name of the student
+vicky
+Enter the last name of the student
+vignesh
+Enter the number of courses registered by the student
+2
+Enter the 2 courses(one per line) registered by the student
+sqa
+app
+Enter the status of student (Active/Inactive)
+Active
+Enter the date when the student became active(Format :: 29-02-2018)
+02-01-2017
+student record is created and assigned with SR1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: MTL 1 , LVL 0 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+4
+Enter the Record ID
+SR1
+Enter field number to be updated (1.CoursesRegistered 2.status or 3.statusDate)
+2
+Enter the value of the field to be updated
+Enter the status of student (Active/Inactive)
+Active
+Updated record with status :: Active
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: MTL 1 , LVL 0 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+
+
+CLIENT OUTPUT ::
+MTL 1 , LVL 0 , DDO 0
+
+SERVER OUTPUT ::
+MTL 1 , LVL 0 , DDO 0

@@ -1,0 +1,134 @@
+TEST CASE 10:
+Kill all the Three servers
+Add a Teacher record
+Edit the Teacher record
+Get the record counts
+Transfer the records to another locations
+Get the record counts
+
+CLIENT INPUT ::
+Please enter the Client's ManagerID
+MTL9701
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+MTL
+MTL1 Server is killed and elected new leader MTL3 in the locationMTL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+LVL
+LVL1 Server is killed and elected new leader LVL3 in the locationLVL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+DDO
+DDO1 Server is killed and elected new leader DDO3 in the locationDDO
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+1
+Enter the first name of the teacher
+aakash
+Enter the last name of the teacher
+Lovepreeth
+Enter the address of the teacher
+120 St mark
+Enter the Phone number in 123-456-7689 format
+123-456-7890
+Enter the specialization of the teacher
+Romance
+Enter the Location(MTL/LVL/DDO)
+MTL
+Teacher record is created and assigned with TR1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+4
+Enter the Record ID
+TR1
+Enter the  field number  to be updated (1.address 2.phone or 3.location)
+3
+Enter the value of the field to be updated
+Enter the new Location(MTL/LVL/DDO)
+DDO
+Updated record with location :: DDO
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: MTL 1 , LVL 0 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+5
+Enter the record ID
+TR1
+Enter the location(MTL/LVL/DDO)
+DDO
+Record created in DDOand removed from MTL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: MTL 0 , LVL 0 , DDO 1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+
+CLIENT OUTPUT ::
+MTL 0 , LVL 0 , DDO 1
+ 
+SERVER OUTPUT :: 
+MTL 0 , LVL 0 , DDO 1

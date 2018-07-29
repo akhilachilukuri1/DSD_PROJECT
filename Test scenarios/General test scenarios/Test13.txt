@@ -1,0 +1,95 @@
+TEST CASE 12::
+add the teacher record in the server.
+get the record count
+kill the server
+edit the record
+get the record count
+
+CLIENT INPUT ::
+Please enter the Client's ManagerID
+DDO1234
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+1
+Enter the first name of the teacher
+akhila
+Enter the last name of the teacher
+chil
+Enter the address of the teacher
+DDO
+Enter the Phone number in 123-456-7689 format
+333-333-3333
+Enter the specialization of the teacher
+MCSE
+Enter the Location(MTL/LVL/DDO)
+DDO
+Teacher record is created and assigned with TR1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: DDO 1 , MTL 0 , LVL 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+DDO
+DDO1 Server is killed and elected new leader DDO3 in the locationDDO
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+4
+Enter the Record ID
+TR1
+Enter the  field number  to be updated (1.address 2.phone or 3.location)
+1
+Enter the value of the field to be updated
+DDO1
+Updated record with address :: DDO1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: DDO 1 , MTL 0 , LVL 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+
+
+CLIENT OUTPUT ::
+DDO 1 , MTL 0 , LVL 0
+
+SERVER OUTPUT ::
+DDO 1 , MTL 0 , LVL 0

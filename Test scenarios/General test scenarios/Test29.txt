@@ -1,0 +1,146 @@
+TEST CASE 29::
+add the student record
+get the record count
+kill the server in LOC2
+transfer the student record from LOC1 to LOC2
+get the record count
+Kill LOC3 server
+get the record count
+Log out LOC1
+Log in LOC2
+transfer the student record from LOC2 to LOC3
+
+CLIENT INPUT ::
+Please enter the Client's ManagerID
+MTL2341
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+2
+Enter the first name of the student
+eamni
+Enter the last name of the student
+tesra
+Enter the number of courses registered by the student
+2
+Enter the 2 courses(one per line) registered by the student
+sqa
+comp
+Enter the status of student (Active/Inactive)
+Active
+Enter the date when the student became active(Format :: 29-02-2018)
+01-02-1993
+student record is created and assigned with SR1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: MTL 1 , LVL 0 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+LVL
+LVL1 Server is killed and elected new leader LVL3 in the locationLVL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+5
+Enter the record ID
+SR1
+Enter the location(MTL/LVL/DDO)
+LVL
+Record created in LVLand removed from MTL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: MTL 0 , LVL 1 , DDO 0
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+6
+Enter the Location (MTL/LVL/DDO)
+DDO
+DDO1 Server is killed and elected new leader DDO3 in the locationDDO
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+7
+Manager with MTL2341is logged Out
+Please enter the Client's ManagerID
+LVL7870
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+5
+Enter the record ID
+SR1
+Enter the location(MTL/LVL/DDO)
+DDO
+Record created in DDOand removed from LVL
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+3
+Total Record Count from all 3 servers is :: LVL 0 , MTL 0 , DDO 1
+choose the operation
+1) Create the Teacher record
+2) Create the Student record
+3) Get the record count
+4) Edit the record
+5) Transfer the record
+6) Kill the Primary Server
+7) Logout manager
+
+CLIENT OUTPUT ::
+LVL 0 , MTL 0 , DDO 1
+
+SERVER OUTPUT ::
+LVL 0 , MTL 0 , DDO 1

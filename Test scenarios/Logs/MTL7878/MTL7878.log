@@ -1,0 +1,32 @@
+Jul 28, 2018 8:41:18 PM Client.DcmsClient main
+INFO: Log client started!
+Jul 28, 2018 8:42:02 PM Client.DcmsClient main
+INFO: Validating the status entered (ManagerID:MTL7878)
+Jul 28, 2018 8:42:02 PM Client.ClientImp createTRecord
+INFO: Initiating T record object creation request
+Jul 28, 2018 8:42:07 PM Client.ClientImp createTRecord
+INFO: Teacher record is created and assigned with TR1
+Jul 28, 2018 8:42:17 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 8:42:22 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 8:42:22 PM Client.ClientImp getRecordCounts
+INFO: MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 8:42:38 PM Client.ClientImp killServer
+INFO: Initiating Server Kill Request at location MTL
+Jul 28, 2018 8:42:38 PM Client.ClientImp killServer
+INFO: MTL1 Server is killed and elected new leader MTL3 in the locationMTL
+Jul 28, 2018 8:43:06 PM Client.ClientImp transferRecord
+INFO: Initiating the record transfer request
+Jul 28, 2018 8:43:11 PM Client.ClientImp transferRecord
+INFO: Record created in LVLand removed from MTL
+Jul 28, 2018 8:43:24 PM Client.ClientImp killServer
+INFO: Initiating Server Kill Request at location LVL
+Jul 28, 2018 8:43:24 PM Client.ClientImp killServer
+INFO: LVL1 Server is killed and elected new leader LVL3 in the locationLVL
+Jul 28, 2018 8:43:31 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 8:43:36 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 8:43:36 PM Client.ClientImp getRecordCounts
+INFO: MTL 0 , LVL 1 , DDO 0
