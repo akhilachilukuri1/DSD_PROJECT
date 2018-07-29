@@ -1,0 +1,30 @@
+Jul 28, 2018 8:31:41 PM Client.DcmsClient main
+INFO: Log client started!
+Jul 28, 2018 8:32:17 PM Client.ClientImp createSRecord
+INFO: Initiating S record object creation request
+Jul 28, 2018 8:32:22 PM Client.ClientImp createSRecord
+INFO: student record is created and assigned with SR1
+Jul 28, 2018 8:32:28 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 8:32:33 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 8:32:33 PM Client.ClientImp getRecordCounts
+INFO: DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 8:32:44 PM Client.ClientImp killServer
+INFO: Initiating Server Kill Request at location DDO
+Jul 28, 2018 8:32:44 PM Client.ClientImp killServer
+INFO: DDO1 Server is killed and elected new leader DDO3 in the locationDDO
+Jul 28, 2018 8:33:36 PM Client.ClientImp transferRecord
+INFO: Initiating the record transfer request
+Jul 28, 2018 8:33:41 PM Client.ClientImp transferRecord
+INFO: Record created in LVLand removed from DDO
+Jul 28, 2018 8:35:32 PM Client.ClientImp killServer
+INFO: Initiating Server Kill Request at location LVL
+Jul 28, 2018 8:35:32 PM Client.ClientImp killServer
+INFO: LVL1 Server is killed and elected new leader LVL3 in the locationLVL
+Jul 28, 2018 8:35:44 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 8:35:49 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 8:35:49 PM Client.ClientImp getRecordCounts
+INFO: DDO 0 , MTL 0 , LVL 1

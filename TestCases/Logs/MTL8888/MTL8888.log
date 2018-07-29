@@ -1,0 +1,20 @@
+Jul 28, 2018 7:00:29 PM Client.DcmsClient main
+INFO: Log client started!
+Jul 28, 2018 7:01:34 PM Client.ClientImp createSRecord
+INFO: Initiating S record object creation request
+Jul 28, 2018 7:01:39 PM Client.ClientImp createSRecord
+INFO: student record is created and assigned with SR1
+Jul 28, 2018 7:01:44 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 7:01:49 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 7:01:49 PM Client.ClientImp getRecordCounts
+INFO: MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:02:03 PM Client.ClientImp killServer
+INFO: Initiating Server Kill Request at location MTL
+Jul 28, 2018 7:02:03 PM Client.ClientImp killServer
+INFO: MTL1 Server is killed and elected new leader MTL3 in the locationMTL
+Jul 28, 2018 7:03:15 PM Client.ClientImp transferRecord
+INFO: Initiating the record transfer request
+Jul 28, 2018 7:03:20 PM Client.ClientImp transferRecord
+INFO: Record created in LVLand removed from MTL

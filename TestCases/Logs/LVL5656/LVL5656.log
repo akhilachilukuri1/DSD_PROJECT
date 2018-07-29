@@ -1,0 +1,16 @@
+Jul 28, 2018 8:36:31 PM Client.DcmsClient main
+INFO: Log client started!
+Jul 28, 2018 8:36:57 PM Client.ClientImp transferRecord
+INFO: Initiating the record transfer request
+Jul 28, 2018 8:37:02 PM Client.ClientImp transferRecord
+INFO: Record created in MTLand removed from LVL
+Jul 28, 2018 8:37:16 PM Client.ClientImp killServer
+INFO: Initiating Server Kill Request at location MTL
+Jul 28, 2018 8:37:16 PM Client.ClientImp killServer
+INFO: MTL1 Server is killed and elected new leader MTL3 in the locationMTL
+Jul 28, 2018 8:37:18 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 8:37:23 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 8:37:23 PM Client.ClientImp getRecordCounts
+INFO: LVL 0 , MTL 1 , DDO 0

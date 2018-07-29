@@ -1,0 +1,262 @@
+Jul 28, 2018 5:59:55 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 6:01:19 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 6:01:19 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 6:02:50 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 6:04:21 PM Server.ServerImplementation.DcmsServerImpl createSRecord
+INFO: Student record created SR1 by manager : LVL1234 for the requestID 1
+Jul 28, 2018 6:04:46 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 1 , MTL 0 , DDO 0 for the request ID 2 as requested by the managerID LVL1234
+Jul 28, 2018 6:05:04 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest getRecordCount
+INFO: Preparing Multicast request for get record Count :2,GET_REC_COUNT,LVL,LVL1234,3
+Jul 28, 2018 6:05:06 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 1 , MTL 0 , DDO 0 for the request ID 3 as requested by the managerID LVL1234
+Jul 28, 2018 6:36:20 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 6:37:48 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 6:37:48 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 6:42:46 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 6:43:56 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 6:43:56 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 6:48:16 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 6:50:02 PM Server.ServerImplementation.DcmsServerImpl createTRecord
+INFO: Teacher record created TR1 by Manager : LVL9999 for the request ID: 1
+Jul 28, 2018 6:50:23 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 1 , MTL 0 , DDO 0 for the request ID 2 as requested by the managerID LVL9999
+Jul 28, 2018 6:52:11 PM Server.ServerImplementation.DcmsServerImpl transferRecord
+INFO: Record created in  MTL  and removed from LVL with requestID 4
+Jul 28, 2018 6:53:22 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 6:54:31 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 6:54:31 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 6:55:31 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#DDO9999,TR1,rama,devi,\DDO,333-333-3333,MCSE,MTL from LVL
+Jul 28, 2018 6:55:31 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: DDO9999,TR1,rama,devi,\DDO,333-333-3333,MCSE,MTL
+Jul 28, 2018 6:56:50 PM Server.ServerImplementation.DcmsServerImpl editTRRecord
+INFO: LVL9001 performed the operation with the requestID 4Updated the records	LVL
+Jul 28, 2018 6:57:03 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 1 , MTL 0 ,  for the request ID 5 as requested by the managerID LVL9001
+Jul 28, 2018 6:59:12 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:01:45 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:01:45 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 7:03:15 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL8888,SR1,sangeetha,kamineni,[SQA/APP],Active,01-02-2017 from LVL
+Jul 28, 2018 7:03:15 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL8888,SR1,sangeetha,kamineni,[SQA/APP],Active,01-02-2017
+Jul 28, 2018 7:04:00 PM Server.ServerImplementation.DcmsServerImpl editSRRecord
+INFO: LVL8888 performed the operation with the requestID 4 and Updated the records	LVL
+Jul 28, 2018 7:04:17 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 1 ,  , DDO 0 for the request ID 5 as requested by the managerID LVL8888
+Jul 28, 2018 7:06:04 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:09:53 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:09:53 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 7:10:33 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL7777,SR1,damini,yantri,[DSD/APP],Active,01-02-2017 from LVL
+Jul 28, 2018 7:10:33 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL7777,SR1,damini,yantri,[DSD/APP],Active,01-02-2017
+Jul 28, 2018 7:14:02 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:15:27 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:15:27 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 7:16:08 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#DDO7777,TR1,ramni,kasa,DDO,333-333-3333,MCSE,DDO from LVL
+Jul 28, 2018 7:16:08 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: DDO7777,TR1,ramni,kasa,DDO,333-333-3333,MCSE,DDO
+Jul 28, 2018 7:21:20 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:22:52 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:22:52 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 7:23:36 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL6666,SR1,john,varnish,[SQA/APP],Active,02-03-2016 from LVL
+Jul 28, 2018 7:23:36 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL6666,SR1,john,varnish,[SQA/APP],Active,02-03-2016
+Jul 28, 2018 7:24:02 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:24:02 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 7:26:51 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:30:10 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:30:10 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 7:30:35 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL5555,TR1,kasi,vishwanath,MTL,444-444-4444,MCSE,MTL from LVL
+Jul 28, 2018 7:30:35 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL5555,TR1,kasi,vishwanath,MTL,444-444-4444,MCSE,MTL
+Jul 28, 2018 7:31:15 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:32:29 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:32:29 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 7:32:56 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL5555,TR1,isha,aggarwal,MTL,444-444-4444,MCSE,LVL from LVL
+Jul 28, 2018 7:32:56 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL5555,TR1,isha,aggarwal,MTL,444-444-4444,MCSE,LVL
+Jul 28, 2018 7:33:15 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 7:33:15 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 7:36:14 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:40:05 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:42:00 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:43:02 PM Server.ServerImplementation.DcmsServerImpl createSRecord
+INFO: Student record created SR1 by manager : LVL5555 for the requestID 1
+Jul 28, 2018 7:43:29 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest getRecordCount
+INFO: Preparing Multicast request for get record Count :2,GET_REC_COUNT,LVL,LVL5555,2
+Jul 28, 2018 7:43:31 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 1 , MTL 0 , DDO 0 for the request ID 2 as requested by the managerID LVL5555
+Jul 28, 2018 7:46:35 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:50:43 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:53:14 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest createTRecord
+INFO: Preparing Multicast request for Create Teacher record : 2,CREATE_T_RECORD,LVL,LVL4444,akaaash,ezhilmani,LVL,333-333-3333,MCSE,LVL,2
+Jul 28, 2018 7:53:14 PM Server.ServerImplementation.DcmsServerImpl createTRecord
+INFO: Teacher record created TR1 by Manager : LVL4444 for the request ID: 2
+Jul 28, 2018 7:53:26 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest getRecordCount
+INFO: Preparing Multicast request for get record Count :2,GET_REC_COUNT,LVL,LVL4444,3
+Jul 28, 2018 7:53:28 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 1 , MTL 0 , DDO 1 for the request ID 3 as requested by the managerID LVL4444
+Jul 28, 2018 7:53:54 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 7:58:25 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 8:04:43 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 8:11:02 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL3456,SR1,shreya,gramil,[sqa/app],Active,01-03-2017 from LVL
+Jul 28, 2018 8:11:02 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL3456,SR1,shreya,gramil,[sqa/app],Active,01-03-2017
+Jul 28, 2018 8:12:40 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 8:12:40 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 8:30:40 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 8:32:30 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 8:32:30 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 8:33:36 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#DDO3123,SR1,chrishley,dharma,[sqa/app],Active,01-02-2017 from LVL
+Jul 28, 2018 8:33:36 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: DDO3123,SR1,chrishley,dharma,[sqa/app],Active,01-02-2017
+Jul 28, 2018 8:35:46 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 8:35:46 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 8:36:57 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest transferRecord
+INFO: Preparing Multicast request for transferRecord : 2,TRANSFER_RECORD,LVL,LVL5656,SR1,MTL,5
+Jul 28, 2018 8:36:57 PM Server.ServerImplementation.DcmsServerImpl transferRecord
+INFO: Record created in  MTL  and removed from LVL with requestID 5
+Jul 28, 2018 8:37:18 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest getRecordCount
+INFO: Preparing Multicast request for get record Count :2,GET_REC_COUNT,LVL,LVL5656,6
+Jul 28, 2018 8:37:20 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 0 , MTL 1 , DDO 0 for the request ID 6 as requested by the managerID LVL5656
+Jul 28, 2018 8:38:52 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 8:42:18 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 8:42:18 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 8:43:06 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL7878,TR1,saiyyi,lakshmi,MTL,555-555-5555,MCSE,MTL from LVL
+Jul 28, 2018 8:43:06 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL7878,TR1,saiyyi,lakshmi,MTL,555-555-5555,MCSE,MTL
+Jul 28, 2018 8:43:32 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 8:43:32 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 8:44:55 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest transferRecord
+INFO: Preparing Multicast request for transferRecord : 2,TRANSFER_RECORD,LVL,LVL6767,TR1,DDO,5
+Jul 28, 2018 8:44:55 PM Server.ServerImplementation.DcmsServerImpl transferRecord
+INFO: Record created in  DDO  and removed from LVL with requestID 5
+Jul 28, 2018 8:45:54 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest getRecordCount
+INFO: Preparing Multicast request for get record Count :2,GET_REC_COUNT,LVL,LVL6767,6
+Jul 28, 2018 8:45:57 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 0 , MTL 0 , DDO 1 for the request ID 6 as requested by the managerID LVL6767
+Jul 28, 2018 8:48:40 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 8:52:02 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 8:52:02 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 8:52:42 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL2341,SR1,eamni,tesra,[sqa/comp],Active,01-02-1993 from LVL
+Jul 28, 2018 8:52:42 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL2341,SR1,eamni,tesra,[sqa/comp],Active,01-02-1993
+Jul 28, 2018 8:52:57 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 8:52:57 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 8:55:42 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest transferRecord
+INFO: Preparing Multicast request for transferRecord : 2,TRANSFER_RECORD,LVL,LVL7870,SR1,DDO,6
+Jul 28, 2018 8:55:42 PM Server.ServerImplementation.DcmsServerImpl transferRecord
+INFO: Record created in  DDO  and removed from LVL with requestID 6
+Jul 28, 2018 8:57:11 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest getRecordCount
+INFO: Preparing Multicast request for get record Count :2,GET_REC_COUNT,LVL,LVL7870,7
+Jul 28, 2018 8:57:13 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 0 , MTL 0 , DDO 1 for the request ID 7 as requested by the managerID LVL7870
+Jul 28, 2018 8:58:20 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 9:00:14 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 9:00:14 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 9:01:38 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver TRANSFER_RECORD#MTL2167,TR1,remo,rams,MTL,555-555-5555,MCSE,MTL from LVL
+Jul 28, 2018 9:01:38 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: Transferring :: MTL2167,TR1,remo,rams,MTL,555-555-5555,MCSE,MTL
+Jul 28, 2018 9:01:46 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 9:01:46 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 9:02:14 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 9:02:14 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 1
+Jul 28, 2018 9:02:54 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest transferRecord
+INFO: Preparing Multicast request for transferRecord : 2,TRANSFER_RECORD,LVL,LVL1953,TR1,DDO,6
+Jul 28, 2018 9:02:54 PM Server.ServerImplementation.DcmsServerImpl transferRecord
+INFO: Record created in  DDO  and removed from LVL with requestID 6
+Jul 28, 2018 9:03:05 PM Server.ServerImplementation.DcmsServerPrepareReplicasRequest getRecordCount
+INFO: Preparing Multicast request for get record Count :2,GET_REC_COUNT,LVL,LVL1953,7
+Jul 28, 2018 9:03:07 PM Server.ServerImplementation.DcmsServerImpl getRecordCount
+INFO: LVL 0 , MTL 0 , DDO 1 for the request ID 7 as requested by the managerID LVL1953
+Jul 28, 2018 9:19:59 PM Server.ServerImplementation.DcmsServerUDPReceiver <init>
+INFO: LVL UDP Server Started
+Jul 28, 2018 9:22:12 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 9:22:12 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0
+Jul 28, 2018 9:22:38 PM Server.ServerImplementation.DcmsServerUDPReceiver run
+INFO: 2 Received in udp receiver GET_RECORD_COUNT from LVL
+Jul 28, 2018 9:22:38 PM Server.ServerImplementation.DcmsServerUDPRequestServer run
+INFO: data in udp req server :: 0

@@ -1,0 +1,612 @@
+Jul 28, 2018 6:01:05 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL1234,akhila,chilukuri,MTL,111-111-1111,MCSE,MTL,1
+Jul 28, 2018 6:01:05 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,MTL,MTL1234,akhila,chilukuri,MTL,111-111-1111,MCSE,MTL,1
+Jul 28, 2018 6:01:05 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:01:05 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:01:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL1234,2
+Jul 28, 2018 6:01:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL1234,2
+Jul 28, 2018 6:01:20 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 6:01:20 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 6:02:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL1234,3
+Jul 28, 2018 6:02:05 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 6:04:21 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,LVL,LVL1234,sai,vishwanath,sqa/app,Active,01-08-2015,1
+Jul 28, 2018 6:04:21 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 6:04:21 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,LVL,LVL1234,sai,vishwanath,sqa/app,Active,01-08-2015,1
+Jul 28, 2018 6:04:21 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 6:04:44 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL1234,2
+Jul 28, 2018 6:04:44 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,LVL,LVL1234,2
+Jul 28, 2018 6:04:46 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 6:04:46 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 6:05:04 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL1234,3
+Jul 28, 2018 6:05:06 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 6:37:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,DDO,DDO1234,akhila,chil,DDO,333-333-3333,MCSE,DDO,1
+Jul 28, 2018 6:37:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:37:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,DDO,DDO1234,akhila,chil,DDO,333-333-3333,MCSE,DDO,1
+Jul 28, 2018 6:37:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:37:46 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO1234,2
+Jul 28, 2018 6:37:46 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,DDO,DDO1234,2
+Jul 28, 2018 6:37:48 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 6:37:48 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 6:38:23 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,EDIT_RECORD,DDO,DDO1234,TR1,Address,DDO1,3
+Jul 28, 2018 6:38:23 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with address :: DDO1
+Jul 28, 2018 6:38:48 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO1234,4
+Jul 28, 2018 6:38:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 6:43:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,MTL,MTL9999,alekya,kari,sqa/app,Active,01-02-2015,1
+Jul 28, 2018 6:43:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 6:43:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,MTL,MTL9999,alekya,kari,sqa/app,Active,01-02-2015,1
+Jul 28, 2018 6:43:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 6:43:55 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL9999,2
+Jul 28, 2018 6:43:55 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL9999,2
+Jul 28, 2018 6:43:57 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 6:43:57 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 6:44:39 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,EDIT_RECORD,MTL,MTL9999,SR1,CoursesRegistered,SQA/APP/DSD,3
+Jul 28, 2018 6:44:39 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with courses :: [SQA/APP/DSD]
+Jul 28, 2018 6:45:58 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL9999,4
+Jul 28, 2018 6:46:00 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 6:50:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,LVL,LVL9999,arundhathi,chilukuri,LVL,222-222-2222,LVL,LVL,1
+Jul 28, 2018 6:50:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:50:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,LVL,LVL9999,arundhathi,chilukuri,LVL,222-222-2222,LVL,LVL,1
+Jul 28, 2018 6:50:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:50:21 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL9999,2
+Jul 28, 2018 6:50:21 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,LVL,LVL9999,2
+Jul 28, 2018 6:50:23 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 6:50:23 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 6:51:29 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,LVL,LVL9999,TR1,LVL,3
+Jul 28, 2018 6:51:29 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Please enter a valid location to transfer. The record is already present in LVL
+Jul 28, 2018 6:51:29 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,LVL,LVL9999,TR1,LVL,3
+Jul 28, 2018 6:51:29 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Please enter a valid location to transfer. The record is already present in LVL
+Jul 28, 2018 6:52:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,LVL,LVL9999,TR1,MTL,4
+Jul 28, 2018 6:52:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,LVL,LVL9999,TR1,MTL,4
+Jul 28, 2018 6:52:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in MTLand removed from LVL
+Jul 28, 2018 6:52:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in MTLand removed from LVL
+Jul 28, 2018 6:54:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,DDO,DDO9999,rama,devi,\DDO,333-333-3333,MCSE,MTL,1
+Jul 28, 2018 6:54:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,DDO,DDO9999,rama,devi,\DDO,333-333-3333,MCSE,MTL,1
+Jul 28, 2018 6:54:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:54:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 6:54:29 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO9999,2
+Jul 28, 2018 6:54:29 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,DDO,DDO9999,2
+Jul 28, 2018 6:54:31 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 6:54:31 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 6:55:31 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,DDO,DDO9999,TR1,LVL,3
+Jul 28, 2018 6:55:31 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from DDO
+Jul 28, 2018 6:56:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,EDIT_RECORD,LVL,LVL9001,TR1,Address,LVL,4
+Jul 28, 2018 6:56:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,EDIT_RECORD,LVL,LVL9001,TR1,Address,LVL,4
+Jul 28, 2018 6:56:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with address :: LVL
+Jul 28, 2018 6:56:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with address :: LVL
+Jul 28, 2018 6:57:01 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL9001,5
+Jul 28, 2018 6:57:01 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,LVL,LVL9001,5
+Jul 28, 2018 6:57:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 ,
+Jul 28, 2018 6:57:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 7:01:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,MTL,MTL8888,sangeetha,kamineni,SQA/APP,Active,01-02-2017,1
+Jul 28, 2018 7:01:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:01:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,MTL,MTL8888,sangeetha,kamineni,SQA/APP,Active,01-02-2017,1
+Jul 28, 2018 7:01:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:01:44 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL8888,2
+Jul 28, 2018 7:01:44 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL8888,2
+Jul 28, 2018 7:01:46 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:01:46 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:03:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL8888,SR1,LVL,3
+Jul 28, 2018 7:03:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 7:04:00 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,EDIT_RECORD,LVL,LVL8888,SR1,Status,Inactive,4
+Jul 28, 2018 7:04:00 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with status :: Inactive
+Jul 28, 2018 7:04:00 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,EDIT_RECORD,LVL,LVL8888,SR1,Status,Inactive,4
+Jul 28, 2018 7:04:00 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with status :: Inactive
+Jul 28, 2018 7:04:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL8888,5
+Jul 28, 2018 7:04:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,LVL,LVL8888,5
+Jul 28, 2018 7:04:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 7:04:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 ,  , DDO 0
+Jul 28, 2018 7:09:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,MTL,MTL7777,damini,yantri,DSD/APP,Active,01-02-2017,1
+Jul 28, 2018 7:09:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:09:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,MTL,MTL7777,damini,yantri,DSD/APP,Active,01-02-2017,1
+Jul 28, 2018 7:09:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:09:52 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL7777,2
+Jul 28, 2018 7:09:52 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL7777,2
+Jul 28, 2018 7:09:54 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:09:54 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:10:33 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL7777,SR1,LVL,3
+Jul 28, 2018 7:10:33 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 7:10:47 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL7777,4
+Jul 28, 2018 7:10:49 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 7:15:12 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,DDO,DDO7777,ramni,kasa,DDO,333-333-3333,MCSE,DDO,1
+Jul 28, 2018 7:15:12 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:15:12 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,DDO,DDO7777,ramni,kasa,DDO,333-333-3333,MCSE,DDO,1
+Jul 28, 2018 7:15:12 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:15:25 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO7777,2
+Jul 28, 2018 7:15:25 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,DDO,DDO7777,2
+Jul 28, 2018 7:15:27 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 7:15:27 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 7:16:08 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,DDO,DDO7777,TR1,LVL,3
+Jul 28, 2018 7:16:08 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from DDO
+Jul 28, 2018 7:16:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO7777,4
+Jul 28, 2018 7:16:20 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 0 , MTL 0 , LVL 1
+Jul 28, 2018 7:22:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,MTL,MTL6666,john,varnish,SQA/APP,Active,02-03-2016,1
+Jul 28, 2018 7:22:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,MTL,MTL6666,john,varnish,SQA/APP,Active,02-03-2016,1
+Jul 28, 2018 7:22:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:22:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:22:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL6666,2
+Jul 28, 2018 7:22:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL6666,2
+Jul 28, 2018 7:22:53 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:22:53 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:23:36 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL6666,SR1,LVL,3
+Jul 28, 2018 7:23:36 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 7:24:01 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL6666,4
+Jul 28, 2018 7:24:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 7:28:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL5555,kasi,vishwanath,MTL,444-444-4444,MCSE,MTL,1
+Jul 28, 2018 7:28:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:28:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,MTL,MTL5555,kasi,vishwanath,MTL,444-444-4444,MCSE,MTL,1
+Jul 28, 2018 7:28:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:30:08 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL5555,2
+Jul 28, 2018 7:30:09 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL5555,2
+Jul 28, 2018 7:30:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:30:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:30:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL5555,TR1,LVL,3
+Jul 28, 2018 7:30:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,MTL,MTL5555,TR1,LVL,3
+Jul 28, 2018 7:30:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 7:30:35 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 7:32:16 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL5555,isha,aggarwal,MTL,444-444-4444,MCSE,LVL,1
+Jul 28, 2018 7:32:16 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:32:16 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,MTL,MTL5555,isha,aggarwal,MTL,444-444-4444,MCSE,LVL,1
+Jul 28, 2018 7:32:16 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:32:28 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL5555,2
+Jul 28, 2018 7:32:28 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL5555,2
+Jul 28, 2018 7:32:30 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:32:30 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:32:56 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL5555,TR1,LVL,3
+Jul 28, 2018 7:32:56 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 7:33:14 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL5555,4
+Jul 28, 2018 7:33:16 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 7:37:52 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,DDO,DDO6666,praneetha,yam,DDO,444-444-4444,MCSE,DDO,1
+Jul 28, 2018 7:37:53 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:37:59 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO6666,2
+Jul 28, 2018 7:38:01 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 7:41:14 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL5555,kaushal,nistra,MTL,555-555-5555,MCSE,MTL,1
+Jul 28, 2018 7:41:14 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:43:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,LVL,LVL5555,remo,rajnikanth,SQA/AOL,Active,01-02-2019,1
+Jul 28, 2018 7:43:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:43:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,LVL,LVL5555,remo,rajnikanth,SQA/AOL,Active,01-02-2019,1
+Jul 28, 2018 7:43:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:43:29 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL5555,2
+Jul 28, 2018 7:43:31 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 0
+Jul 28, 2018 7:48:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,MTL,MTL4444,vicky,vignesh,sqa/app,Active,02-01-2017,1
+Jul 28, 2018 7:48:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 7:48:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL4444,2
+Jul 28, 2018 7:48:20 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:48:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,EDIT_RECORD,MTL,MTL4444,SR1,Status,Active,3
+Jul 28, 2018 7:48:51 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with status :: Active
+Jul 28, 2018 7:49:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL4444,4
+Jul 28, 2018 7:49:05 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:51:53 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,DDO,DDO4444,akash,ezhilmani,DDO,555-555-5555,MCSE,DDO,1
+Jul 28, 2018 7:51:53 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:51:53 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,DDO,DDO4444,akash,ezhilmani,DDO,555-555-5555,MCSE,DDO,1
+Jul 28, 2018 7:51:53 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:53:14 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,LVL,LVL4444,akaaash,ezhilmani,LVL,333-333-3333,MCSE,LVL,2
+Jul 28, 2018 7:53:14 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:53:26 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL4444,3
+Jul 28, 2018 7:53:28 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 1 , MTL 0 , DDO 1
+Jul 28, 2018 7:55:00 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL3333,shermila,vamsham,MTL,333-333-3333,MCSE,MTL,1
+Jul 28, 2018 7:55:00 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 7:55:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL3333,2
+Jul 28, 2018 7:55:09 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 7:55:49 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,EDIT_RECORD,MTL,MTL3333,TR1,Phone,676-565-5656,3
+Jul 28, 2018 7:55:49 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with Phone :: 676-565-5656
+Jul 28, 2018 7:56:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL3333,4
+Jul 28, 2018 7:56:09 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 8:00:09 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,DDO,DDO3333,satya,dharma,DDO,444-444-4444,MCSE,DDO,1
+Jul 28, 2018 8:00:09 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 8:00:10 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,DDO,DDO3333,satya,dharma,DDO,444-444-4444,MCSE,DDO,1
+Jul 28, 2018 8:00:10 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 8:00:27 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,DDO,DDO3333,TR1,MTL,2
+Jul 28, 2018 8:00:27 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,DDO,DDO3333,TR1,MTL,2
+Jul 28, 2018 8:00:27 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in MTLand removed from DDO
+Jul 28, 2018 8:00:27 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in MTLand removed from DDO
+Jul 28, 2018 8:00:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary RecordID unavailable!
+Jul 28, 2018 8:00:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,DDO,DDO3333,TR!,DDO,3
+Jul 28, 2018 8:00:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,DDO,DDO3333,TR!,DDO,3
+Jul 28, 2018 8:00:50 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary RecordID unavailable!
+Jul 28, 2018 8:01:30 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO3333,4
+Jul 28, 2018 8:01:33 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 0 , MTL 1 , LVL 0
+Jul 28, 2018 8:10:34 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,MTL,MTL3456,shreya,gramil,sqa/app,Active,01-03-2017,1
+Jul 28, 2018 8:10:34 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,MTL,MTL3456,shreya,gramil,sqa/app,Active,01-03-2017,1
+Jul 28, 2018 8:10:34 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 8:10:34 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 8:11:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,MTL,MTL3456,SR1,LVL,2
+Jul 28, 2018 8:11:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL3456,SR1,LVL,2
+Jul 28, 2018 8:11:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 8:11:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 8:12:39 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL3456,3
+Jul 28, 2018 8:12:41 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 8:32:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,DDO,DDO3123,chrishley,dharma,sqa/app,Active,01-02-2017,1
+Jul 28, 2018 8:32:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 8:32:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,DDO,DDO3123,chrishley,dharma,sqa/app,Active,01-02-2017,1
+Jul 28, 2018 8:32:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 8:32:28 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,DDO,DDO3123,2
+Jul 28, 2018 8:32:28 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO3123,2
+Jul 28, 2018 8:32:30 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 8:32:30 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 8:33:36 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,DDO,DDO3123,SR1,LVL,3
+Jul 28, 2018 8:33:36 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from DDO
+Jul 28, 2018 8:35:44 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,DDO,DDO3123,4
+Jul 28, 2018 8:35:46 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary DDO 0 , MTL 0 , LVL 1
+Jul 28, 2018 8:36:57 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,LVL,LVL5656,SR1,MTL,5
+Jul 28, 2018 8:36:57 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in MTLand removed from LVL
+Jul 28, 2018 8:37:18 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL5656,6
+Jul 28, 2018 8:37:20 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 0 , MTL 1 , DDO 0
+Jul 28, 2018 8:42:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL7878,saiyyi,lakshmi,MTL,555-555-5555,MCSE,MTL,1
+Jul 28, 2018 8:42:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 8:42:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,MTL,MTL7878,saiyyi,lakshmi,MTL,555-555-5555,MCSE,MTL,1
+Jul 28, 2018 8:42:02 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 8:42:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL7878,2
+Jul 28, 2018 8:42:17 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL7878,2
+Jul 28, 2018 8:42:19 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 8:42:19 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 8:43:06 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL7878,TR1,LVL,3
+Jul 28, 2018 8:43:06 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 8:43:31 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL7878,4
+Jul 28, 2018 8:43:33 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 8:44:55 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,LVL,LVL6767,TR1,DDO,5
+Jul 28, 2018 8:44:55 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in DDOand removed from LVL
+Jul 28, 2018 8:45:54 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL6767,6
+Jul 28, 2018 8:45:57 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 0 , MTL 0 , DDO 1
+Jul 28, 2018 8:51:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_S_RECORD,MTL,MTL2341,eamni,tesra,sqa/comp,Active,01-02-1993,1
+Jul 28, 2018 8:51:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_S_RECORD,MTL,MTL2341,eamni,tesra,sqa/comp,Active,01-02-1993,1
+Jul 28, 2018 8:51:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 8:51:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary SR1
+Jul 28, 2018 8:52:01 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL2341,2
+Jul 28, 2018 8:52:01 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL2341,2
+Jul 28, 2018 8:52:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 8:52:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 8:52:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL2341,SR1,LVL,3
+Jul 28, 2018 8:52:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,MTL,MTL2341,SR1,LVL,3
+Jul 28, 2018 8:52:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 8:52:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 8:52:56 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL2341,4
+Jul 28, 2018 8:52:56 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL2341,4
+Jul 28, 2018 8:52:58 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 ,  , DDO 0
+Jul 28, 2018 8:52:58 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 8:53:32 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary RecordID unavailable!
+Jul 28, 2018 8:53:32 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL2341,SR11,DDO,5
+Jul 28, 2018 8:53:32 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,MTL,MTL2341,SR11,DDO,5
+Jul 28, 2018 8:53:32 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary RecordID unavailable!
+Jul 28, 2018 8:55:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,LVL,LVL7870,SR1,DDO,6
+Jul 28, 2018 8:55:42 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in DDOand removed from LVL
+Jul 28, 2018 8:57:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL7870,7
+Jul 28, 2018 8:57:13 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 0 , MTL 0 , DDO 1
+Jul 28, 2018 9:00:06 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL2167,remo,rams,MTL,555-555-5555,MCSE,MTL,1
+Jul 28, 2018 9:00:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,CREATE_T_RECORD,MTL,MTL2167,remo,rams,MTL,555-555-5555,MCSE,MTL,1
+Jul 28, 2018 9:00:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 9:00:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 9:00:13 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL2167,2
+Jul 28, 2018 9:00:13 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL2167,2
+Jul 28, 2018 9:00:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 9:00:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 9:01:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL2167,TR1,LVL,3
+Jul 28, 2018 9:01:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,TRANSFER_RECORD,MTL,MTL2167,TR1,LVL,3
+Jul 28, 2018 9:01:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 9:01:38 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in LVLand removed from MTL
+Jul 28, 2018 9:01:45 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL2167,4
+Jul 28, 2018 9:01:45 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL2167,4
+Jul 28, 2018 9:01:47 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 9:01:47 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 ,  , DDO 0
+Jul 28, 2018 9:02:13 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 3,GET_REC_COUNT,MTL,MTL2167,5
+Jul 28, 2018 9:02:13 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL2167,5
+Jul 28, 2018 9:02:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 ,  ,
+Jul 28, 2018 9:02:15 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 1 , DDO 0
+Jul 28, 2018 9:02:54 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,LVL,LVL1953,TR1,DDO,6
+Jul 28, 2018 9:02:55 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in DDOand removed from LVL
+Jul 28, 2018 9:03:05 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,LVL,LVL1953,7
+Jul 28, 2018 9:03:07 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary LVL 0 , MTL 0 , DDO 1
+Jul 28, 2018 9:21:40 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,CREATE_T_RECORD,MTL,MTL9701,aakash,Lovepreeth,120 St mark,123-456-7890,Romance,MTL,1
+Jul 28, 2018 9:21:40 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary TR1
+Jul 28, 2018 9:22:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,EDIT_RECORD,MTL,MTL9701,TR1,Location,DDO,2
+Jul 28, 2018 9:22:03 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Updated record with location :: DDO
+Jul 28, 2018 9:22:11 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL9701,3
+Jul 28, 2018 9:22:13 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 1 , LVL 0 , DDO 0
+Jul 28, 2018 9:22:28 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,TRANSFER_RECORD,MTL,MTL9701,TR1,DDO,4
+Jul 28, 2018 9:22:28 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary Record created in DDOand removed from MTL
+Jul 28, 2018 9:22:37 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: RECEIVED ACKNOWLEDGEMENT IN PRIMARY :: 2,GET_REC_COUNT,MTL,MTL9701,5
+Jul 28, 2018 9:22:39 PM Server.ServerImplementation.DcmsServerReplicaResponseReceiver run
+INFO: Received response in Primary MTL 0 , LVL 0 , DDO 1

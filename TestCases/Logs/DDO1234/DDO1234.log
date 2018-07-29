@@ -1,0 +1,28 @@
+Jul 28, 2018 6:36:49 PM Client.DcmsClient main
+INFO: Log client started!
+Jul 28, 2018 6:37:35 PM Client.DcmsClient main
+INFO: Validating the status entered (ManagerID:DDO1234)
+Jul 28, 2018 6:37:35 PM Client.ClientImp createTRecord
+INFO: Initiating T record object creation request
+Jul 28, 2018 6:37:40 PM Client.ClientImp createTRecord
+INFO: Teacher record is created and assigned with TR1
+Jul 28, 2018 6:37:46 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 6:37:51 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 6:37:51 PM Client.ClientImp getRecordCounts
+INFO: DDO 1 , MTL 0 , LVL 0
+Jul 28, 2018 6:37:59 PM Client.ClientImp killServer
+INFO: Initiating Server Kill Request at location DDO
+Jul 28, 2018 6:37:59 PM Client.ClientImp killServer
+INFO: DDO1 Server is killed and elected new leader DDO3 in the locationDDO
+Jul 28, 2018 6:38:23 PM Client.ClientImp editRecord
+INFO: DDO1234has Initiated the record edit request for TR1
+Jul 28, 2018 6:38:28 PM Client.ClientImp editRecord
+INFO: Updated record with address :: DDO1
+Jul 28, 2018 6:38:48 PM Client.ClientImp getRecordCounts
+INFO: Initiating record count request
+Jul 28, 2018 6:38:53 PM Client.ClientImp getRecordCounts
+INFO: received....count as follows
+Jul 28, 2018 6:38:53 PM Client.ClientImp getRecordCounts
+INFO: DDO 1 , MTL 0 , LVL 0
