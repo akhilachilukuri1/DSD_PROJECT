@@ -1,8 +1,0 @@
-Jul 28, 2018 7:51:29 PM Client.DcmsClient main
-INFO: Log client started!
-Jul 28, 2018 7:51:52 PM Client.DcmsClient main
-INFO: Validating the status entered (ManagerID:DDO4444)
-Jul 28, 2018 7:51:52 PM Client.ClientImp createTRecord
-INFO: Initiating T record object creation request
-Jul 28, 2018 7:51:57 PM Client.ClientImp createTRecord
-INFO: Teacher record is created and assigned with TR1
